@@ -2,6 +2,7 @@ import React from "react";
 import { cn } from "../../../lib/utils";
 import { NFT } from "./nft-data";
 import gif from "../../../public/gif.gif";
+import { AvatarsCard } from "./avatar-card";
 
 function NFTCard({ nft }: { nft: NFT }) {
   return (
@@ -20,14 +21,26 @@ function NFTCard({ nft }: { nft: NFT }) {
           backgroundImage: `url(${nft.image})`,
         }}
       >
-        <div className="text relative z-50 backdrop-blur-sm w-full">
-          <h1 className="font-bold text-xl md:text-3xl text-gray-50 relative">
-            Background Overlays
-          </h1>
-          <p className="font-normal text-base text-gray-50 relative my-4">
-            This card is for some special elements, like displaying background
-            gifs on hover only.
-          </p>
+        <div className="relative z-50 backdrop-blur-lg w-full p-2 rounded-xl">
+          <div className="w-1/2 mb-[-36px]">
+            <AvatarsCard avatars={nft.avatars} />
+          </div>
+          <div className="flex items-center justify-between">
+            <div className="px-2">
+              <h1 className="text-white text-lg font-bold font-body">
+                {nft.name}
+              </h1>
+              <h1 className="text-primary font-body underline">{nft.chef}</h1>
+            </div>
+            <div>
+              <p className="text-white text-xl font-bold font-body text-center my-2">
+                {nft.price} ICP
+              </p>
+              <button className="border-primary border-[2px] text-white rounded-xl py-2 px-8 font-body font-semibold">
+                Buy
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -11,9 +11,16 @@ export interface NFT {
   name: string;
   price: number;
   image: string;
-  avatars: string[];
+  avatars: Avatar[];
   description: string;
   chef: string;
+}
+
+export interface Avatar {
+  id: number;
+  name: string;
+  image: string;
+  designation: string;
 }
 
 export const nfts: NFT[] = [
@@ -22,7 +29,32 @@ export const nfts: NFT[] = [
     name: "Sauce",
     price: 2,
     image: livesale1,
-    avatars: [avatar1, avatar2, avatar3, avatar4],
+    avatars: [
+      {
+        id: 1,
+        name: "SkipperGee",
+        image: avatar1,
+        designation: "Chef",
+      },
+      {
+        id: 2,
+        name: "ConorMG",
+        image: avatar2,
+        designation: "XXLChef",
+      },
+      {
+        id: 3,
+        name: "LennyPink",
+        image: avatar3,
+        designation: "mini-Chef",
+      },
+      {
+        id: 4,
+        name: "ToomuchLag",
+        image: avatar4,
+        designation: "Sauce master",
+      },
+    ],
     description:
       "This card is for some special elements, like displaying background gifs on hover only.",
     chef: "ToomuchLag",
@@ -32,7 +64,32 @@ export const nfts: NFT[] = [
     name: "Sauce",
     price: 2,
     image: livesale2,
-    avatars: [avatar1, avatar2, avatar3, avatar4],
+    avatars: [
+      {
+        id: 1,
+        name: "SkipperGee",
+        image: avatar1,
+        designation: "Chef",
+      },
+      {
+        id: 2,
+        name: "ConorMG",
+        image: avatar2,
+        designation: "XXLChef",
+      },
+      {
+        id: 3,
+        name: "LennyPink",
+        image: avatar3,
+        designation: "mini-Chef",
+      },
+      {
+        id: 4,
+        name: "ToomuchLag",
+        image: avatar4,
+        designation: "Sauce master",
+      },
+    ],
     description:
       "This card is for some special elements, like displaying background gifs on hover only.",
     chef: "ToomuchLag",
@@ -42,7 +99,32 @@ export const nfts: NFT[] = [
     name: "Burger",
     price: 3,
     image: livesale3,
-    avatars: [avatar1, avatar2, avatar3, avatar4],
+    avatars: [
+      {
+        id: 1,
+        name: "SkipperGee",
+        image: avatar1,
+        designation: "Chef",
+      },
+      {
+        id: 2,
+        name: "ConorMG",
+        image: avatar2,
+        designation: "XXLChef",
+      },
+      {
+        id: 3,
+        name: "LennyPink",
+        image: avatar3,
+        designation: "mini-Chef",
+      },
+      {
+        id: 4,
+        name: "ToomuchLag",
+        image: avatar4,
+        designation: "Sauce master",
+      },
+    ],
     description:
       "This card is for some special elements, like displaying background gifs on hover only.",
     chef: "Werewanle",
@@ -52,7 +134,32 @@ export const nfts: NFT[] = [
     name: "Smocha",
     price: 1,
     image: livesale1,
-    avatars: [avatar1, avatar2, avatar3, avatar4],
+    avatars: [
+      {
+        id: 1,
+        name: "SkipperGee",
+        image: avatar1,
+        designation: "Chef",
+      },
+      {
+        id: 2,
+        name: "ConorMG",
+        image: avatar2,
+        designation: "XXLChef",
+      },
+      {
+        id: 3,
+        name: "LennyPink",
+        image: avatar3,
+        designation: "mini-Chef",
+      },
+      {
+        id: 4,
+        name: "ToomuchLag",
+        image: avatar4,
+        designation: "Sauce master",
+      },
+    ],
     description:
       "This card is for some special elements, like displaying background gifs on hover only.",
     chef: "SnipQux",
