@@ -6,6 +6,14 @@ export default {
       animation: {
         shimmer: "shimmer 2s linear infinite",
       },
+      fontFamily: {
+        title: ["Ubuntu", "sans-serif"],
+        body: ['"Space Mono"', "monospace"],
+      },
+      colors: {
+        background: "#0d0c0c",
+        primary: "#f9a505",
+      },
       keyframes: {
         shimmer: {
           from: {

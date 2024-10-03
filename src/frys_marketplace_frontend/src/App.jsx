@@ -6,7 +6,7 @@ import Navbar from "./app/Navbar";
 
 function App() {
   return (
-    <main className="bg-rose-200 rounded-md p-4 mx-2 w-full">
+    <main className="bg-background rounded-md p-4 mx-2 w-full h-screen">
       <Navbar />
       <Hero />
       <LiveSale />
