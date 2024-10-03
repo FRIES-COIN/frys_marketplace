@@ -1,29 +1,11 @@
 import { useState } from "react";
 import { frys_marketplace_backend } from "declarations/frys_marketplace_backend";
+import { ButtonsCard } from "../components/ui/tailwindcss-buttons";
 
 function App() {
-  const [greeting, setGreeting] = useState("");
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    const name = event.target.elements.name.value;
-    frys_marketplace_backend.greet(name).then((greeting) => {
-      setGreeting(greeting);
-    });
-    return false;
-  }
-
   return (
     <main className="bg-rose-200 rounded-md p-4 mx-2">
-      <img src="/logo2.svg" alt="DFINITY logo" />
-      <br />
-      <br />
-      <form action="#" onSubmit={handleSubmit}>
-        <label htmlFor="name">Enter your name: &nbsp;</label>
-        <input id="name" alt="Name" type="text" />
-        <button type="submit">Click Me!</button>
-      </form>
-      <section id="greeting">{greeting}</section>
+      <ButtonsCard />
     </main>
   );
 }
