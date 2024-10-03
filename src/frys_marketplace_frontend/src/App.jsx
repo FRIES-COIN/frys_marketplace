@@ -6,7 +6,7 @@ import Navbar from "./app/Navbar";
 
 function App() {
   return (
-    <main className="bg-background rounded-md p-4 mx-2 w-full h-screen text-white">
+    <main className="bg-background p-4 w-full text-white">
       <Navbar />
       <Hero />
       <LiveSale />
