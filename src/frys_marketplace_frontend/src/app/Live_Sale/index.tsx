@@ -8,11 +8,13 @@ function LiveSale() {
       <h1 className="text-bold font-body font-bold text-primary text-xl md:text-2xl mb-3">
         Live Sale
       </h1>
-      <div className="md:grid flex items-center justify-center flex-col md:grid-cols-2 lg:grid-cols-4 gap-2">
-        {nfts.map((nft: NFT) => (
-          <NFTCard nft={nft} key={nft.id} />
-        ))}
-      </div>
+      <section className="w-full flex items-center justify-center">
+        <div className="md:grid flex items-center justify-center flex-col md:grid-cols-2 lg:grid-cols-4 gap-2 lg:max-w-[90%]">
+          {nfts.map((nft: NFT) => (
+            <NFTCard nft={nft} key={nft.id} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
