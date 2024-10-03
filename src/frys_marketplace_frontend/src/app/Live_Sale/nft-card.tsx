@@ -1,19 +1,24 @@
 import React from "react";
 import { cn } from "../../../lib/utils";
+import { NFT } from "./nft-data";
+import gif from "../../../public/gif.gif";
 
-function NFTCard() {
+function NFTCard({ nft }: { nft: NFT }) {
   return (
-    <div className="max-w-xs w-full">
+    <div className="md:max-w-sm max-w-xl w-full my-2">
       <div
         className={cn(
-          "group w-full cursor-pointer overflow-hidden relative card h-96 rounded-md shadow-xl mx-auto flex flex-col justify-end p-4 border border-transparent dark:border-neutral-800",
-          "bg-[url(https://images.unsplash.com/photo-1476842634003-7dcca8f832de?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80)] bg-cover",
+          `group w-full cursor-pointer overflow-hidden relative card h-96 rounded-md shadow-xl mx-auto flex flex-col justify-end p-4 border border-transparent dark:border-neutral-800`,
           // Preload hover image by setting it in a pseudo-element
-          "before:bg-[url(https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWlodTF3MjJ3NnJiY3Rlc2J0ZmE0c28yeWoxc3gxY2VtZzA5ejF1NSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/syEfLvksYQnmM/giphy.gif)] before:fixed before:inset-0 before:opacity-0 before:z-[-1]",
-          "hover:bg-[url(https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWlodTF3MjJ3NnJiY3Rlc2J0ZmE0c28yeWoxc3gxY2VtZzA5ejF1NSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/syEfLvksYQnmM/giphy.gif)]",
-          "hover:after:content-[''] hover:after:absolute hover:after:inset-0 hover:after:bg-black hover:after:opacity-50",
-          "transition-all duration-500"
+          `before:bg-[url(https://media.tenor.com/gjg2V_hL2BYAAAAM/cat-kitty.gif)] before:fixed before:inset-0 before:opacity-0 before:z-[-1]`,
+          `hover:before:opacity-100 hover:scale-95`,
+          `hover:after:content-[''] hover:after:absolute hover:after:inset-0 hover:after:bg-black hover:after:opacity-50`,
+          `transition-all duration-500`,
+          `bg-cover`
         )}
+        style={{
+          backgroundImage: `url(${nft.image})`,
+        }}
       >
         <div className="text relative z-50 backdrop-blur-sm w-full">
           <h1 className="font-bold text-xl md:text-3xl text-gray-50 relative">
