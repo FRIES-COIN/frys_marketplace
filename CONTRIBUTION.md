@@ -20,23 +20,23 @@ Welcome to the NFT Marketplace project! We are excited to have you onboard. This
 │   ├── index.html
 │   └── assets/ (for images, logos, fonts)
 │
-├── /@
+├── /components/ui
 │   ├── components pulled from Aceternity UI & ShadcnUI
 │   └── (other third-party templates, if needed)
 │
 ├── /src
 │   ├── /assets
 │   │   └── (any additional assets like images, icons)
-│   ├── /components
+│   ├── /app
 │   │   ├── Navbar # will contain all navbar components files
 │   │   ├── Hero # will contain all hero components files
 │   │   ├── LiveSale # will contain all live-sale components files
 │   │   ├── Footer # will contain all footer components files
 │   │   └── Common/ (reusable UI components like buttons, cards, etc.)
 │   ├── /pages
-│   │   └── (any page-specific components or layouts)
+│   │   └── (any page-specific components or layouts) #only 1 page rn, so not yet created
 │   ├── /store
-│   │   └── zustandStore.ts (for state management using Zustand in the future)
+│   │   └── zustandStore.ts (for state management using Zustand in the future) #not yet created
 │   ├── /utils
 │   │   └── (helper functions, constants)
 │   ├── App.tsx (main component file)
@@ -73,7 +73,7 @@ We use the **Gitflow** workflow for branching. Follow the strategy below:
 - **main**: This branch contains the production-ready code.
 - **develop**: The active development branch where all feature branches should be merged.
 - **feature/**: Create feature branches for specific sections (e.g., `feature/navbar`, `feature/hero`, etc.).
-- _Remember to always create a branch of the feature you are working on then pulling from develop before begining_
+- _Remember to always create a branch of the feature you are working on then pulling from develop before beginning_
 
 Naming conventions for feature branches:
 
@@ -89,6 +89,13 @@ git checkout -b feature/navbar
 | Hero      | Steve    |
 | LiveSale  | Sylus    |
 | Footer    | Chriss   |
+
+### Important points before contributing
+
+- Always create a new branch from develop before starting
+- Avoid force pushing
+- While developing a new feature change as little files as possible(To reduce chances of having conflicts when merging branches)
+- Make sure the code runs with no error before submitting a PR to develop
 
 ## Pull Requests
 
