@@ -72,8 +72,8 @@ We use the **Gitflow** workflow for branching. Follow the strategy below:
 
 - **main**: This branch contains the production-ready code.
 - **develop**: The active development branch where all feature branches should be merged.
-- **feature/**: Create feature branches for specific sections (e.g., `feature/navbar`, `feature/hero`, etc.).
-- _Remember to always create a branch of the feature you are working on then pulling from develop before beginning_
+- **feature/**: Create feature branches for specific sections (e.g., `feature/navbar`, `feature/hero`, etc.). PS. all branches have been created
+- _Remember to always checkout to a branch of the feature you are working on then pulling from develop before beginning_
 
 Naming conventions for feature branches:
 
@@ -92,7 +92,7 @@ git checkout -b feature/navbar
 
 ### Important points before contributing
 
-- Always create a new branch from develop before starting
+- Always checkout to your assigned branch starting
 - Avoid force pushing
 - While developing a new feature change as little files as possible(To reduce chances of having conflicts when merging branches)
 - Make sure the code runs with no error before submitting a PR to develop
@@ -217,3 +217,7 @@ const my_component = () => { ... };
 ```
 
 ## Happy Coding🥳
+
+## For the Team
+
+So guys the repo is ready for contribution. I have updated the Contribution.md with teh frontend project structure and guidelines. The task table is also available. So after reading the two readmes, the next step is to see from the table in the contribution.md file what task you have been assigned, then checkout to the branch you have been assigned, Ex. if you're working on the Navbar checkout to the feat/navbar-component branch then start your contribution. When done submit a PR to the develop branch NOT the main branch. Also if your are working on the navbar for example, I have already created a folder called app with all the necessary folders for each component. All extra components you create make sure are in the specific folder you're working on in this case Mary will only work on the folder called Navbar. This helps minimizes the number of conflict during merging with develop. In addition when installing dependencies, do them at the root of the frontend folder and not at the root of the entire project. i.e in the terminal before installing any dependencies you will use make sure you are at `frys_marketplace/src/frys_marketplace_frontend` .Lastly for colors and fonts we are using the ones in the figma. Since we're using tailwindcss you can find the blackish background color `bg-background`this sets the background color to the black color. Same to the primary orangish color, it can be used as `text-primary` this sets the color of the text to the primary color. For the fonts i have included two fonts body & title. However, for consistency use `font-body`instead of `font-title`. I included the title font for good measure only should we need to change fonts in the future. But for now use `font-body`for every text.
