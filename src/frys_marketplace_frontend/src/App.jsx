@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { frys_marketplace_backend } from 'declarations/frys_marketplace_backend';
+import { useState } from "react";
+import { frys_marketplace_backend } from "declarations/frys_marketplace_backend";
 
 function App() {
-  const [greeting, setGreeting] = useState('');
+  const [greeting, setGreeting] = useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -14,7 +14,7 @@ function App() {
   }
 
   return (
-    <main>
+    <main className="bg-rose-200 rounded-md p-4">
       <img src="/logo2.svg" alt="DFINITY logo" />
       <br />
       <br />
