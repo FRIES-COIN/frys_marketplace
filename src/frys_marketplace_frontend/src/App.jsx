@@ -14,7 +14,7 @@ function App() {
   }
 
   return (
-    <main className="bg-rose-200 rounded-md p-4">
+    <main className="bg-rose-200 rounded-md p-4 mx-2">
       <img src="/logo2.svg" alt="DFINITY logo" />
       <br />
       <br />
