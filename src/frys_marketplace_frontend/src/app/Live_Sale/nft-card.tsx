@@ -5,7 +5,7 @@ import gif from "../../../public/gif.gif";
 
 function NFTCard({ nft }: { nft: NFT }) {
   return (
-    <div className="md:max-w-sm max-w-xl w-full my-2">
+    <div className="md:max-w-sm max-w-xl w-full my-2 h-[400px]">
       <div
         className={cn(
           `group w-full cursor-pointer overflow-hidden relative card h-96 rounded-md shadow-xl mx-auto flex flex-col justify-end p-4 border border-transparent dark:border-neutral-800`,
