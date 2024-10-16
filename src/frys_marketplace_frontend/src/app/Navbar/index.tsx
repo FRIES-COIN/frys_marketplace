@@ -1,23 +1,26 @@
 import { FaRocket, FaUser } from "react-icons/fa";
 import avatar from "../../../public/avatar1.svg";
+import { useState } from "react";
 
 function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <nav className="bg-[#0C0C0C]  flex items-center justify-between px-4 py-2 font-body">
+    <nav className="bg-[#0C0C0C] w-full flex items-center justify-between py-2 font-body">
       <div className="flex items-center">
         <img
           src="../../logo.png"
           alt="Logo"
           width={56}
           height={56}
-          className="mr-2"
+          className=""
+          onClick={() => setIsOpen(!isOpen)}
         />
         <span className="text-[#ffa503] font-body text-[24.58px] leading-[56px] font-bold">
           FRYS
         </span>
       </div>
 
-      <div className="flex items-center space-x-8">
+      <div className="md:flex items-center space-x-8 hidden">
         <a
           href="#"
           className="text-white font-semibold font-body text-[20.96px] leading-[24.84px] w-[131px] h-[25px] hover:text-[#ffa503] hover:text-[22.96px] transition-all duration-500"
