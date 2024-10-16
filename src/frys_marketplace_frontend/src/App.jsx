@@ -6,12 +6,16 @@ import Navbar from "./app/Navbar";
 
 function App() {
   return (
-    <main className="bg-background py-4 px-1 w-full text-white">
-      <Navbar />
-      <Hero />
-      <LiveSale />
+    <div className="flex flex-col min-h-screen bg-background text-white">
+      <header>
+        <Navbar />
+      </header>
+      <main className="flex-grow py-4 px-1">
+        <Hero />
+        <LiveSale />
+      </main>
       <Footer />
-    </main>
+    </div>
   );
 }
 

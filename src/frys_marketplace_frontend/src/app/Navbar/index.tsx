@@ -1,5 +1,6 @@
 import { FaRocket, FaUser } from "react-icons/fa";
 import avatar from "../../../public/avatar1.svg";
+import Logo from '../Footer/Logo.svg'
 import { useState } from "react";
 
 function Navbar() {
@@ -15,9 +16,7 @@ function Navbar() {
           className=""
           onClick={() => setIsOpen(!isOpen)}
         />
-        <span className="text-[#ffa503] font-body text-[24.58px] leading-[56px] font-bold">
-          FRYS
-        </span>
+        <Logo />
       </div>
 
       <div className="md:flex items-center space-x-8 hidden">
