@@ -4,7 +4,7 @@ import { NFT, nfts } from "./nft-data";
 
 function LiveSale() {
   return (
-    <div className="my-4 md:my-12">
+    <div className="my-4 md:my-12 mx-2">
       <h1 className="text-bold font-body font-bold text-primary text-xl md:text-2xl mb-3">
         Live Sale
       </h1>
