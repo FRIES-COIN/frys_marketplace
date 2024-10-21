@@ -10,7 +10,7 @@ function App() {
       <header>
         <Navbar />
       </header>
-      <main className="flex-grow py-4 px-1">
+      <main className="flex-grow">
         <Hero />
         <LiveSale />
       </main>
