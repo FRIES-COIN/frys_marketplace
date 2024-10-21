@@ -1,13 +1,13 @@
 import { FaRocket, FaUser } from "react-icons/fa";
 import avatar from "../../../public/avatar1.svg";
-import Logo from '../Footer/Logo.svg'
+import Logo from "../Footer/Logo.svg";
 import { useState } from "react";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   return (
     // <nav className="w-full flex items-center justify-between py-2 font-body bg-gradient-to-r from-[#0C0C0C] to-transparent z-0">
-    <nav className="w-full flex items-center justify-between py-2 font-body bg-transparent z-0">
+    <div className="w-full flex items-center justify-between py-2 font-body bg-transparent z-0">
       <div className="flex items-center">
         <img
           src="../../logo.png"
@@ -50,7 +50,7 @@ function Navbar() {
           <FaRocket />
         </button>
       </div>
-    </nav>
+    </div>
   );
 }
 
