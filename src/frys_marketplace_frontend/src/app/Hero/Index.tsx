@@ -16,29 +16,29 @@ function Hero() {
   return (
     <div className="relative flex flex-col md:flex-row items-center bg-[#0C0C0C] min-h-screen overflow-hidden">
       {/* Left content */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="z-10 px-6 md:pl-8 py-8 md:py-16 w-full md:max-w-2xl flex flex-col items-center md:items-start justify-center md:justify-end text-center md:text-left"
       >
         <h1 className="text-4xl md:text-6xl font-bold mb-6 md:mb-8 leading-tight">
-          <span className="text-[#FFA503]">Discover</span>{" "}
-          <span className="text-white">unique NFTs </span>
-          <span className="text-white">and cook your way to </span>
-          <span className="text-white">the top.</span>
+          <span className="text-[#FFA503] font-body">Discover</span>{" "}
+          <span className="text-white font-title">unique NFTs </span>
+          <span className="text-white font-title">and cook your way to </span>
+          <span className="text-white font-title">the top.</span>
         </h1>
-        <motion.button 
+        <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="bg-[#FFA503] text-white font-semibold py-3 px-10 md:px-16 rounded-lg text-lg md:text-xl uppercase tracking-wide shadow-[0_0_20px_rgba(255,165,3,0.7)] hover:shadow-[0_0_30px_rgba(255,165,3,0.9)] transition-all duration-300"
+          className="bg-[#FFA503] text-white font-semibold font-body py-3 px-10 md:px-16 rounded-lg text-lg md:text-xl uppercase tracking-wide shadow-[0_0_20px_rgba(255,165,3,0.7)] hover:shadow-[0_0_30px_rgba(255,165,3,0.9)] transition-all duration-300"
         >
           explore
         </motion.button>
       </motion.div>
 
       {/* Right image */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
