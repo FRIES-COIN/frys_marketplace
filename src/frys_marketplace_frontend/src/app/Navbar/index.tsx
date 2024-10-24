@@ -2,6 +2,7 @@ import { FaRocket, FaUser } from "react-icons/fa";
 import avatar from "../../../public/avatar1.svg";
 import Logo from "../Footer/Logo.svg";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,18 +22,18 @@ function Navbar() {
         </div>
 
         <div className="md:flex items-center space-x-8 hidden">
-          <a
-            href="#"
+          <Link
+            to="/"
             className="text-white font-semibold font-body text-[20.96px] leading-[24.84px] w-[131px] h-[25px] hover:text-[#ffa503] hover:text-[22.96px] transition-all duration-500"
           >
             COLLECTION
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            to="/mint"
             className="text-white font-semibold font-body text-[20.96px] leading-[24.84px] w-[131px] h-[25px] hover:text-[#ffa503] hover:text-[22.96px] transition-all duration-500"
           >
             MINT
-          </a>
+          </Link>
         </div>
 
         <div className="flex items-center space-x-4 mx-2">
