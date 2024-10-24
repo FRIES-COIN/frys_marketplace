@@ -12,7 +12,7 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/collections" element={<Collection />} />
           <Route path="/mint" element={<Mint />} />
-          <Route path="/profile:id" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
       </BrowserRouter>

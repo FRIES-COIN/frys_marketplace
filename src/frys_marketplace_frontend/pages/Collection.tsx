@@ -1,9 +1,14 @@
 import React from "react";
+import CollectionsPage from "../src/app/collections";
+import Navbar from "../src/app/Navbar";
 
 function Collection() {
   return (
     <div>
-      <h1>Collection page</h1>
+      <Navbar />
+      <div className="">
+        <CollectionsPage />
+      </div>
     </div>
   );
 }
