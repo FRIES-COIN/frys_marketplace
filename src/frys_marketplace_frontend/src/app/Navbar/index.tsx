@@ -10,15 +10,17 @@ function Navbar() {
     <nav className="w-full md:mt-2 mx-2 flex items-center justify-between py-2 font-body bg-gradient-to-r from-[#0C0C0C] to-transparent z-0">
       <div className="w-full flex items-center justify-between py-2 font-body bg-transparent z-0">
         <div className="flex items-center">
-          <img
-            src="../../logo.png"
-            alt="Logo"
-            width={56}
-            height={56}
-            className=""
-            onClick={() => setIsOpen(!isOpen)}
-          />
-          <Logo />
+          <Link to="/" className="flex items-center">
+            <img
+              src="../../logo.png"
+              alt="Logo"
+              width={56}
+              height={56}
+              className=""
+              onClick={() => setIsOpen(!isOpen)}
+            />
+            <Logo />
+          </Link>
         </div>
 
         <div className="md:flex items-center space-x-8 hidden">

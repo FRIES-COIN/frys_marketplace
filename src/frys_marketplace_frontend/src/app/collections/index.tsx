@@ -9,12 +9,9 @@ import {
 } from "@tabler/icons-react";
 import React from "react";
 
-function CollectionsPage() {
+function CollectionsHeader() {
   return (
-    <div className="bg-primary max-w-[96rem] mx-auto my-0 rounded-3xl px-4 pt-6">
-      <h1 className="font-bold font-body md:text-3xl text-2xl mb-6">
-        Featured NFTs
-      </h1>
+    <section>
       <div className="flex flex-col md:flex-row items-center justify-between mt-12 font-title">
         <div className="flex items-center md:gap-1 lg:gap-3 ">
           <div className="bg-white rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1">
@@ -36,7 +33,7 @@ function CollectionsPage() {
             <h1>Trading Card</h1>
           </div>
         </div>
-        <div className="flex items-center md:justify-between justify-center bg-black text-white md:py-4 py-2 px-4 my-4 rounded-[52px] w-full md:w-[10%]">
+        <div className="flex items-center md:justify-between justify-center cursor-pointer bg-black text-white md:py-4 py-2 px-4 my-4 rounded-[52px] w-full md:w-[10%]">
           <div className="flex items-center gap-1">
             <IconFilterSearch />
             <h1 className="font-title text-lg">Filter</h1>
@@ -72,6 +69,17 @@ function CollectionsPage() {
           <IconChevronDown />
         </div>
       </div>
+    </section>
+  );
+}
+
+function CollectionsPage() {
+  return (
+    <div className="bg-primary max-w-[96rem] mx-auto my-0 rounded-3xl px-4 pt-6">
+      <h1 className="font-bold font-body md:text-3xl text-2xl mb-6">
+        Featured NFTs
+      </h1>
+      <CollectionsHeader />
     </div>
   );
 }
