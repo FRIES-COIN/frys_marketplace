@@ -14,7 +14,9 @@ function Landing() {
         <Hero />
         <LiveSale />
       </main>
-      <Footer />
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }

@@ -8,6 +8,7 @@ import {
   IconWallet,
 } from "@tabler/icons-react";
 import React from "react";
+import Footer from "../Footer";
 
 function CollectionsHeader() {
   return (

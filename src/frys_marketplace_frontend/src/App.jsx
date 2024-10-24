@@ -3,6 +3,7 @@ import Landing from "../pages/Landing";
 import Collection from "../pages/Collection";
 import Mint from "../pages/Mint";
 import Profile from "../pages/Profile";
+import Footer from "./app/Footer";
 
 function App() {
   return (

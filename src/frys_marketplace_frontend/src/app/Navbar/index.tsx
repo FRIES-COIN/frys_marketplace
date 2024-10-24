@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <nav className="w-full md:mt-2 mx-2 flex items-center justify-between py-2 font-body bg-gradient-to-r from-[#0C0C0C] to-transparent z-0">
+    <nav className="w-full md:mt-2 mx-2 lg:px-6 flex items-center justify-between py-2 font-body bg-gradient-to-r from-[#0C0C0C] to-transparent z-0">
       <div className="w-full flex items-center justify-between py-2 font-body bg-transparent z-0">
         <div className="flex items-center">
           <Link to="/" className="flex items-center">
