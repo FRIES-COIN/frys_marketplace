@@ -1,25 +1,22 @@
-import { TailwindcssButtons } from "./app/Button";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Landing from "../pages/Landing";
+import Collection from "../pages/Collection";
+import Mint from "../pages/Mint";
+import Profile from "../pages/Profile";
 import Footer from "./app/Footer";
-import Hero from "./app/Hero/Index";
-import LiveSale from "./app/Live_Sale";
-import Navbar from "./app/Navbar";
-import MintPage from "./app/Mint";
-import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen bg-background text-white">
-      <header>
-        <Navbar />
-      </header>
-      <main className="flex-grow">
+    <div>
+      <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Hero />} />
-          <Route path="/live-sale" element={<LiveSale />} />
-          <Route path="/mint" element={<MintPage />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/collections" element={<Collection />} />
+          <Route path="/mint" element={<Mint />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
-      </main>
-      <Footer />
+      </BrowserRouter>
     </div>
   );
 }

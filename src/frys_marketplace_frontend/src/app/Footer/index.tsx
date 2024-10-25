@@ -62,17 +62,19 @@ const Footer = () => {
             Get exclusive promotions & updates straight to your inbox.
           </p>
           <form className="flex flex-col sm:flex-row items-center sm:items-start mt-4 space-y-2 sm:space-y-0">
-            <input
-              type="email"
-              placeholder="Enter your email here"
-              className="px-4 py-2 font-title rounded-md sm:rounded-l-md sm:rounded-r-none bg-gray-800 text-white border-none outline-none focus:ring-2 focus:ring-yellow-400 w-full sm:w-auto"
-            />
-            <button
-              type="submit"
-              className="bg-yellow-400 text-black px-4 py-2 rounded-md font-body sm:rounded-r-md sm:rounded-l-none hover:bg-yellow-500 transition-colors w-full sm:w-auto"
-            >
-              Subscribe
-            </button>
+            <div className="bg-gray-800 rounded-lg">
+              <input
+                type="email"
+                placeholder="Enter your email here"
+                className="px-4 py-[0.7rem] h-full font-body rounded-lg bg-inherit text-white border-none outline-none focus:ring-2 focus:ring-yellow-400 w-full sm:w-auto"
+              />
+              <button
+                type="submit"
+                className="bg-primary text-black px-4 py-[0.7rem] rounded-xl font-body w-full sm:w-auto"
+              >
+                Subscribe
+              </button>
+            </div>
           </form>
         </div>
       </div>
