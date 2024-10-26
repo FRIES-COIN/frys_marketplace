@@ -7,9 +7,10 @@ function Collection() {
   return (
     <div>
       <Navbar />
-      <div className="">
+      <div className="mb-8">
         <CollectionsPage />
       </div>
+      <Footer />
     </div>
   );
 }
