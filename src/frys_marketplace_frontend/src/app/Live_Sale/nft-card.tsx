@@ -3,8 +3,27 @@ import { cn } from "../../../lib/utils";
 import { NFT } from "./nft-data";
 import gif from "../../../public/gif.gif";
 import { AvatarsCard } from "./avatar-card";
+import { connectPlug, processPayment } from '../Wallet/wallet-service';
 
 function NFTCard({ nft }: { nft: NFT }) {
+  const handleBuyClick = async () => {
+    try {
+      // First ensure wallet is connected
+      const connected = await connectPlug();
+      if (!connected) {
+        console.log('Please connect your wallet first');
+        return;
+      }
+
+      // Process the payment
+      const result = await processPayment(nft.id.toString(), nft.price);
+      console.log(nft.id.toString(), nft.price);
+      console.log('Purchase successful:', result);
+    } catch (error) {
+      console.error('Purchase failed:', error);
+    }
+  };
+
   return (
     <div className="md:max-w-sm max-w-xl w-full my-2 h-[400px]">
       <div
@@ -36,7 +55,10 @@ function NFTCard({ nft }: { nft: NFT }) {
               <p className="text-white text-xl font-bold font-body text-center my-2">
                 {nft.price} ICP
               </p>
-              <button className="border-primary border-[2px] text-white rounded-xl py-2 px-8 font-body font-semibold">
+              <button 
+                onClick={handleBuyClick}
+                className="border-primary border-[2px] text-white rounded-xl py-2 px-8 font-body font-semibold hover:bg-primary transition-colors"
+              >
                 Buy
               </button>
             </div>
