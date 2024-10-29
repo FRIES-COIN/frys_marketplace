@@ -17,6 +17,7 @@ function NFTCard({ nft }: { nft: NFT }) {
 
       // Process the payment
       const result = await processPayment(nft.id.toString(), nft.price);
+      console.log(nft.id.toString(), nft.price);
       console.log('Purchase successful:', result);
     } catch (error) {
       console.error('Purchase failed:', error);

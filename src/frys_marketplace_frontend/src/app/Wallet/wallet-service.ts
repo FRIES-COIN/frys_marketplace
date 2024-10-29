@@ -72,20 +72,13 @@ export const initiatePayment = async (recipientAddress: string, amount: number) 
   }
 };
 
-
 export const processPayment = async (id: string, price: number) => {
   try {
-    // First handle the Plug wallet transfer
-    const plugTransfer = await window.ic.plug.requestTransfer({
-      to: import.meta.env.VITE_CANISTER_ID_FRYS_MARKETPLACE_BACKEND,
-      amount: price,
-    });
-
-    // Then call the backend payment function
     const result = await frys_marketplace_backend.payment(id, price);
+
     return result;
   } catch (error) {
-    console.error('Payment processing failed:', error);
+    console.log('Payment params:', { id, price });
     throw error;
   }
 };
