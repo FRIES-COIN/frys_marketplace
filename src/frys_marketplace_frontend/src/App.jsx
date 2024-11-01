@@ -4,6 +4,7 @@ import Collection from "../pages/Collection";
 import Mint from "../pages/Mint";
 import Profile from "../pages/Profile";
 import Footer from "./app/Footer";
+import Error from "../pages/Error";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
           <Route path="/collections" element={<Collection />} />
           <Route path="/mint" element={<Mint />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="*" element={<h1>Not Found</h1>} />
+          <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>
     </div>
