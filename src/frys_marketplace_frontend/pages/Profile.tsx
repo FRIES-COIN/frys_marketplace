@@ -6,7 +6,7 @@ function Profile() {
   return (
     <div>
       <Navbar />
-      <div className="max-w-[96rem] mx-auto my-0">
+      <div className=" mx-auto my-0">
         <Sidebar />
       </div>
       <Footer />

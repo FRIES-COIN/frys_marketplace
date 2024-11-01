@@ -2,6 +2,7 @@ import {
   IconArtboard,
   IconArtboardFilled,
   IconLogout,
+  IconMenu2,
   IconSettingsFilled,
   IconUserFilled,
   IconWallet,
@@ -13,6 +14,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../components/ui/select";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../../../components/ui/drawer";
 import { Input } from "../../../components/ui/input";
 import { CarouselSize } from "./nfts-owned";
 import { useState } from "react";
@@ -27,12 +38,12 @@ import { Button } from "../../../components/ui/button";
 //NFT TAB COMPONENT
 function NFTTab() {
   return (
-    <div className="bg-primary rounded-md h-full">
+    <div className="bg-primary rounded-md h-full w-full max-w-7xl overflow-hidden mx-4">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold font-body px-2 mt-12 mx-2">
           Overview
         </h1>
-        <button className="bg-black rounded-[52px] px-6 py-4 text-white font-body mt-12 mx-2">
+        <button className="bg-black rounded-[52px] px-6 py-4 text-white font-body mt-12 mx-6">
           View all
         </button>
       </div>
@@ -44,10 +55,10 @@ function NFTTab() {
 //WALLET TAB COMPONENT
 function WalletTab() {
   return (
-    <div className="bg-[#151415] rounded-md h-full">
+    <div className="bg-[#151415] rounded-md h-full px-2">
       <div className="text-white font-body w-full pt-4 flex items-center justify-center">
         <Select>
-          <SelectTrigger className="w-1/4 border-none bg-[#202020] h-16 -mr-2">
+          <SelectTrigger className="md:w-1/4 border-none bg-[#202020] h-16 -mr-2">
             <SelectValue
               placeholder="Choose token"
               className="flex items-center gap-2 placeholder:text-gray-500"
@@ -106,30 +117,33 @@ function WalletTab() {
         </Select>
         <Input
           placeholder="0.0000"
-          className="w-1/4 border-none bg-[#202020] h-16 focus:ring-0 focus:border-0 focus:outline-none"
+          className="md:w-1/4 border-none bg-[#202020] h-16 focus:ring-0 focus:border-0 focus:outline-none"
         />
       </div>
       <div>
-        <img src={qr} className="w-[20%] mx-auto mt-8 rounded-md" />
+        <img
+          src={qr}
+          className="xl:w-[15%] md:w-[20%] h-56 md:h-auto mx-auto mt-8 rounded-md"
+        />
       </div>
       <div className="w-full flex items-center justify-center mt-4">
         <Input
           placeholder="Enter deposit address"
-          className="w-1/2 border-none bg-[#202020] text-white h-16 focus:ring-0 focus:border-0 focus:outline-none"
+          className="w-1/2 border-none bg-[#202020] text-white md:h-16 h-10 focus:ring-0 focus:border-0 focus:outline-none"
         />
       </div>
       <div className="flex items-center justify-center mt-4">
-        <p className="text-center font-body text-xs leading-relaxed text-gray-500 w-1/2">
+        <p className="text-center font-body text-xs leading-relaxed text-gray-500 md:w-1/2">
           Always start with small amounts of transactions whether you are newbie
           or an expert and be on the look out for phishing scams going on in the
           crypto industry.
         </p>
       </div>
       <div className="flex items-center justify-between">
-        <Button className="bg-primary text-white w-1/4 mx-auto mt-8">
+        <Button className="bg-primary text-white w-1/4 mx-auto mt-4 font-body">
           Send
         </Button>
-        <Button className="bg-primary text-white w-1/4 mx-auto mt-8">
+        <Button className="bg-primary text-white w-1/4 mx-auto mt-4 font-body">
           Receive
         </Button>
       </div>
@@ -140,8 +154,49 @@ function WalletTab() {
 function Sidebar() {
   const [tab, setTab] = useState<Tab>("nft");
   return (
-    <div className="flex items-center h-[80vh] gap-8">
-      <nav className="flex flex-col justify-between h-3/4 flex-2">
+    <div className="md:flex items-center h-[80vh] gap-8">
+      <div className="md:hidden flex items-center justify-between w-full overflow-scrolls px-2 mb-4">
+        <div
+          className={`flex items-center gap-4 text-sm cursor-pointer py-2 px-4 rounded-md ${
+            tab === "nft" ? "bg-primary" : ""
+          }`}
+          onClick={() => setTab("nft")}
+        >
+          <IconArtboardFilled size={14} className="text-white" />
+          <h1 className="text-white font-body">NFTs</h1>
+        </div>
+        <div
+          className={`flex items-center gap-4 text-sm cursor-pointer py-2 px-4 rounded-md ${
+            tab === "wallet" ? "bg-primary" : ""
+          }`}
+          onClick={() => setTab("wallet")}
+        >
+          <IconWallet size={14} className="text-white" />
+          <h1 className="text-white font-body">Wallet</h1>
+        </div>
+        <div
+          className={`flex items-center text-sm gap-4 cursor-pointer py-2 px-4 rounded-md ${
+            tab === "settings" ? "bg-primary" : ""
+          }`}
+          onClick={() => setTab("settings")}
+        >
+          <IconSettingsFilled size={14} className="text-white" />
+          <h1 className="text-white font-body">Settings</h1>
+        </div>
+        <div
+          className={`flex items-center gap-4 text-sm cursor-pointer py-2 px-4 rounded-md ${
+            tab === "profile" ? "bg-primary" : ""
+          }`}
+          onClick={() => setTab("profile")}
+        >
+          <IconUserFilled size={14} className="text-white" />
+          <h1 className="text-white font-body transition-all duration-150">
+            Profile
+          </h1>
+        </div>
+      </div>
+      {/* hidden in smaller screen */}
+      <nav className="md:flex flex-col justify-between h-3/4 flex-2 hidden">
         <section className="flex flex-col gap-8">
           <div
             className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
@@ -193,8 +248,10 @@ function Sidebar() {
           </div>
         </section>
       </nav>
-      <aside className="flex-1 h-3/4">
-        <WalletTab />
+      <aside className="flex-1 h-3/4 overflow-hidden">
+        {
+          tab === "nft" ? <NFTTab /> : tab === "wallet" ? <WalletTab /> : null //to be continued with settings and profile tabs
+        }
       </aside>
     </div>
   );

@@ -45,8 +45,8 @@ export function CarouselSize() {
         ))}
       </CarouselContent>
       <div className="flex items-center justify-between bg-white w-full">
-        <CarouselNext className="text-white border-none mx-4 px-2 py-1 mt-4" />
-        <CarouselPrevious className="text-white border-none mx-4 px-2 py-1 right-0 mt-4" />
+        <CarouselNext className="text-white border-none mx-4 px-2 py-1 mt-4 left-10" />
+        <CarouselPrevious className="text-white border-none mx-4 px-2 py-1 left-0 mt-4" />
       </div>
     </Carousel>
   );

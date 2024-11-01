@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../src/app/Navbar";
 import MintPage from "../src/app/mint";
+import Footer from "../src/app/Footer";
 
 function Mint() {
   return (
@@ -9,6 +10,7 @@ function Mint() {
       <section className="lg:px-12 md:px-4">
         <MintPage />
       </section>
+      <Footer />
     </div>
   );
 }

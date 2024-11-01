@@ -216,7 +216,7 @@ const CarouselPrevious = React.forwardRef<
       {...props}
     >
       <ArrowLeft className="h-4 w-4" />
-      <span className="sr-only">Previous</span>
+      {/* <span className="sr-only">Previous</span> */}
     </Button>
   );
 });
@@ -245,7 +245,9 @@ const CarouselNext = React.forwardRef<
       {...props}
     >
       <ArrowRight className="h-4 w-4" />
-      <span className="sr-only">Next</span>
+      {/* <span className="sr-only font-bold flex items-center justify-center">
+        {">"}
+      </span> */}
     </Button>
   );
 });
