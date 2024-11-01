@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Logo,
   DiscordIcon,
@@ -6,8 +6,16 @@ import {
   TwitterIcon,
   InstagramIcon,
 } from "./Icons";
+import { connectPlug } from '../Wallet/wallet-service';
 
 const Footer = () => {
+  const [isConnected, setIsConnected] = useState(false);
+
+  const handleWalletConnect = async () => {
+    const connected = await connectPlug();
+    setIsConnected(connected);
+  };
+
   return (
     <footer className="bg-black text-yellow-400 py-10 px-6 mt-auto">
       <div className="container mx-auto flex flex-col space-y-8 lg:space-y-0 lg:flex-row lg:justify-between lg:items-start">
@@ -49,8 +57,11 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-white">
-                Connect a wallet
+              <a 
+                onClick={handleWalletConnect} 
+                className="hover:text-white cursor-pointer"
+              >
+                {isConnected ? 'Wallet Connected' : 'Connect a wallet'}
               </a>
             </li>
           </ul>
@@ -80,7 +91,7 @@ const Footer = () => {
       </div>
 
       <div className="border-t border-gray-700 mt-10 pt-4 text-gray-500 text-sm text-center font-body">
-        &copy; FRYS COIN NFT MARKETPLACE. All rights reserved.
+        © FRYS COIN NFT MARKETPLACE. All rights reserved.
       </div>
     </footer>
   );

@@ -2,5 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 body {
-    background-color: "#0d0c0c";
+  background-color: "#0d0c0c";
+}
+
+.custom-shape-divider-top-1729962728 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-top-1729962728 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 130px;
+}
+
+.custom-shape-divider-top-1729962728 .shape-fill {
+  fill: #ffffff;
 }
