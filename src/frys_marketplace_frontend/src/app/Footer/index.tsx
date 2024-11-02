@@ -6,7 +6,7 @@ import {
   TwitterIcon,
   InstagramIcon,
 } from "./Icons";
-import { connectPlug } from '../Wallet/wallet-service';
+import { connectPlug } from "../Wallet/wallet-service";
 
 const Footer = () => {
   const [isConnected, setIsConnected] = useState(false);
@@ -57,11 +57,11 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a 
-                onClick={handleWalletConnect} 
+              <a
+                onClick={handleWalletConnect}
                 className="hover:text-white cursor-pointer"
               >
-                {isConnected ? 'Wallet Connected' : 'Connect a wallet'}
+                {isConnected ? "Wallet Connected" : "Connect a wallet"}
               </a>
             </li>
           </ul>
@@ -72,7 +72,7 @@ const Footer = () => {
           <p className="text-gray-400 mt-1 font-body text-sm">
             Get exclusive promotions & updates straight to your inbox.
           </p>
-          <form className="flex flex-col sm:flex-row items-center sm:items-start mt-4 space-y-2 sm:space-y-0">
+          <form className="flex flex-col sm:flex-row items-center sm:items-start justify-center mt-4 space-y-2 sm:space-y-0">
             <div className="bg-gray-800 rounded-lg">
               <input
                 type="email"
