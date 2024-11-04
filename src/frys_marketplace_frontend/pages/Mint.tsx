@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../src/app/Navbar";
-import MintPage from "../src/app/mint";
+import MintPage from "../src/app/Mint";
 import Footer from "../src/app/Footer";
 
 function Mint() {

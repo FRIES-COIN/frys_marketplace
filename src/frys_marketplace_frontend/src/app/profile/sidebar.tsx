@@ -1,3 +1,5 @@
+import { IconLink } from "@tabler/icons-react";
+import { IconCamera } from "@tabler/icons-react";
 import {
   IconArtboard,
   IconArtboardFilled,
@@ -151,10 +153,238 @@ function WalletTab() {
   );
 }
 
+//settings tab component
+function SettingsTab() {
+  return (
+    <div className="bg-[#151415] rounded-md h-full px-2 py-4">
+      <h1 className="text-white font-body text-2xl">Settings</h1>
+      <div className="mt-4">
+        <Input
+          placeholder="Change username"
+          className="border-none bg-[#202020] h-12 focus:ring-0"
+        />
+        <Button className="bg-primary text-white w-full mt-4">
+          Update Username
+        </Button>
+      </div>
+      <div className="mt-4">
+        <Input
+          placeholder="Change email"
+          className="border-none bg-[#202020] h-12 focus:ring-0"
+        />
+        <Button className="bg-primary text-white w-full mt-4">
+          Update Email
+        </Button>
+      </div>
+      <div className="mt-4">
+        <Input
+          placeholder="Change password"
+          type="password"
+          className="border-none bg-[#202020] h-12 focus:ring-0"
+        />
+        <Button className="bg-primary text-white w-full mt-4">
+          Update Password
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+//profile tab component
+function ProfileTab() {
+  const [isEditing, setIsEditing] = useState(false);
+
+  return (
+    <div className="bg-[#FFA503] rounded-md h-full px-5 pb-26 pt-[120px] m-5">
+      <div className="flex items-center justify-between mb-6 p-11">
+        <div className="flex items-center gap-4">
+          <div className="relative w-20 h-20">
+            <img
+              src="../../../../public/avatar1.svg"
+              alt="Profile"
+              className="w-full h-full rounded-full object-cover"
+            />
+            <label
+              htmlFor="profile-upload"
+              className="absolute bottom-0 right-0 bg-[#4182F9] p-2 rounded-full cursor-pointer"
+            >
+              <IconCamera size={16} className="text-white" />
+            </label>
+            <input
+              type="file"
+              id="profile-upload"
+              className="hidden"
+              accept="image/*"
+            />
+          </div>
+          <div>
+            <p className="text-black-500 font-medium font-body">Alexa Rawles</p>
+            <p className="text-gray-600 font-body">alexarawles@gmail.com</p>
+          </div>
+        </div>
+        <button
+          className="bg-[#4182F9] text-white px-4 py-2 rounded-md transform transition-transform hover:scale-110 font-body h-[44px] w-[93px]"
+          onClick={() => setIsEditing(!isEditing)}
+        >
+          {isEditing ? "Save" : "Edit"}
+        </button>
+      </div>
+
+      <div className="flex flex-wrap gap-4 p-5">
+        <div className="space-y-4 flex-1 min-w-[280px]">
+          <div className="flex flex-col">
+            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body">
+              Full Name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your full name"
+              className="w-full h-[52px] bg-[#F9F9F9] rounded-[8px] px-4 text-[#000000] placeholder-gray-500 font-body"
+              disabled={!isEditing}
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body">
+              About
+            </label>
+            <input
+              type="text"
+              placeholder="Tell us about yourself"
+              className="w-full h-[52px] bg-[#F9F9F9] rounded-[8px] px-4 text-[#000000] placeholder-gray-500 font-body"
+              disabled={!isEditing}
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label className="text-[#000000] font-[400] text-[16px] leading-[24px] mb-1 font-body">
+              Language
+            </label>
+            <select
+              className="w-full h-[52px] bg-[#F9F9F9] rounded-[8px] px-4 text-gray-500 placeholder-gray-500 font-body appearance-none cursor-pointer bg-no-repeat bg-right pr-16"
+              style={{
+                backgroundImage:
+                  "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
+                backgroundPosition: "right 16px center",
+              }}
+              disabled={!isEditing}
+            >
+              <option value="">Language</option>
+              <option value="en">English</option>
+              <option value="es">Spanish</option>
+              <option value="fr">French</option>
+              <option value="de">German</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="space-y-4 flex-1 min-w-[280px]">
+          <div className="flex flex-col">
+            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body">
+              Nick Name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your nickname"
+              className="w-full h-[52px] bg-[#F9F9F9] rounded-[8px] px-4 text-[#000000] placeholder-gray-500 font-body"
+              disabled={!isEditing}
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body">
+              Country
+            </label>
+            <select
+              className="w-full h-[52px] bg-[#F9F9F9] rounded-[8px] px-4 text-gray-500 placeholder-gray-500 font-body appearance-none cursor-pointer bg-no-repeat bg-right pr-16"
+              style={{
+                backgroundImage:
+                  "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
+                backgroundPosition: "right 16px center",
+              }}
+              disabled={!isEditing}
+            >
+              <option value="">Country</option>
+              <option value="us">United States</option>
+              <option value="uk">United Kingdom</option>
+              <option value="ca">Canada</option>
+              <option value="au">Australia</option>
+            </select>
+          </div>
+
+          <div className="flex flex-col">
+            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body">
+              Time Zone
+            </label>
+            <select
+              className="w-full h-[52px] bg-[#F9F9F9] rounded-[8px] px-4 text-gray-500 placeholder-gray-500 font-body appearance-none cursor-pointer bg-no-repeat bg-right pr-16"
+              style={{
+                backgroundImage:
+                  "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
+                backgroundPosition: "right 16px center",
+              }}
+              disabled={!isEditing}
+            >
+              <option value="">Timezone</option>
+              <option value="pst">Pacific Time (PAT)</option>
+              <option value="est">Eastern Time (EAT)</option>
+              <option value="gmt">GMT</option>
+              <option value="ist">IST</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex justify-center mt-[58px] p-5">
+        <div className="space-y-2 w-[472.33px]">
+          <h3 className="text-black-600 text-[16px] leading-[21px] font-body mb-2">
+            Social Links
+          </h3>
+          <div className="flex items-center gap-2">
+            <IconLink size={14} className="text-gray-500" />
+            <button
+              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center"
+              disabled={!isEditing}
+            >
+              <span className="text-[14px] font-body">LinkedIn</span>
+            </button>
+          </div>
+          <div className="flex items-center gap-2">
+            <IconLink size={14} className="text-gray-500" />
+            <button
+              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center"
+              disabled={!isEditing}
+            >
+              <span className="text-[14px] font-body">Twitter</span>
+            </button>
+          </div>
+          <div className="flex items-center gap-2">
+            <IconLink size={14} className="text-gray-500" />
+            <button
+              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center"
+              disabled={!isEditing}
+            >
+              <span className="text-[14px] font-body">OpenChat</span>
+            </button>
+          </div>
+          <div className="flex items-center gap-2">
+            <IconLink size={14} className="text-gray-500" />
+            <button
+              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center"
+              disabled={!isEditing}
+            >
+              <span className="text-[14px] font-body">Telegram</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 function Sidebar() {
   const [tab, setTab] = useState<Tab>("nft");
   return (
-    <div className="md:flex items-center h-[80vh] gap-8">
+    <div className="md:flex items-center h-[200vh] gap-8">
       <div className="md:hidden flex items-center justify-between w-full overflow-scrolls px-2 mb-4">
         <div
           className={`flex items-center gap-4 text-sm cursor-pointer py-2 px-4 rounded-md ${
@@ -250,7 +480,15 @@ function Sidebar() {
       </nav>
       <aside className="flex-1 h-3/4 overflow-hidden">
         {
-          tab === "nft" ? <NFTTab /> : tab === "wallet" ? <WalletTab /> : null //to be continued with settings and profile tabs
+          tab === "nft" ? (
+            <NFTTab />
+          ) : tab === "wallet" ? (
+            <WalletTab />
+          ) : tab === "settings" ? (
+            <SettingsTab />
+          ) : tab === "profile" ? (
+            <ProfileTab />
+          ) : null //to be continued with settings and profile tabs
         }
       </aside>
     </div>
