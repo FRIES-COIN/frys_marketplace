@@ -35,7 +35,7 @@ function Navbar() {
           </Link>
         </div>
 
-        <div className="md:flex items-center space-x-8 hidden">
+        <div className="md:flex items-center space-x-8 hidden bg-black">
           <Link
             to="/collections"
             className="text-white font-semibold font-body text-[20.96px] leading-[24.84px] w-[131px] h-[25px] hover:text-[#ffa503] hover:text-[22.96px] transition-all duration-500"
@@ -49,15 +49,6 @@ function Navbar() {
             MINT
           </Link>
         </div>
-
-        <div className="px-2">
-          <IconMenu2
-            size={44}
-            className="md:hidden text-white"
-            onClick={() => setIsOpen(!isOpen)}
-          />
-        </div>
-
         <div className="md:flex hidden items-center space-x-4 mx-2">
           <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
             <Link to="/profile">
@@ -75,6 +66,13 @@ function Navbar() {
             <FaRocket />
           </button>
         </div>
+      </div>
+      <div className="px-2 bg-black">
+        <IconMenu2
+          size={44}
+          className="md:hidden text-white"
+          onClick={() => setIsOpen(!isOpen)}
+        />
       </div>
       <div
         className={`backdrop-blur-lg h-screen w-full md:hidden flex flex-col fixed top-0 left-0 z-50 transform transition-transform duration-500 ${

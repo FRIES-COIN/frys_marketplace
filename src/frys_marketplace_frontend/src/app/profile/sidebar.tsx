@@ -196,7 +196,7 @@ function ProfileTab() {
 
   return (
     <div className="bg-[#FFA503] ml-2 rounded-md p-2 md:px-5 md:pb-26 md:pt-[120px] md:m-5">
-      <div className="flex items-center justify-between mb-6 md:p-11">
+      <div className="flex items-center justify-between mb-2 md:p-11">
         <div className="flex items-center gap-4">
           <div className="relative md:w-20 md:h-20 w-14 h-14">
             <img
