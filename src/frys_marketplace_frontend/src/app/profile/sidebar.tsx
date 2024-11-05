@@ -248,10 +248,9 @@ function ProfileTab() {
             <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body">
               About
             </label>
-            <input
-              type="text"
+            <textarea
               placeholder="Tell us about yourself"
-              className="w-full h-[52px] bg-[#F9F9F9] rounded-[8px] px-4 text-[#000000] placeholder-gray-500 font-body"
+              className="w-full h-[52px] bg-[#F9F9F9] rounded-[8px] px-4 text-[#000000] pt-2 placeholder-gray-500 font-body"
               disabled={!isEditing}
             />
           </div>
@@ -384,7 +383,7 @@ function ProfileTab() {
 function Sidebar() {
   const [tab, setTab] = useState<Tab>("nft");
   return (
-    <div className="md:flex items-center h-[200vh] gap-8">
+    <div className="md:flex h-screen gap-8">
       <div className="md:hidden flex items-center justify-between w-full overflow-scrolls px-2 mb-4">
         <div
           className={`flex items-center gap-4 text-sm cursor-pointer py-2 px-4 rounded-md ${
@@ -426,7 +425,7 @@ function Sidebar() {
         </div>
       </div>
       {/* hidden in smaller screen */}
-      <nav className="md:flex flex-col justify-between h-3/4 flex-2 hidden">
+      <nav className="md:flex pt-12 flex-col justify-between h-3/4 flex-2 hidden">
         <section className="flex flex-col gap-8">
           <div
             className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${

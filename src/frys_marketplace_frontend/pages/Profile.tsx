@@ -6,7 +6,7 @@ function Profile() {
   return (
     <div>
       <Navbar />
-      <div className=" mx-auto my-0">
+      <div className="md:mt-12 mx-auto my-0">
         <Sidebar />
       </div>
       <Footer />
