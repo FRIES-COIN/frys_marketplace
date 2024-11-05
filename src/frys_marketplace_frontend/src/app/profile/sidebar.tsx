@@ -1,5 +1,9 @@
 import { IconLink } from "@tabler/icons-react";
 import { IconCamera } from "@tabler/icons-react";
+import { IconToggleLeftFilled } from "@tabler/icons-react";
+import { IconCircle } from "@tabler/icons-react";
+
+
 import {
   IconArtboard,
   IconArtboardFilled,
@@ -153,51 +157,165 @@ function WalletTab() {
   );
 }
 
-//settings tab component
+//SETTINGS TAB COMPONENT
 function SettingsTab() {
   return (
-    <div className="bg-[#151415] rounded-md h-full px-2 py-4">
-      <h1 className="text-white font-body text-2xl">Settings</h1>
-      <div className="mt-4">
-        <Input
-          placeholder="Change username"
-          className="border-none bg-[#202020] h-12 focus:ring-0"
-        />
-        <Button className="bg-primary text-white w-full mt-4">
-          Update Username
-        </Button>
-      </div>
-      <div className="mt-4">
-        <Input
-          placeholder="Change email"
-          className="border-none bg-[#202020] h-12 focus:ring-0"
-        />
-        <Button className="bg-primary text-white w-full mt-4">
-          Update Email
-        </Button>
-      </div>
-      <div className="mt-4">
-        <Input
-          placeholder="Change password"
-          type="password"
-          className="border-none bg-[#202020] h-12 focus:ring-0"
-        />
-        <Button className="bg-primary text-white w-full mt-4">
-          Update Password
-        </Button>
+    <div className="bg-[#050505] rounded-md h-full px-2 py-4">
+      <div className="flex gap-8">
+        <div className="flex-1">
+          <div className="mb-8">
+            <h2 className="text-white font-body text-2xl mb-4">Account</h2>
+            <div className="space-y-4">
+              <div className="flex items-center gap-4 bg-[#FFA503] p-4 rounded">
+                <div className="flex-1">
+                  <label className="text-white mb-2 block font-body">
+                    Username
+                  </label>
+
+                  <label className="text-[#9CB3C9] mb-2 block font-body">
+                    @n
+                  </label>
+                </div>
+                <button
+                  className="px-4 py-2 rounded text-white font-body"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #E052A0 0%, #F15C41 100%)",
+                  }}
+                >
+                  Change
+                </button>
+              </div>
+              <div className="flex items-center gap-4 bg-[#FFA503] p-4 rounded">
+                <div className="flex-1">
+                  <label className="text-white mb-2 block font-body">
+                    Email Address
+                  </label>
+
+                  <label className="text-[#9CB3C9] mb-2 block font-body">
+                    alexarawles@gmail.com
+                  </label>
+                </div>
+                <button
+                  className="px-4 py-2 rounded text-white font-body"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #E052A0 0%, #F15C41 100%)",
+                  }}
+                >
+                  Change
+                </button>
+              </div>
+              <div className="flex items-center gap-4 bg-[#FFA503] p-4 rounded">
+                <div className="flex-1">
+                  <label className="text-white mb-2 block font-body">
+                    Deletion
+                  </label>
+                  <label className="text-[#9CB3C9] mb-2 block font-body">
+                    alexarawles@gmail.com
+                  </label>
+                </div>
+                <button
+                  className="px-4 py-2 rounded text-white font-body"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #E052A0 0%, #F15C41 100%)",
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-8">
+            <h2 className="text-white font-body text-2xl mb-4">
+              Website Notifications
+            </h2>
+            <p className="text-[#9CB3C9] mb-4 font-body">
+              What would you like to see when you visit the Indie Hackers
+              website?
+            </p>
+
+            <div className="space-y-2">
+
+              <label className="flex items-center gap-2 bg-[#FFA503] p-1 rounded cursor-pointer ">
+                <input
+                  type="checkbox"
+                  className="text-[   #0075FF] rounded border-none focus:ring-0"
+                />
+                <span className="text-white font-body">
+                  Notifications for new followers
+                </span>
+              </label>
+
+              <label className="flex items-center gap-2 bg-[#FFA503] p-1 rounded cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="text-[#0075FF] rounded border-none focus:ring-0"
+                />
+                <span className="text-white font-body">
+                  Notifications for likes on your posts
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-white font-body text-2xl mb-4">
+              Email Notifications
+            </h2>
+            <p className="text-[#9CB3C9] mb-4 font-body">
+            What would you like to be notified of via email?
+            </p>
+            <div className="space-y-2">
+              <label className="flex items-center gap-3 bg-[#FFA503] p-1 rounded cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="text-[#0075FF] rounded border-none focus:ring-0"
+                />
+                <span className="text-white font-body">Emails for new followers</span>
+              </label>
+              <label className="flex items-center gap-3 bg-[#FFA503] p-1 rounded cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="text-[#0075FF] rounded border-none focus:ring-0"
+                />
+                <span className="text-white font-body">Emails for replies to your posts</span>
+              </label>
+              <label className="flex items-center gap-3 bg-[#FFA503] p-1 rounded cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="text-[#0075FF] rounded border-none focus:ring-0"
+                />
+                <span className="text-white font-body">Emails when someone tags you</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-[370px]">
+          <h2 className="text-white font-body text-2xl mb-4">Security</h2>
+          <div className="bg-[#FFA503] w-[370px] h-[224px] rounded-[6px] flex flex-col items-center justify-center">
+            <div className="mb-4">
+              <IconToggleLeftFilled className="w-14 h-14 " style={{ '--icon-circle-size': '1.5em', '--icon-circle-position': '0' } as React.CSSProperties} />
+            </div>            <p className="text-black mb-4 font-body">Light/Dark</p>
+            <p className="text-[#9CB3C9] font-body">
+              Require a pin to transfer funds
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
-
-//profile tab component
+  
+//PROFILE TAB
 function ProfileTab() {
-  const [isEditing, setIsEditing] = useState(false);
-
   return (
-    <div className="bg-[#FFA503] rounded-md h-full px-5 pb-26 pt-[120px] m-5">
+    <div className="bg-[#FFA503] rounded-md h-full px-2 pb-24 pt-[110px] m-5">
       <div className="flex items-center justify-between mb-6 p-11">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-5">
           <div className="relative w-20 h-20">
             <img
               src="../../../../public/avatar1.svg"
@@ -222,42 +340,37 @@ function ProfileTab() {
             <p className="text-gray-600 font-body">alexarawles@gmail.com</p>
           </div>
         </div>
-        <button
-          className="bg-[#4182F9] text-white px-4 py-2 rounded-md transform transition-transform hover:scale-110 font-body h-[44px] w-[93px]"
-          onClick={() => setIsEditing(!isEditing)}
-        >
-          {isEditing ? "Save" : "Edit"}
+        <button className="bg-[#4182F9] text-white px-2 py-2 rounded-md transform transition-transform hover:scale-110 font-body h-[44px] w-[93px]">
+          Edit
         </button>
       </div>
 
       <div className="flex flex-wrap gap-4 p-5">
-        <div className="space-y-4 flex-1 min-w-[280px]">
+        <div className="space-y-8 flex-1 min-w-[280px]">
           <div className="flex flex-col">
-            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body">
+            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
               Full Name
             </label>
             <input
               type="text"
               placeholder="Enter your full name"
               className="w-full h-[52px] bg-[#F9F9F9] rounded-[8px] px-4 text-[#000000] placeholder-gray-500 font-body"
-              disabled={!isEditing}
             />
           </div>
 
           <div className="flex flex-col">
-            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body">
+            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
               About
             </label>
             <input
               type="text"
               placeholder="Tell us about yourself"
               className="w-full h-[52px] bg-[#F9F9F9] rounded-[8px] px-4 text-[#000000] placeholder-gray-500 font-body"
-              disabled={!isEditing}
             />
           </div>
 
           <div className="flex flex-col">
-            <label className="text-[#000000] font-[400] text-[16px] leading-[24px] mb-1 font-body">
+            <label className="text-[#000000] font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
               Language
             </label>
             <select
@@ -267,8 +380,8 @@ function ProfileTab() {
                   "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
                 backgroundPosition: "right 16px center",
               }}
-              disabled={!isEditing}
             >
+              {" "}
               <option value="">Language</option>
               <option value="en">English</option>
               <option value="es">Spanish</option>
@@ -278,21 +391,20 @@ function ProfileTab() {
           </div>
         </div>
 
-        <div className="space-y-4 flex-1 min-w-[280px]">
+        <div className="space-y-8 flex-1 min-w-[280px]">
           <div className="flex flex-col">
-            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body">
+            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
               Nick Name
             </label>
             <input
               type="text"
               placeholder="Enter your nickname"
               className="w-full h-[52px] bg-[#F9F9F9] rounded-[8px] px-4 text-[#000000] placeholder-gray-500 font-body"
-              disabled={!isEditing}
-            />
+            />{" "}
           </div>
 
           <div className="flex flex-col">
-            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body">
+            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
               Country
             </label>
             <select
@@ -302,7 +414,6 @@ function ProfileTab() {
                   "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
                 backgroundPosition: "right 16px center",
               }}
-              disabled={!isEditing}
             >
               <option value="">Country</option>
               <option value="us">United States</option>
@@ -313,7 +424,7 @@ function ProfileTab() {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body">
+            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
               Time Zone
             </label>
             <select
@@ -323,7 +434,6 @@ function ProfileTab() {
                   "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
                 backgroundPosition: "right 16px center",
               }}
-              disabled={!isEditing}
             >
               <option value="">Timezone</option>
               <option value="pst">Pacific Time (PAT)</option>
@@ -337,42 +447,30 @@ function ProfileTab() {
 
       <div className="flex justify-center mt-[58px] p-5">
         <div className="space-y-2 w-[472.33px]">
-          <h3 className="text-black-600 text-[16px] leading-[21px] font-body mb-2">
+          <h3 className="text-black-600 text-[16px] leading-[21px] font-body mb-2 opacity-80">
             Social Links
           </h3>
           <div className="flex items-center gap-2">
             <IconLink size={14} className="text-gray-500" />
-            <button
-              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center"
-              disabled={!isEditing}
-            >
+            <button className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center">
               <span className="text-[14px] font-body">LinkedIn</span>
             </button>
           </div>
           <div className="flex items-center gap-2">
             <IconLink size={14} className="text-gray-500" />
-            <button
-              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center"
-              disabled={!isEditing}
-            >
+            <button className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center">
               <span className="text-[14px] font-body">Twitter</span>
             </button>
           </div>
           <div className="flex items-center gap-2">
             <IconLink size={14} className="text-gray-500" />
-            <button
-              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center"
-              disabled={!isEditing}
-            >
+            <button className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center">
               <span className="text-[14px] font-body">OpenChat</span>
             </button>
           </div>
           <div className="flex items-center gap-2">
             <IconLink size={14} className="text-gray-500" />
-            <button
-              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center"
-              disabled={!isEditing}
-            >
+            <button className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center">
               <span className="text-[14px] font-body">Telegram</span>
             </button>
           </div>
