@@ -4,7 +4,7 @@ import Sidebar from "../src/app/profile/sidebar";
 
 function Profile() {
   return (
-    <div>
+    <div className="w-full">
       <Navbar />
       <div className="md:mt-12 mx-auto my-0">
         <Sidebar />
