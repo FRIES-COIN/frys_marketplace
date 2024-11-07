@@ -326,10 +326,10 @@ function SettingsTab() {
 }//PROFILE TAB
 function ProfileTab() {
   return (
-    <div className="bg-[#FFA503] rounded-md h-full px-2 pb-24 pt-[110px] m-5">
-      <div className="flex flex-col md:flex-row items-center justify-between mb-6 p-4 md:p-11 gap-4">
-        <div className="flex flex-col md:flex-row items-center gap-5">
-          <div className="relative w-20 h-20">
+    <div className="bg-[#FFA503] ml-2 rounded-md p-2 md:px-5 md:pb-26 md:pt-[120px] md:m-5">
+      <div className="flex items-center justify-between mb-2 md:p-11">
+        <div className="flex items-center gap-4">
+          <div className="relative md:w-20 md:h-20 w-14 h-14">
             <img
               src="../../../../public/avatar1.svg"
               alt="Profile"
@@ -339,7 +339,7 @@ function ProfileTab() {
               htmlFor="profile-upload"
               className="absolute bottom-0 right-0 bg-[#4182F9] p-2 rounded-full cursor-pointer"
             >
-              <IconCamera size={16} className="text-white" />
+              <IconCamera className="text-white size-4 md:size-6" />
             </label>
             <input
               type="file"
@@ -359,7 +359,7 @@ function ProfileTab() {
       </div>
 
       <div className="flex flex-col md:flex-row flex-wrap gap-4 p-5">
-        <div className="space-y-8 flex-1 min-w-[280px]">
+        <div className="space-y-4 flex-1 min-w-[280px]">
           <div className="flex flex-col">
             <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
               Full Name
@@ -375,10 +375,10 @@ function ProfileTab() {
             <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
               About
             </label>
-            <input
-              type="text"
+            <textarea
               placeholder="Tell us about yourself"
-              className="w-full h-[52px] bg-[#F9F9F9] rounded-[8px] px-4 text-[#000000] placeholder-gray-500 font-body"
+              className="w-full h-[52px] bg-[#F9F9F9] rounded-[8px] px-4 text-[#000000] pt-2 placeholder-gray-500 font-body"
+              disabled={!isEditing}
             />
           </div>
 
@@ -458,7 +458,7 @@ function ProfileTab() {
         </div>
       </div>
 
-      <div className="flex justify-center mt-[58px] p-5">
+      <div className="flex justify-center mt-[8px] md:mt-[40px] mb-2 p-5">
         <div className="space-y-2 w-[472.33px]">
           <h3 className="text-black-600 text-[16px] leading-[21px] font-body mb-2 opacity-80">
             Social Links
@@ -487,7 +487,7 @@ function ProfileTab() {
               className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
             />
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mb-4">
             <IconLink size={14} className="text-gray-500" />
             <input
               type="text"
@@ -502,7 +502,7 @@ function ProfileTab() {
 function Sidebar() {
   const [tab, setTab] = useState<Tab>("nft");
   return (
-    <div className="md:flex items-center h-[300vh] gap-8">
+    <div className="md:flex h-screen gap-8 w-full">
       <div className="md:hidden flex items-center justify-between w-full overflow-scrolls px-2 mb-4">
         <div
           className={`flex items-center gap-4 text-sm cursor-pointer py-2 px-4 rounded-md ${
@@ -544,7 +544,7 @@ function Sidebar() {
         </div>
       </div>
       {/* hidden in smaller screen */}
-      <nav className="md:flex flex-col justify-between h-3/4 flex-2 hidden">
+      <nav className="md:flex pt-12 flex-col justify-between h-3/4 flex-2 hidden">
         <section className="flex flex-col gap-8">
           <div
             className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
@@ -596,18 +596,16 @@ function Sidebar() {
           </div>
         </section>
       </nav>
-      <aside className="flex-1 h-3/4 overflow-hidden">
-        {
-          tab === "nft" ? (
-            <NFTTab />
-          ) : tab === "wallet" ? (
-            <WalletTab />
-          ) : tab === "settings" ? (
-            <SettingsTab />
-          ) : tab === "profile" ? (
-            <ProfileTab />
-          ) : null //to be continued with settings and profile tabs
-        }
+      <aside className="flex-1 h-3/4 w-full items-center justify-center">
+        {tab === "nft" ? (
+          <NFTTab />
+        ) : tab === "wallet" ? (
+          <WalletTab />
+        ) : tab === "settings" ? (
+          <SettingsTab />
+        ) : tab === "profile" ? (
+          <ProfileTab />
+        ) : null}
       </aside>
     </div>
   );
