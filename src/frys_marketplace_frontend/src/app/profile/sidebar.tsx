@@ -159,7 +159,7 @@ function WalletTab() {
 function SettingsTab() {
   return (
     <div className="bg-[#050505] rounded-md h-full px-2 py-4 m-5">
-      <div className="flex gap-12">
+      <div className="flex flex-col md:flex-row gap-12">
         <div className="flex-1">
           <div className="mb-8">
             <h2 className="text-white font-body text-26px mb-4">Account</h2>
@@ -300,12 +300,11 @@ function SettingsTab() {
           </div>
         </div>
 
-        <div className="w-[370px]">
+        <div className="w-full md:w-[370px] order-last md:order-none">
           <h2 className="text-white font-body text-26px mb-4">Security</h2>
-          <div className="bg-[#FFA503] w-[370px] h-[224px] rounded-[6px] flex flex-col items-center justify-center">
+          <div className="bg-[#FFA503] w-full md:w-[370px] h-[224px] rounded-[6px] flex flex-col items-center justify-center">
             <div className="mb-4">
               <div
-              
                 className={`w-16 h-8 flex items-center rounded-full p-1 cursor-pointer `}
               >
                 
@@ -333,8 +332,8 @@ function SettingsTab() {
 function ProfileTab() {
   return (
     <div className="bg-[#FFA503] rounded-md h-full px-2 pb-24 pt-[110px] m-5">
-      <div className="flex items-center justify-between mb-6 p-11">
-        <div className="flex items-center gap-5">
+      <div className="flex flex-col md:flex-row items-center justify-between mb-6 p-4 md:p-11 gap-4">
+        <div className="flex flex-col md:flex-row items-center gap-5">
           <div className="relative w-20 h-20">
             <img
               src="../../../../public/avatar1.svg"
@@ -354,7 +353,7 @@ function ProfileTab() {
               accept="image/*"
             />
           </div>
-          <div>
+          <div className="text-center md:text-left">
             <p className="text-black-500 font-medium font-body">Alexa Rawles</p>
             <p className="text-gray-600 font-body">alexarawles@gmail.com</p>
           </div>
@@ -501,7 +500,7 @@ function ProfileTab() {
 function Sidebar() {
   const [tab, setTab] = useState<Tab>("nft");
   return (
-    <div className="md:flex items-center h-[200vh] gap-8">
+    <div className="md:flex items-center h-[300vh] gap-8">
       <div className="md:hidden flex items-center justify-between w-full overflow-scrolls px-2 mb-4">
         <div
           className={`flex items-center gap-4 text-sm cursor-pointer py-2 px-4 rounded-md ${
@@ -609,7 +608,7 @@ function Sidebar() {
         }
       </aside>
     </div>
-  );
-}
+
+  );}
 
 export default Sidebar;
