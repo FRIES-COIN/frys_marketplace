@@ -1,9 +1,3 @@
-import { IconLink } from "@tabler/icons-react";
-import { IconCamera } from "@tabler/icons-react";
-import { IconToggleLeftFilled } from "@tabler/icons-react";
-import { IconCircle } from "@tabler/icons-react";
-
-
 import {
   IconArtboard,
   IconArtboardFilled,
@@ -12,7 +6,10 @@ import {
   IconSettingsFilled,
   IconUserFilled,
   IconWallet,
+  IconLink,
+  IconCamera,
 } from "@tabler/icons-react";
+
 import {
   Select,
   SelectContent,
@@ -40,6 +37,7 @@ import eth from "../../../public/eth.svg";
 import frys from "../../../public/frys.jpeg";
 import qr from "../../../public/qr.png";
 import { Button } from "../../../components/ui/button";
+
 
 //NFT TAB COMPONENT
 function NFTTab() {
@@ -160,11 +158,11 @@ function WalletTab() {
 //SETTINGS TAB COMPONENT
 function SettingsTab() {
   return (
-    <div className="bg-[#050505] rounded-md h-full px-2 py-4">
-      <div className="flex gap-8">
+    <div className="bg-[#050505] rounded-md h-full px-2 py-4 m-5">
+      <div className="flex gap-12">
         <div className="flex-1">
           <div className="mb-8">
-            <h2 className="text-white font-body text-2xl mb-4">Account</h2>
+            <h2 className="text-white font-body text-26px mb-4">Account</h2>
             <div className="space-y-4">
               <div className="flex items-center gap-4 bg-[#FFA503] p-4 rounded">
                 <div className="flex-1">
@@ -229,27 +227,26 @@ function SettingsTab() {
           </div>
 
           <div className="mb-8">
-            <h2 className="text-white font-body text-2xl mb-4">
+            <h2 className="text-white font-body text-26px mb-4">
               Website Notifications
             </h2>
-            <p className="text-[#9CB3C9] mb-4 font-body">
+            <p className="text-[#9CB3C9] mb-4 text-18px font-body">
               What would you like to see when you visit the Indie Hackers
               website?
             </p>
 
-            <div className="space-y-2">
-
-              <label className="flex items-center gap-2 bg-[#FFA503] p-1 rounded cursor-pointer ">
+            <div className="space-y-2 ">
+              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
-                  className="text-[   #0075FF] rounded border-none focus:ring-0"
+                  className="text-[#0075FF] rounded border-none focus:ring-0"
                 />
                 <span className="text-white font-body">
                   Notifications for new followers
                 </span>
               </label>
 
-              <label className="flex items-center gap-2 bg-[#FFA503] p-1 rounded cursor-pointer">
+              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
                   className="text-[#0075FF] rounded border-none focus:ring-0"
@@ -262,44 +259,67 @@ function SettingsTab() {
           </div>
 
           <div>
-            <h2 className="text-white font-body text-2xl mb-4">
+            <h2 className="text-white font-body text-26px mb-4  ">
               Email Notifications
             </h2>
-            <p className="text-[#9CB3C9] mb-4 font-body">
-            What would you like to be notified of via email?
+            <p className="text-[#9CB3C9] mb-4 text-18px font-body">
+              What would you like to be notified of via email?
             </p>
+            <div className="space-y-2  mb-2">
+              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="text-[#0075FF] rounded border-none focus:ring-0"
+                />
+                <span className="text-white font-body">
+                  Emails for new followers
+                </span>
+              </label>
+            </div>
             <div className="space-y-2">
-              <label className="flex items-center gap-3 bg-[#FFA503] p-1 rounded cursor-pointer">
+              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
                   className="text-[#0075FF] rounded border-none focus:ring-0"
                 />
-                <span className="text-white font-body">Emails for new followers</span>
+                <span className="text-white font-body">
+                  Notifications for new followers
+                </span>
               </label>
-              <label className="flex items-center gap-3 bg-[#FFA503] p-1 rounded cursor-pointer">
+
+              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
                   className="text-[#0075FF] rounded border-none focus:ring-0"
                 />
-                <span className="text-white font-body">Emails for replies to your posts</span>
-              </label>
-              <label className="flex items-center gap-3 bg-[#FFA503] p-1 rounded cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="text-[#0075FF] rounded border-none focus:ring-0"
-                />
-                <span className="text-white font-body">Emails when someone tags you</span>
+                <span className="text-white font-body">
+                  Notifications for likes on your posts
+                </span>
               </label>
             </div>
           </div>
         </div>
 
         <div className="w-[370px]">
-          <h2 className="text-white font-body text-2xl mb-4">Security</h2>
+          <h2 className="text-white font-body text-26px mb-4">Security</h2>
           <div className="bg-[#FFA503] w-[370px] h-[224px] rounded-[6px] flex flex-col items-center justify-center">
             <div className="mb-4">
-              <IconToggleLeftFilled className="w-14 h-14 " style={{ '--icon-circle-size': '1.5em', '--icon-circle-position': '0' } as React.CSSProperties} />
-            </div>            <p className="text-black mb-4 font-body">Light/Dark</p>
+              <div
+              
+                className={`w-16 h-8 flex items-center rounded-full p-1 cursor-pointer `}
+              >
+                
+              <div className="h-5 w-5 bg-white rounded-full shadow-md transform transition-transform duration-300 ${
+                    isOn ? "
+                 
+                >
+              </div>
+                <div>
+              </div>
+              </div>
+            </div>
+
+            <p className="text-black mb-4 font-body">Light/Dark</p>
             <p className="text-[#9CB3C9] font-body">
               Require a pin to transfer funds
             </p>
@@ -309,7 +329,6 @@ function SettingsTab() {
     </div>
   );
 }
-  
 //PROFILE TAB
 function ProfileTab() {
   return (
@@ -345,7 +364,7 @@ function ProfileTab() {
         </button>
       </div>
 
-      <div className="flex flex-wrap gap-4 p-5">
+      <div className="flex flex-col md:flex-row flex-wrap gap-4 p-5">
         <div className="space-y-8 flex-1 min-w-[280px]">
           <div className="flex flex-col">
             <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
