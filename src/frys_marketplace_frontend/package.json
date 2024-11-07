@@ -9,7 +9,6 @@
     "prebuild": "dfx generate",
     "build": "tsc && vite build",
     "format": "prettier --write \"src/**/*.{json,js,jsx,ts,tsx,css,scss}\""
-
   },
   "dependencies": {
     "@bradgarropy/next-link": "^1.1.0",

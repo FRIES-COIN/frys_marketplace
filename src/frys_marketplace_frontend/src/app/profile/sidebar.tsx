@@ -323,8 +323,9 @@ function SettingsTab() {
       </div>
     </div>
   );
-}//PROFILE TAB
+} //PROFILE TAB
 function ProfileTab() {
+  const [isEditing, setIsEditing] = useState(false);
   return (
     <div className="bg-[#FFA503] ml-2 rounded-md p-2 md:px-5 md:pb-26 md:pt-[120px] md:m-5">
       <div className="flex items-center justify-between mb-2 md:p-11">
@@ -494,7 +495,8 @@ function ProfileTab() {
               placeholder="Telegram"
               className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
             />
-          </div>        </div>
+          </div>{" "}
+        </div>
       </div>
     </div>
   );
