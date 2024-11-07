@@ -38,7 +38,6 @@ import frys from "../../../public/frys.jpeg";
 import qr from "../../../public/qr.png";
 import { Button } from "../../../components/ui/button";
 
-
 //NFT TAB COMPONENT
 function NFTTab() {
   return (
@@ -283,7 +282,7 @@ function SettingsTab() {
                   className="text-[#0075FF] rounded border-none focus:ring-0"
                 />
                 <span className="text-white font-body">
-                  Notifications for new followers
+                  Emails for replies to your posts
                 </span>
               </label>
 
@@ -293,7 +292,7 @@ function SettingsTab() {
                   className="text-[#0075FF] rounded border-none focus:ring-0"
                 />
                 <span className="text-white font-body">
-                  Notifications for likes on your posts
+                  Emails when someone tags you
                 </span>
               </label>
             </div>
@@ -307,14 +306,11 @@ function SettingsTab() {
               <div
                 className={`w-16 h-8 flex items-center rounded-full p-1 cursor-pointer `}
               >
-                
-              <div className="h-5 w-5 bg-white rounded-full shadow-md transform transition-transform duration-300 ${
+                <div
+                  className="h-5 w-5 bg-white rounded-full shadow-md transform transition-transform duration-300 ${
                     isOn ? "
-                 
-                >
-              </div>
-                <div>
-              </div>
+                ></div>
+                <div></div>
               </div>
             </div>
 
@@ -608,7 +604,7 @@ function Sidebar() {
         }
       </aside>
     </div>
-
-  );}
+  );
+}
 
 export default Sidebar;
