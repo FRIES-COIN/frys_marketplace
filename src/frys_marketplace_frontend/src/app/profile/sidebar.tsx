@@ -27,6 +27,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "../../../components/ui/drawer";
+import { Switch } from "../../../components/ui/switch";
+import { Label } from "../../../components/ui/label";
 import { Input } from "../../../components/ui/input";
 import { CarouselSize } from "./nfts-owned";
 import { useState } from "react";
@@ -157,19 +159,21 @@ function WalletTab() {
 //SETTINGS TAB COMPONENT
 function SettingsTab() {
   return (
-    <div className="bg-[#050505] rounded-md h-full px-2 py-4 m-5 ">
+    <div className="bg-[#050505] rounded-md md:px-2 px-1 py-2 md:m-2">
       <div className="flex flex-col md:flex-row gap-12">
         <div className="flex-1">
           <div className="mb-8">
-            <h2 className="text-white font-body text-26px mb-4">Account</h2>
-            <div className="space-y-4">
-              <div className="flex items-center gap-4 bg-[#FFA503] p-4 rounded">
+            <h2 className="text-white font-body text-26px mb-4 font-bold">
+              Account
+            </h2>
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 bg-[#FFA503] py-2 px-4 rounded">
                 <div className="flex-1">
-                  <label className="text-white mb-2 block font-body">
+                  <label className="text-white mb-1 block font-body">
                     Username
                   </label>
 
-                  <label className="text-[#9CB3C9] mb-2 block font-body">
+                  <label className="text-gray-500 mb-1 md:mb-2 block font-body">
                     @n
                   </label>
                 </div>
@@ -183,13 +187,13 @@ function SettingsTab() {
                   Change
                 </button>
               </div>
-              <div className="flex items-center gap-4 bg-[#FFA503] p-4 rounded">
+              <div className="flex items-center gap-2 bg-[#FFA503] px-4 py-2 rounded">
                 <div className="flex-1">
-                  <label className="text-white mb-2 block font-body">
+                  <label className="text-white mb-1 block font-body">
                     Email Address
                   </label>
 
-                  <label className="text-[#9CB3C9] mb-2 block font-body">
+                  <label className="text-gray-500 mb-1 md:mb-2 block font-body">
                     alexarawles@gmail.com
                   </label>
                 </div>
@@ -203,12 +207,12 @@ function SettingsTab() {
                   Change
                 </button>
               </div>
-              <div className="flex items-center gap-4 bg-[#FFA503] p-4 rounded">
+              <div className="flex items-center gap-2 bg-[#FFA503] px-4 py-2 rounded">
                 <div className="flex-1">
-                  <label className="text-white mb-2 block font-body">
+                  <label className="text-white mb-1 block font-body">
                     Deletion
                   </label>
-                  <label className="text-[#9CB3C9] mb-2 block font-body">
+                  <label className="text-gray-500 mb-1 md:mb-2 block font-body">
                     alexarawles@gmail.com
                   </label>
                 </div>
@@ -226,15 +230,15 @@ function SettingsTab() {
           </div>
 
           <div className="mb-8">
-            <h2 className="text-white font-body text-26px mb-4">
+            <h2 className="text-white font-body text-26px font-bold mb-1 md:mb-2">
               Website Notifications
             </h2>
-            <p className="text-[#9CB3C9] mb-4 text-18px font-body">
+            <p className="text-[#9CB3C9] md:mb-4 mb-2 text-18px font-body">
               What would you like to see when you visit the Indie Hackers
               website?
             </p>
 
-            <div className="space-y-2 ">
+            <div className="space-y-2 flex flex-col  max-w-md">
               <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
@@ -257,14 +261,14 @@ function SettingsTab() {
             </div>
           </div>
 
-          <div>
-            <h2 className="text-white font-body text-26px mb-4  ">
+          <div className="-mt-2">
+            <h2 className="text-white font-body text-26px mb-1 md:mb-2 font-bold">
               Email Notifications
             </h2>
-            <p className="text-[#9CB3C9] mb-4 text-18px font-body">
+            <p className="text-[#9CB3C9] mb-2 text-18px font-body">
               What would you like to be notified of via email?
             </p>
-            <div className="space-y-2  mb-2">
+            <div className="mb-1">
               <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
@@ -275,7 +279,7 @@ function SettingsTab() {
                 </span>
               </label>
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col max-w-md">
               <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
@@ -286,7 +290,7 @@ function SettingsTab() {
                 </span>
               </label>
 
-              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
+              <label className="inline-flex mt-1 items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
                   className="text-[#0075FF] rounded border-none focus:ring-0"
@@ -298,24 +302,18 @@ function SettingsTab() {
             </div>
           </div>
         </div>
-
-        <div className="w-full md:w-[370px] order-last md:order-none">
-          <h2 className="text-white font-body text-26px mb-4">Security</h2>
-          <div className="bg-[#FFA503] w-full md:w-[370px] h-[224px] rounded-[6px] flex flex-col items-center justify-center">
-            <div className="mb-4">
-              <div
-                className={`w-16 h-8 flex items-center rounded-full p-1 cursor-pointer `}
-              >
-                <div
-                  className="h-5 w-5 bg-white rounded-full shadow-md transform transition-transform duration-300 ${
-                    isOn ? "
-                ></div>
-                <div></div>
-              </div>
-            </div>
-
-            <p className="text-black mb-4 font-body">Light/Dark</p>
-            <p className="text-[#9CB3C9] font-body">
+        <div className="-mt-8 md:mt-0 w-full md:w-[370px] order-last md:order-none">
+          <h2 className="text-white font-body text-26px mb-2 font-bold">
+            Security
+          </h2>
+          <div className="bg-[#FFA503] w-full md:w-[370px] md:h-[224px] h-[100px] rounded-[6px] flex flex-col items-center justify-center">
+            <input
+              type="checkbox"
+              className="toggle toggle-md"
+              id="security"
+              defaultChecked
+            />
+            <p className="text-gray-500 font-body">
               Require a pin to transfer funds
             </p>
           </div>
@@ -507,7 +505,7 @@ function Sidebar() {
     <div className="md:flex h-screen gap-8 w-full">
       <div className="md:hidden flex items-center justify-between w-full overflow-scrolls px-2 mb-4">
         <div
-          className={`flex items-center gap-4 text-sm cursor-pointer py-2 px-4 rounded-md ${
+          className={`flex items-center gap-1 text-sm cursor-pointer py-2 px-4 rounded-md ${
             tab === "nft" ? "bg-primary" : ""
           }`}
           onClick={() => setTab("nft")}
@@ -516,7 +514,7 @@ function Sidebar() {
           <h1 className="text-white font-body">NFTs</h1>
         </div>
         <div
-          className={`flex items-center gap-4 text-sm cursor-pointer py-2 px-4 rounded-md ${
+          className={`flex items-center gap-1 text-sm cursor-pointer py-2 px-4 rounded-md ${
             tab === "wallet" ? "bg-primary" : ""
           }`}
           onClick={() => setTab("wallet")}
@@ -525,7 +523,7 @@ function Sidebar() {
           <h1 className="text-white font-body">Wallet</h1>
         </div>
         <div
-          className={`flex items-center text-sm gap-4 cursor-pointer py-2 px-4 rounded-md ${
+          className={`flex items-center text-sm gap-1 cursor-pointer py-2 px-4 rounded-md ${
             tab === "settings" ? "bg-primary" : ""
           }`}
           onClick={() => setTab("settings")}
@@ -534,7 +532,7 @@ function Sidebar() {
           <h1 className="text-white font-body">Settings</h1>
         </div>
         <div
-          className={`flex items-center gap-4 text-sm cursor-pointer py-2 px-4 rounded-md ${
+          className={`flex items-center gap-1 text-sm cursor-pointer py-2 px-4 rounded-md ${
             tab === "profile" ? "bg-primary" : ""
           }`}
           onClick={() => setTab("profile")}

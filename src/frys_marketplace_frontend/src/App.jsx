@@ -8,7 +8,7 @@ import Error from "../pages/Error";
 
 function App() {
   return (
-    <div>
+    <div className="w-full overflow-hidden">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Landing />} />
