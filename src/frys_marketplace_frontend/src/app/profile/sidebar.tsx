@@ -157,7 +157,7 @@ function WalletTab() {
 //SETTINGS TAB COMPONENT
 function SettingsTab() {
   return (
-    <div className="bg-[#1C1C1C] rounded-md h-full px-2 py-4 m-5">
+    <div className="bg-[#050505] rounded-md h-full px-2 py-4 m-5 ">
       <div className="flex flex-col md:flex-row gap-12">
         <div className="flex-1">
           <div className="mb-8">
@@ -323,8 +323,7 @@ function SettingsTab() {
       </div>
     </div>
   );
-}
-//PROFILE TAB
+}//PROFILE TAB
 function ProfileTab() {
   return (
     <div className="bg-[#FFA503] rounded-md h-full px-2 pb-24 pt-[110px] m-5">
@@ -466,29 +465,36 @@ function ProfileTab() {
           </h3>
           <div className="flex items-center gap-2">
             <IconLink size={14} className="text-gray-500" />
-            <button className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center">
-              <span className="text-[14px] font-body">LinkedIn</span>
-            </button>
+            <input
+              type="text"
+              placeholder="LinkedIn"
+              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
+            />
           </div>
           <div className="flex items-center gap-2">
             <IconLink size={14} className="text-gray-500" />
-            <button className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center">
-              <span className="text-[14px] font-body">Twitter</span>
-            </button>
+            <input
+              type="text"
+              placeholder="Twitter"
+              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
+            />
           </div>
           <div className="flex items-center gap-2">
             <IconLink size={14} className="text-gray-500" />
-            <button className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center">
-              <span className="text-[14px] font-body">OpenChat</span>
-            </button>
+            <input
+              type="text"
+              placeholder="OpenChat"
+              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
+            />
           </div>
           <div className="flex items-center gap-2">
             <IconLink size={14} className="text-gray-500" />
-            <button className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center">
-              <span className="text-[14px] font-body">Telegram</span>
-            </button>
-          </div>
-        </div>
+            <input
+              type="text"
+              placeholder="Telegram"
+              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
+            />
+          </div>        </div>
       </div>
     </div>
   );
