@@ -157,7 +157,7 @@ function WalletTab() {
 //SETTINGS TAB COMPONENT
 function SettingsTab() {
   return (
-    <div className="bg-[#050505] rounded-md h-full px-2 py-4 m-5">
+    <div className="bg-[#1C1C1C] rounded-md h-full px-2 py-4 m-5">
       <div className="flex flex-col md:flex-row gap-12">
         <div className="flex-1">
           <div className="mb-8">
