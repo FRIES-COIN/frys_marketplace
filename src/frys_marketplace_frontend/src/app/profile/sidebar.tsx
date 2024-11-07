@@ -1,5 +1,3 @@
-import { IconLink } from "@tabler/icons-react";
-import { IconCamera } from "@tabler/icons-react";
 import {
   IconArtboard,
   IconArtboardFilled,
@@ -8,7 +6,10 @@ import {
   IconSettingsFilled,
   IconUserFilled,
   IconWallet,
+  IconLink,
+  IconCamera,
 } from "@tabler/icons-react";
+
 import {
   Select,
   SelectContent,
@@ -153,47 +154,177 @@ function WalletTab() {
   );
 }
 
-//settings tab component
+//SETTINGS TAB COMPONENT
 function SettingsTab() {
   return (
-    <div className="bg-[#151415] rounded-md h-full px-2 py-4">
-      <h1 className="text-white font-body text-2xl">Settings</h1>
-      <div className="mt-4">
-        <Input
-          placeholder="Change username"
-          className="border-none bg-[#202020] h-12 focus:ring-0"
-        />
-        <Button className="bg-primary text-white w-full mt-4">
-          Update Username
-        </Button>
-      </div>
-      <div className="mt-4">
-        <Input
-          placeholder="Change email"
-          className="border-none bg-[#202020] h-12 focus:ring-0"
-        />
-        <Button className="bg-primary text-white w-full mt-4">
-          Update Email
-        </Button>
-      </div>
-      <div className="mt-4">
-        <Input
-          placeholder="Change password"
-          type="password"
-          className="border-none bg-[#202020] h-12 focus:ring-0"
-        />
-        <Button className="bg-primary text-white w-full mt-4">
-          Update Password
-        </Button>
+    <div className="bg-[#050505] rounded-md h-full px-2 py-4 m-5 ">
+      <div className="flex flex-col md:flex-row gap-12">
+        <div className="flex-1">
+          <div className="mb-8">
+            <h2 className="text-white font-body text-26px mb-4">Account</h2>
+            <div className="space-y-4">
+              <div className="flex items-center gap-4 bg-[#FFA503] p-4 rounded">
+                <div className="flex-1">
+                  <label className="text-white mb-2 block font-body">
+                    Username
+                  </label>
+
+                  <label className="text-[#9CB3C9] mb-2 block font-body">
+                    @n
+                  </label>
+                </div>
+                <button
+                  className="px-4 py-2 rounded text-white font-body"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #E052A0 0%, #F15C41 100%)",
+                  }}
+                >
+                  Change
+                </button>
+              </div>
+              <div className="flex items-center gap-4 bg-[#FFA503] p-4 rounded">
+                <div className="flex-1">
+                  <label className="text-white mb-2 block font-body">
+                    Email Address
+                  </label>
+
+                  <label className="text-[#9CB3C9] mb-2 block font-body">
+                    alexarawles@gmail.com
+                  </label>
+                </div>
+                <button
+                  className="px-4 py-2 rounded text-white font-body"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #E052A0 0%, #F15C41 100%)",
+                  }}
+                >
+                  Change
+                </button>
+              </div>
+              <div className="flex items-center gap-4 bg-[#FFA503] p-4 rounded">
+                <div className="flex-1">
+                  <label className="text-white mb-2 block font-body">
+                    Deletion
+                  </label>
+                  <label className="text-[#9CB3C9] mb-2 block font-body">
+                    alexarawles@gmail.com
+                  </label>
+                </div>
+                <button
+                  className="px-4 py-2 rounded text-white font-body"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #E052A0 0%, #F15C41 100%)",
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-8">
+            <h2 className="text-white font-body text-26px mb-4">
+              Website Notifications
+            </h2>
+            <p className="text-[#9CB3C9] mb-4 text-18px font-body">
+              What would you like to see when you visit the Indie Hackers
+              website?
+            </p>
+
+            <div className="space-y-2 ">
+              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="text-[#0075FF] rounded border-none focus:ring-0"
+                />
+                <span className="text-white font-body">
+                  Notifications for new followers
+                </span>
+              </label>
+
+              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="text-[#0075FF] rounded border-none focus:ring-0"
+                />
+                <span className="text-white font-body">
+                  Notifications for likes on your posts
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-white font-body text-26px mb-4  ">
+              Email Notifications
+            </h2>
+            <p className="text-[#9CB3C9] mb-4 text-18px font-body">
+              What would you like to be notified of via email?
+            </p>
+            <div className="space-y-2  mb-2">
+              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="text-[#0075FF] rounded border-none focus:ring-0"
+                />
+                <span className="text-white font-body">
+                  Emails for new followers
+                </span>
+              </label>
+            </div>
+            <div className="space-y-2">
+              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="text-[#0075FF] rounded border-none focus:ring-0"
+                />
+                <span className="text-white font-body">
+                  Emails for replies to your posts
+                </span>
+              </label>
+
+              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="text-[#0075FF] rounded border-none focus:ring-0"
+                />
+                <span className="text-white font-body">
+                  Emails when someone tags you
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-full md:w-[370px] order-last md:order-none">
+          <h2 className="text-white font-body text-26px mb-4">Security</h2>
+          <div className="bg-[#FFA503] w-full md:w-[370px] h-[224px] rounded-[6px] flex flex-col items-center justify-center">
+            <div className="mb-4">
+              <div
+                className={`w-16 h-8 flex items-center rounded-full p-1 cursor-pointer `}
+              >
+                <div
+                  className="h-5 w-5 bg-white rounded-full shadow-md transform transition-transform duration-300 ${
+                    isOn ? "
+                ></div>
+                <div></div>
+              </div>
+            </div>
+
+            <p className="text-black mb-4 font-body">Light/Dark</p>
+            <p className="text-[#9CB3C9] font-body">
+              Require a pin to transfer funds
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
-}
-
-//profile tab component
+}//PROFILE TAB
 function ProfileTab() {
-  const [isEditing, setIsEditing] = useState(false);
-
   return (
     <div className="bg-[#FFA503] ml-2 rounded-md p-2 md:px-5 md:pb-26 md:pt-[120px] md:m-5">
       <div className="flex items-center justify-between mb-2 md:p-11">
@@ -217,35 +348,31 @@ function ProfileTab() {
               accept="image/*"
             />
           </div>
-          <div>
+          <div className="text-center md:text-left">
             <p className="text-black-500 font-medium font-body">Alexa Rawles</p>
             <p className="text-gray-600 font-body">alexarawles@gmail.com</p>
           </div>
         </div>
-        <button
-          className="bg-[#4182F9] text-white px-4 py-2 rounded-md transform transition-transform hover:scale-110 font-body h-[44px] w-[93px]"
-          onClick={() => setIsEditing(!isEditing)}
-        >
-          {isEditing ? "Save" : "Edit"}
+        <button className="bg-[#4182F9] text-white px-2 py-2 rounded-md transform transition-transform hover:scale-110 font-body h-[44px] w-[93px]">
+          Edit
         </button>
       </div>
 
       <div className="flex flex-col md:flex-row flex-wrap gap-4 p-5">
         <div className="space-y-4 flex-1 min-w-[280px]">
           <div className="flex flex-col">
-            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body">
+            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
               Full Name
             </label>
             <input
               type="text"
               placeholder="Enter your full name"
               className="w-full h-[52px] bg-[#F9F9F9] rounded-[8px] px-4 text-[#000000] placeholder-gray-500 font-body"
-              disabled={!isEditing}
             />
           </div>
 
           <div className="flex flex-col">
-            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body">
+            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
               About
             </label>
             <textarea
@@ -256,7 +383,7 @@ function ProfileTab() {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-[#000000] font-[400] text-[16px] leading-[24px] mb-1 font-body">
+            <label className="text-[#000000] font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
               Language
             </label>
             <select
@@ -266,8 +393,8 @@ function ProfileTab() {
                   "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
                 backgroundPosition: "right 16px center",
               }}
-              disabled={!isEditing}
             >
+              {" "}
               <option value="">Language</option>
               <option value="en">English</option>
               <option value="es">Spanish</option>
@@ -277,21 +404,20 @@ function ProfileTab() {
           </div>
         </div>
 
-        <div className="space-y-4 flex-1 min-w-[280px]">
+        <div className="space-y-8 flex-1 min-w-[280px]">
           <div className="flex flex-col">
-            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body">
+            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
               Nick Name
             </label>
             <input
               type="text"
               placeholder="Enter your nickname"
               className="w-full h-[52px] bg-[#F9F9F9] rounded-[8px] px-4 text-[#000000] placeholder-gray-500 font-body"
-              disabled={!isEditing}
-            />
+            />{" "}
           </div>
 
           <div className="flex flex-col">
-            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body">
+            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
               Country
             </label>
             <select
@@ -301,7 +427,6 @@ function ProfileTab() {
                   "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
                 backgroundPosition: "right 16px center",
               }}
-              disabled={!isEditing}
             >
               <option value="">Country</option>
               <option value="us">United States</option>
@@ -312,7 +437,7 @@ function ProfileTab() {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body">
+            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
               Time Zone
             </label>
             <select
@@ -322,7 +447,6 @@ function ProfileTab() {
                   "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
                 backgroundPosition: "right 16px center",
               }}
-              disabled={!isEditing}
             >
               <option value="">Timezone</option>
               <option value="pst">Pacific Time (PAT)</option>
@@ -336,46 +460,41 @@ function ProfileTab() {
 
       <div className="flex justify-center mt-[8px] md:mt-[40px] mb-2 p-5">
         <div className="space-y-2 w-[472.33px]">
-          <h3 className="text-black-600 text-[16px] leading-[21px] font-body mb-2">
+          <h3 className="text-black-600 text-[16px] leading-[21px] font-body mb-2 opacity-80">
             Social Links
           </h3>
           <div className="flex items-center gap-2">
             <IconLink size={14} className="text-gray-500" />
-            <button
-              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center"
-              disabled={!isEditing}
-            >
-              <span className="text-[14px] font-body">LinkedIn</span>
-            </button>
+            <input
+              type="text"
+              placeholder="LinkedIn"
+              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
+            />
           </div>
           <div className="flex items-center gap-2">
             <IconLink size={14} className="text-gray-500" />
-            <button
-              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center"
-              disabled={!isEditing}
-            >
-              <span className="text-[14px] font-body">Twitter</span>
-            </button>
+            <input
+              type="text"
+              placeholder="Twitter"
+              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
+            />
           </div>
           <div className="flex items-center gap-2">
             <IconLink size={14} className="text-gray-500" />
-            <button
-              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center"
-              disabled={!isEditing}
-            >
-              <span className="text-[14px] font-body">OpenChat</span>
-            </button>
+            <input
+              type="text"
+              placeholder="OpenChat"
+              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
+            />
           </div>
           <div className="flex items-center gap-2 mb-4">
             <IconLink size={14} className="text-gray-500" />
-            <button
-              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 flex items-center"
-              disabled={!isEditing}
-            >
-              <span className="text-[14px] font-body">Telegram</span>
-            </button>
-          </div>
-        </div>
+            <input
+              type="text"
+              placeholder="Telegram"
+              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
+            />
+          </div>        </div>
       </div>
     </div>
   );
