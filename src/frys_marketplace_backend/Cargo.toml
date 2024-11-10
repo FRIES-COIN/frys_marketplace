@@ -15,6 +15,6 @@ ic-cdk-timers = "0.10"      # Feel free to remove this dependency if you don't n
 icrc-ledger-types = '0.1.6'
 serde_json = '1.0.9'
 serde_derive = '1.0.9'
-serde = '1.0.9'
+serde = { version = "1.0.9", features = ["derive"] }
 ic-cdk-macros = "0.17.0"
 sha2 = "0.10.8"  # Add this for Sha256
