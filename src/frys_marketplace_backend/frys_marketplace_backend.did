@@ -1,1 +1,117 @@
-service : { payment : (text, float64) -> (text) }
+type Inscription = record {
+    id : nat64;
+    content_type : text;
+    data : text;
+    metadata : InscriptionMetadata;
+    owner : principal;
+    timestamp : nat64;
+    frys_amount : nat64;
+    sat_point : nat64;
+    transfer_history : vec TransferRecord;
+    status : variant {
+        Active;
+        Listed;
+        Locked;
+        Burned;
+    };
+    rarity_score : float64;
+    generation : nat64;
+};
+
+type InscriptionMetadata = record {
+    name : text;
+    description : text;
+    collection_name : text;
+    attributes : vec record { text; text; };
+    price : float64;
+    creator : principal;
+    creation_number : nat64;
+    media_hash : text;
+    external_url : opt text;
+    license : opt text;
+};
+
+type TransferRecord = record {
+    from : principal;
+    to : principal;
+    timestamp : nat64;
+    price : opt nat64;
+    transaction_type : variant {
+        Mint;
+        Transfer;
+        List;
+        Unlist;
+        Sale;
+        Lock;
+        Unlock;
+        Burn;
+    };
+};
+
+type Collection = record {
+    name : text;
+    description : text;
+    creator : principal;
+    inscription_count : nat64;
+    floor_price : opt nat64;
+    total_volume : nat64;
+    verified : bool;
+    creation_time : nat64;
+    metadata : CollectionMetadata;
+};
+
+type CollectionMetadata = record {
+    banner_image : opt text;
+    profile_image : opt text;
+    website : opt text;
+    social_links : vec record { text; text; };
+    category : text;
+    royalty_percentage : float64;
+};
+
+type MintRequest = record {
+    content_type : text;
+    data : text;
+    metadata : InscriptionMetadata;
+    frys_amount : nat64;
+};
+
+type MintBatchRequest = record {
+    requests : vec MintRequest;
+    total_frys_amount : nat64;
+};
+
+type MintResponse = record {
+    inscription_id : nat64;
+    sat_point : nat64;
+    rarity_score : float64;
+    timestamp : nat64;
+};
+
+type SystemStats = record {
+    total_inscriptions : nat64;
+    total_frys_locked : nat64;
+    total_collections : nat64;
+};
+
+service : {
+    // Minting functions
+    mint_inscription : (MintRequest) -> (variant { Ok: MintResponse; Err: text; });
+    mint_batch : (MintBatchRequest) -> (variant { Ok: vec MintResponse; Err: text; });
+
+    // Query functions
+    get_inscription : (nat64) -> (opt Inscription) query;
+    get_user_inscriptions : (principal) -> (vec Inscription) query;
+    get_rarest_inscriptions : (nat64) -> (vec Inscription) query;
+    get_inscriptions_by_sat_range : (nat64, nat64) -> (vec Inscription) query;
+    get_inscriptions_by_generation : (nat64) -> (vec Inscription) query;
+    get_collection_info : (text) -> (opt Collection) query;
+    get_stats : () -> (SystemStats) query;
+
+    // Collection management
+    get_collection_floor : (text) -> (opt nat64) query;
+    get_collection_stats : (text) -> (opt Collection) query;
+
+    // System functions
+    init : () -> ();
+};

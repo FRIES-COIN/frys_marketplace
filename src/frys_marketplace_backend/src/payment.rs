@@ -1,6 +1,6 @@
 use candid::{CandidType, Nat, Principal};
 use ic_cdk::storage;
-use ic_cdk::{api::call, caller, post_upgrade, pre_upgrade, query, update};
+use ic_cdk::{api::call, caller, post_upgrade, pre_upgrade, update};
 use icrc_ledger_types::{
     icrc1::account::Account,
     icrc2::transfer_from::{TransferFromArgs, TransferFromError},
@@ -9,6 +9,8 @@ use serde_derive::{Deserialize, Serialize};
 use serde_json::json;
 use std::cell::RefCell;
 use std::collections::HashMap;
+
+use crate::types::*;
 
 #[derive(CandidType, Deserialize, Serialize, Clone)]
 struct Payment {

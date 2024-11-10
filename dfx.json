@@ -1,27 +1,31 @@
 {
-  "canisters": {
-    "frys_marketplace_backend": {
-      "candid": "src/frys_marketplace_backend/frys_marketplace_backend.did",
-      "package": "frys_marketplace_backend",
-      "type": "rust"
+    "canisters": {
+        "frys_marketplace_backend": {
+            "candid": "src/frys_marketplace_backend/frys_marketplace_backend.did",
+            "package": "frys_marketplace_backend",
+            "type": "rust"
+        },
+        "frys_marketplace_frontend": {
+            "dependencies": [
+                "frys_marketplace_backend"
+            ],
+            "frontend": {
+                "entrypoint": "src/frys_marketplace_frontend/src/index.html"
+            },
+            "source": [
+                "src/frys_marketplace_frontend/assets",
+                "dist/frys_marketplace_frontend/"
+            ],
+            "type": "assets",
+            "build": "cd src/frys_marketplace_frontend && npm run build"
+        }
     },
-    "frys_marketplace_frontend": {
-      "dependencies": [
-        "frys_marketplace_backend"
-      ],
-      "source": [
-        "src/frys_marketplace_frontend/dist"
-      ],
-      "type": "assets",
-      "workspace": "frys_marketplace_frontend"
-    }
-  },
-  "defaults": {
-    "build": {
-      "args": "",
-      "packtool": ""
-    }
-  },
-  "output_env_file": ".env",
-  "version": 1
+    "defaults": {
+        "build": {
+            "args": "",
+            "packtool": ""
+        }
+    },
+    "output_env_file": ".env",
+    "version": 1
 }

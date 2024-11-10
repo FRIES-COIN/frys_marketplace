@@ -1,39 +1,45 @@
-import React, { useState } from "react";
-import MintForm from "./mint-form";
-import { IconCloudUpload } from "@tabler/icons-react";
+import React, { useEffect, useState } from 'react';
+import { createActor, FrysMarketplaceActor } from '../../declarations/frys_marketplace_backend';
+import MintForm from './mint-form';
+import { waitForMintingConfirmation } from './utils';
+import { toast } from 'react-hot-toast';
 
 const MintPage: React.FC = () => {
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [actor, setActor] = useState<FrysMarketplaceActor | null>(null);
 
-  const handleFileUpload = (file: File) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setUploadedImage(reader.result as string);
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const canisterId = import.meta.env.VITE_CANISTER_ID_FRYS_MARKETPLACE_BACKEND || "";
+        const actor = await createActor(canisterId);
+        setActor(actor);
+      } catch (err) {
+        console.error("Failed to create actor:", err);
+      }
     };
-    reader.readAsDataURL(file);
+
+    init();
+  }, []);
+
+  if (!actor) {
+    return <div>Loading...</div>;
+  }
+
+  const handleMintSuccess = async (response: MintResponse) => {
+    console.log("Minted inscription:", response);
+
+    // Wait for minting confirmation
+    const isConfirmed = await waitForMintingConfirmation(response.inscription_id);
+    if (isConfirmed) {
+      toast.success('Minting confirmed on the blockchain!');
+    } else {
+      toast.warning('Minting initiated but confirmation is taking longer than expected');
+    }
   };
 
   return (
-    <div className="bg-background text-white min-h-screen flex flex-col md:flex-row px-2 gap-8 md:gap-0">
-      <div className="w-full md:w-1/2 bg-primary flex justify-center items-center rounded-lg flex-col">
-        <IconCloudUpload className="w-1/4 h-1/4" size={24} />
-        <h1 className="font-body text-black font-semibold text-xl pt-4">
-          Upload/Drag Image
-        </h1>
-      </div>
-
-      <div className="w-full md:w-1/2 p-8 md:p-16 bg-background flex flex-col justify-center px-2">
-        {uploadedImage && (
-          <div className="flex justify-center mb-4">
-            <img
-              src={uploadedImage}
-              alt="Uploaded"
-              className="w-24 h-24 rounded-full"
-            />
-          </div>
-        )}
-        <MintForm />
-      </div>
+    <div className="container mx-auto px-4 py-8">
+      <MintForm onMint={handleMintSuccess} />
     </div>
   );
 };

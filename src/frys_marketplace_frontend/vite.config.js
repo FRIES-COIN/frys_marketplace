@@ -1,43 +1,38 @@
-import { fileURLToPath, URL } from 'url';
-import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
-import environment from 'vite-plugin-environment';
-import dotenv from 'dotenv';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-dotenv.config({ path: '../../.env' });
+const __filename = fileURLToPath(
+    import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default defineConfig({
-  build: {
-    emptyOutDir: true,
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      define: {
-        global: "globalThis",
-      },
-    },
-  },
-  server: {
-    proxy: {
-      "/api": {
-        target: "http://127.0.0.1:4943",
-        changeOrigin: true,
-      },
-    },
-  },
-  plugins: [
-    react(),
-    environment("all", { prefix: "CANISTER_" }),
-    environment("all", { prefix: "DFX_" }),
-  ],
-  resolve: {
-    alias: [
-      {
-        find: "declarations",
-        replacement: fileURLToPath(
-          new URL("../declarations", import.meta.url)
+    plugins: [react()],
+    define: {
+        'import.meta.env.VITE_DFX_NETWORK': JSON.stringify(process.env.DFX_NETWORK || 'local'),
+        'import.meta.env.VITE_CANISTER_ID_FRYS_MARKETPLACE_BACKEND': JSON.stringify(
+            process.env.CANISTER_ID_FRYS_MARKETPLACE_BACKEND
         ),
-      },
-    ],
-  },
+    },
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, './src'),
+            'declarations': path.resolve(__dirname, './src/declarations')
+        },
+    },
+    build: {
+        sourcemap: true,
+        rollupOptions: {
+            external: ['react', 'react-dom'],
+        }
+    },
+    server: {
+        proxy: {
+            '/api': {
+                target: 'http://localhost:4943',
+                changeOrigin: true,
+            },
+        },
+    },
 });
