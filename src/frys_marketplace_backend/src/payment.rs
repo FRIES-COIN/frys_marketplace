@@ -10,7 +10,6 @@ use serde_json::json;
 use std::cell::RefCell;
 use std::collections::HashMap;
 
-use crate::types::*;
 
 #[derive(CandidType, Deserialize, Serialize, Clone)]
 struct Payment {

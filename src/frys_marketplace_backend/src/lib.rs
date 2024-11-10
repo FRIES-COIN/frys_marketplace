@@ -8,15 +8,11 @@ use candid::candid_method;
 use ic_cdk_macros::*;
 
 use crate::state::STATE;
-use crate::types::{SystemStats, Inscription, Collection};
-
-// Re-export main functions
-pub use ordinals::{
-    get_inscription,
-    get_user_inscriptions,
-    get_rarest_inscriptions,
-    get_inscriptions_by_sat_range,
-    get_inscriptions_by_generation
+use crate::types::{
+    SystemStats,
+    Collection,
+    MintRequest,
+    MintResponse
 };
 
 // Initialize state
@@ -71,4 +67,32 @@ fn get_collection_stats(name: String) -> Option<Collection> {
         let state = state.borrow();
         state.collections.get(&name).cloned()
     })
+}
+
+#[update]
+#[candid_method(update)]
+async fn mint_inscription(request: MintRequest) -> Result<MintResponse, String> {
+    let caller = ic_cdk::caller();
+
+    // Store frys_amount before moving request
+    let frys_amount = request.frys_amount;
+
+    // Verify and lock FRYS tokens first
+    frys_interface::verify_and_lock_frys(caller, frys_amount).await?;
+
+    // Update request with caller as creator
+    let mut request = request;
+    request.metadata.creator = caller;
+
+    // If FRYS verification succeeds, proceed with minting
+    match ordinals::mint_inscription(request).await {
+        Ok(response) => Ok(response),
+        Err(e) => {
+            // If minting fails, unlock the FRYS tokens
+            if let Err(unlock_err) = frys_interface::unlock_frys(caller, frys_amount).await {
+                ic_cdk::println!("Failed to unlock FRYS tokens: {}", unlock_err);
+            }
+            Err(e)
+        }
+    }
 }

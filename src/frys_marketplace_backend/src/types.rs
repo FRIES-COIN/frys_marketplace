@@ -1,6 +1,5 @@
 use candid::{CandidType, Principal};
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 
 #[derive(CandidType, Serialize, Deserialize, Clone, Debug)]
 pub struct Inscription {
@@ -23,7 +22,7 @@ pub struct InscriptionMetadata {
     pub name: String,
     pub description: String,
     pub collection_name: String,
-    pub attributes: HashMap<String, String>,
+    pub attributes: Vec<(String, String)>,
     pub price: f64,
     pub creator: Principal,
     pub creation_number: u64,
@@ -97,7 +96,7 @@ impl Default for CollectionMetadata {
     }
 }
 
-#[derive(CandidType, Serialize, Deserialize, Debug)]
+#[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
 pub struct MintRequest {
     pub content_type: String,
     pub data: String,
