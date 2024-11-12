@@ -61,10 +61,12 @@ function Navbar() {
               />
             </Link>
           </div>
-          <button className="bg-transparent border-[2.66px] border-[#ffa503] font-body rounded-[17.47px] text-white px-4 py-2 flex items-center hover:bg-[#ffa503] hover:text-black transition-all duration-500">
-            <span className="mr-2">COOK</span>
-            <FaRocket />
-          </button>
+          <Link to="/profile">
+            <button className="bg-transparent border-[2.66px] border-[#ffa503] font-body rounded-[17.47px] text-white px-4 py-2 flex items-center hover:bg-[#ffa503] hover:text-black transition-all duration-500">
+              <span className="mr-2">COOK</span>
+              <FaRocket />
+            </button>
+          </Link>
         </div>
       </div>
       <div className="px-2 bg-black">
@@ -124,10 +126,21 @@ function Navbar() {
                 />
               </Link>
             </div>
-            <button className="bg-transparent border-[2.66px] border-[#ffa503] font-body rounded-[17.47px] text-white px-4 py-2 flex items-center hover:bg-[#ffa503] hover:text-black transition-all duration-500">
-              <span className="mr-2 text-2xl">COOK</span>
-              <FaRocket />
-            </button>
+            {/* Desktop Cook button */}
+            <Link to="/profile">
+              <button className="bg-transparent border-[2.66px] border-[#ffa503] font-body rounded-[17.47px] text-white px-4 py-2 flex items-center hover:bg-[#ffa503] hover:text-black transition-all duration-500">
+                <span className="mr-2">COOK</span>
+                <FaRocket />
+              </button>
+            </Link>
+
+            {/* Mobile Cook button */}
+            <Link to="/profile">
+              <button className="bg-transparent border-[2.66px] border-[#ffa503] font-body rounded-[17.47px] text-white px-4 py-2 flex items-center hover:bg-[#ffa503] hover:text-black transition-all duration-500">
+                <span className="mr-2 text-2xl">COOK</span>
+                <FaRocket />
+              </button>
+            </Link>
           </div>
         </div>
       </div>
