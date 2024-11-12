@@ -31,7 +31,7 @@ import { Switch } from "../../../components/ui/switch";
 import { Label } from "../../../components/ui/label";
 import { Input } from "../../../components/ui/input";
 import { CarouselSize } from "./nfts-owned";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 type Tab = "nft" | "wallet" | "settings" | "profile" | "logout";
 import btc from "../../../public/btc.svg";
 import icp from "../../../public/icp.svg";
@@ -39,6 +39,8 @@ import eth from "../../../public/eth.svg";
 import frys from "../../../public/frys.jpeg";
 import qr from "../../../public/qr.png";
 import { Button } from "../../../components/ui/button";
+import { getBalance, initiatePayment, processPayment } from '../Wallet/wallet-service';
+
 
 //NFT TAB COMPONENT
 function NFTTab() {
@@ -59,93 +61,105 @@ function NFTTab() {
 
 //WALLET TAB COMPONENT
 function WalletTab() {
+  const [balance, setBalance] = useState<Array<{ amount: number, symbol: string }>>([]);
+  const [recipientAddress, setRecipientAddress] = useState('');
+  const [amount, setAmount] = useState(0);
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const walletBalance = await getBalance();
+      setBalance(walletBalance);
+    };
+    fetchBalance();
+  }, []);
+
+  const handleTransfer = async () => {
+    try {
+      const paymentId = crypto.randomUUID();
+      await processPayment(paymentId, amount);
+      await initiatePayment(recipientAddress, amount);
+      alert('Transfer successful!');
+    } catch (error) {
+      alert('Transfer failed. Please try again.');
+    }
+  };
+
   return (
     <div className="bg-[#151415] rounded-md h-full px-2">
       <div className="text-white font-body w-full pt-4 flex items-center justify-center">
         <Select>
           <SelectTrigger className="md:w-1/4 border-none bg-[#202020] h-16 -mr-2">
-            <SelectValue
-              placeholder="Choose token"
-              className="flex items-center gap-2 placeholder:text-gray-500"
-            />
+            <SelectValue placeholder="Choose token" className="flex items-center gap-2 placeholder:text-gray-500" />
           </SelectTrigger>
           <SelectContent className="bg-[#202020] w-[14rem] border-none">
-            <SelectItem
-              value="btc"
-              className="flex items-center gap-2 justify-between w-full mt-4"
-            >
+            <SelectItem value="btc" className="flex items-center gap-2 justify-between w-full mt-4">
               <div className="w-full flex flex-row items-center gap-2">
                 <img src={btc} alt="btc" className="w-8 h-8" />
-                <p className="uppercase font-body font-semibold text-gray-500">
-                  btc
-                </p>
+                <p className="uppercase font-body font-semibold text-gray-500">btc</p>
               </div>
             </SelectItem>
-            <SelectItem
-              value="icp"
-              className="flex items-center gap-2 justify-between w-full mt-4"
-            >
+            <SelectItem value="icp" className="flex items-center gap-2 justify-between w-full mt-4">
               <div className="w-full flex flex-row items-center gap-2">
                 <img src={icp} alt="icp" className="w-8 h-8" />
-                <p className="uppercase font-body font-semibold text-gray-500">
-                  icp
-                </p>
+                <p className="uppercase font-body font-semibold text-gray-500">icp</p>
               </div>
             </SelectItem>
-            <SelectItem
-              value="eth"
-              className="flex items-center gap-2 justify-between w-full mt-4"
-            >
+            <SelectItem value="eth" className="flex items-center gap-2 justify-between w-full mt-4">
               <div className="w-full flex flex-row items-center gap-2">
                 <img src={eth} alt="eth" className="w-8 h-8" />
-                <p className="uppercase font-body font-semibold text-gray-500">
-                  eth
-                </p>
+                <p className="uppercase font-body font-semibold text-gray-500">eth</p>
               </div>
             </SelectItem>
-            <SelectItem
-              value="frys"
-              className="flex items-center gap-2 justify-between w-full mt-4"
-            >
+            <SelectItem value="frys" className="flex items-center gap-2 justify-between w-full mt-4">
               <div className="w-full flex flex-row items-center gap-2">
-                <img
-                  src={frys}
-                  alt="FRYS COIN"
-                  className="w-8 h-8 rounded-full"
-                />
-                <p className="uppercase font-body font-semibold text-gray-500">
-                  frys
-                </p>
+                <img src={frys} alt="FRYS COIN" className="w-8 h-8 rounded-full" />
+                <p className="uppercase font-body font-semibold text-gray-500">frys</p>
               </div>
             </SelectItem>
           </SelectContent>
+
         </Select>
         <Input
+          value={amount}
+          onChange={(e) => setAmount(Number(e.target.value))}
           placeholder="0.0000"
           className="md:w-1/4 border-none bg-[#202020] h-16 focus:ring-0 focus:border-0 focus:outline-none"
         />
       </div>
-      <div>
-        <img
-          src={qr}
-          className="xl:w-[15%] md:w-[20%] h-56 md:h-auto mx-auto mt-8 rounded-md"
-        />
+
+      {/* Balance Display */}
+      <div className="text-white font-body mt-4 text-center">
+        {balance.map((item, index) => (
+          <p key={index} className="text-gray-500">
+            {item.symbol}: {item.amount}
+          </p>
+        ))}
       </div>
+
+      <div>
+        <img src={qr} className="xl:w-[15%] md:w-[20%] h-56 md:h-auto mx-auto mt-8 rounded-md" />
+      </div>
+
       <div className="w-full flex items-center justify-center mt-4">
         <Input
+          value={recipientAddress}
+          onChange={(e) => setRecipientAddress(e.target.value)}
           placeholder="Enter deposit address"
           className="w-1/2 border-none bg-[#202020] text-white md:h-16 h-10 focus:ring-0 focus:border-0 focus:outline-none"
         />
       </div>
+
       <div className="flex items-center justify-center mt-4">
         <p className="text-center font-body text-xs leading-relaxed text-gray-500 md:w-1/2">
-          Always start with small amounts of transactions whether you are newbie
-          or an expert and be on the look out for phishing scams going on in the
-          crypto industry.
+          Always start with small amounts of transactions whether you are newbie or an expert and be on the look out for phishing scams going on in the crypto industry.
         </p>
       </div>
+
       <div className="flex items-center justify-between">
-        <Button className="bg-primary text-white w-1/4 mx-auto mt-4 font-body">
+        <Button
+          onClick={handleTransfer}
+          className="bg-primary text-white w-1/4 mx-auto mt-4 font-body"
+        >
           Send
         </Button>
         <Button className="bg-primary text-white w-1/4 mx-auto mt-4 font-body">
@@ -155,6 +169,7 @@ function WalletTab() {
     </div>
   );
 }
+
 
 //SETTINGS TAB COMPONENT
 function SettingsTab() {
@@ -504,36 +519,32 @@ function Sidebar() {
     <div className="md:flex h-screen gap-8 w-full">
       <div className="md:hidden flex items-center justify-between w-full overflow-scrolls px-2 mb-4">
         <div
-          className={`flex items-center gap-1 text-sm cursor-pointer py-2 px-4 rounded-md ${
-            tab === "nft" ? "bg-primary" : ""
-          }`}
+          className={`flex items-center gap-1 text-sm cursor-pointer py-2 px-4 rounded-md ${tab === "nft" ? "bg-primary" : ""
+            }`}
           onClick={() => setTab("nft")}
         >
           <IconArtboardFilled size={14} className="text-white" />
           <h1 className="text-white font-body">NFTs</h1>
         </div>
         <div
-          className={`flex items-center gap-1 text-sm cursor-pointer py-2 px-4 rounded-md ${
-            tab === "wallet" ? "bg-primary" : ""
-          }`}
+          className={`flex items-center gap-1 text-sm cursor-pointer py-2 px-4 rounded-md ${tab === "wallet" ? "bg-primary" : ""
+            }`}
           onClick={() => setTab("wallet")}
         >
           <IconWallet size={14} className="text-white" />
           <h1 className="text-white font-body">Wallet</h1>
         </div>
         <div
-          className={`flex items-center text-sm gap-1 cursor-pointer py-2 px-4 rounded-md ${
-            tab === "settings" ? "bg-primary" : ""
-          }`}
+          className={`flex items-center text-sm gap-1 cursor-pointer py-2 px-4 rounded-md ${tab === "settings" ? "bg-primary" : ""
+            }`}
           onClick={() => setTab("settings")}
         >
           <IconSettingsFilled size={14} className="text-white" />
           <h1 className="text-white font-body">Settings</h1>
         </div>
         <div
-          className={`flex items-center gap-1 text-sm cursor-pointer py-2 px-4 rounded-md ${
-            tab === "profile" ? "bg-primary" : ""
-          }`}
+          className={`flex items-center gap-1 text-sm cursor-pointer py-2 px-4 rounded-md ${tab === "profile" ? "bg-primary" : ""
+            }`}
           onClick={() => setTab("profile")}
         >
           <IconUserFilled size={14} className="text-white" />
@@ -546,36 +557,32 @@ function Sidebar() {
       <nav className="md:flex pt-12 flex-col justify-between h-3/4 flex-2 hidden">
         <section className="flex flex-col gap-8">
           <div
-            className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
-              tab === "nft" ? "bg-primary" : ""
-            }`}
+            className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${tab === "nft" ? "bg-primary" : ""
+              }`}
             onClick={() => setTab("nft")}
           >
             <IconArtboardFilled size={24} className="text-white" />
             <h1 className="text-white font-body">NFTs</h1>
           </div>
           <div
-            className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
-              tab === "wallet" ? "bg-primary" : ""
-            }`}
+            className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${tab === "wallet" ? "bg-primary" : ""
+              }`}
             onClick={() => setTab("wallet")}
           >
             <IconWallet size={24} className="text-white" />
             <h1 className="text-white font-body">Wallet</h1>
           </div>
           <div
-            className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
-              tab === "settings" ? "bg-primary" : ""
-            }`}
+            className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${tab === "settings" ? "bg-primary" : ""
+              }`}
             onClick={() => setTab("settings")}
           >
             <IconSettingsFilled size={24} className="text-white" />
             <h1 className="text-white font-body">Settings</h1>
           </div>
           <div
-            className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
-              tab === "profile" ? "bg-primary" : ""
-            }`}
+            className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${tab === "profile" ? "bg-primary" : ""
+              }`}
             onClick={() => setTab("profile")}
           >
             <IconUserFilled size={24} className="text-white" />
@@ -586,9 +593,8 @@ function Sidebar() {
         </section>
         <section className="flex flex-col gap-8">
           <div
-            className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
-              tab === "logout" ? "bg-primary" : ""
-            }`}
+            className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${tab === "logout" ? "bg-primary" : ""
+              }`}
           >
             <IconLogout size={24} className="text-white" />
             <h1 className="text-white font-body">Log out</h1>
