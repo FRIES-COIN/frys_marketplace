@@ -145,7 +145,7 @@ function CollectionsPage() {
         Featured NFTs🔥
       </h1>
       <CollectionsHeader />
-      <section className="mt-8 md:mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 space-y-2 md:pl-0 pl-4">
+      <section className="mt-8 md:mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 space-y-2 md:gap-4 md:pl-0 pl-4">
         {collections.map((collection) => (
           <CollectionCard collection={collection} key={collection.id} />
         ))}
