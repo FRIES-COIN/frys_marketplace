@@ -35,7 +35,7 @@ function Navbar() {
           </Link>
         </div>
 
-        <div className="md:flex items-center space-x-8 hidden bg-black">
+        <div className="md:flex items-center space-x-8 hidden">
           <Link
             to="/collections"
             className="text-white font-semibold font-body text-[20.96px] leading-[24.84px] w-[131px] h-[25px] hover:text-[#ffa503] hover:text-[22.96px] transition-all duration-500"

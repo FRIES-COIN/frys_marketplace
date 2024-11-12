@@ -13,10 +13,10 @@ import { ButtonsCard } from "../../../components/ui/tailwindcss-buttons";
 
 function CollectionsHeader() {
   return (
-    <section>
-      <div className="flex flex-col md:flex-row items-center justify-between mt-12 font-title">
+    <section className="text-black">
+      <div className="flex flex-col md:flex-row items-center justify-between mt-12 font-title ">
         <div className="flex items-center md:gap-1 lg:gap-3 ">
-          <div className="bg-white rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1">
+          <div className="bg-white rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 ">
             <h1>All NFTs</h1>
           </div>
           <div className="bg-transparent rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1">
@@ -141,7 +141,7 @@ function CollectionCard({ collection }: { collection: ICollection }) {
 function CollectionsPage() {
   return (
     <div className="bg-primary max-w-[96rem] mx-auto my-0 rounded-3xl px-4 pt-6 pb-4">
-      <h1 className="font-bold font-body md:text-3xl text-2xl mb-6">
+      <h1 className="font-bold font-body md:text-3xl text-2xl mb-6 text-black">
         Featured NFTs🔥
       </h1>
       <CollectionsHeader />

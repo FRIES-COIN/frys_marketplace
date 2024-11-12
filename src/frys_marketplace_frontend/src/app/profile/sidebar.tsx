@@ -43,7 +43,7 @@ import { Button } from "../../../components/ui/button";
 //NFT TAB COMPONENT
 function NFTTab() {
   return (
-    <div className="bg-primary rounded-md h-full w-full max-w-7xl overflow-hidden md:mx-4">
+    <div className="bg-primary rounded-md h-full w-full max-w-7xl overflow-hidden md:mx-4 text-black">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold font-body px-2 mt-12 mx-2">
           Overview
@@ -159,7 +159,7 @@ function WalletTab() {
 //SETTINGS TAB COMPONENT
 function SettingsTab() {
   return (
-    <div className="bg-[#050505] rounded-md md:px-2 px-1 py-2 md:m-2">
+    <div className="bg-[#050505] rounded-md md:px-2 px-1 py-2 md:m-2 ">
       <div className="flex flex-col md:flex-row gap-12">
         <div className="flex-1">
           <div className="mb-8">
@@ -350,7 +350,9 @@ function ProfileTab() {
             />
           </div>
           <div className="text-center md:text-left">
-            <p className="text-black-500 font-medium font-body">Alexa Rawles</p>
+            <p className="text-black-500 font-medium font-body text-black">
+              Alexa Rawles
+            </p>
             <p className="text-gray-500 font-body">alexarawles@gmail.com</p>
           </div>
         </div>
@@ -359,10 +361,10 @@ function ProfileTab() {
         </button>
       </div>
 
-      <div className="flex flex-col md:flex-row flex-wrap gap-4 md:p-5 mt-2">
+      <div className="flex flex-col md:flex-row flex-wrap gap-4 md:p-5 mt-2 text-black">
         <div className="space-y-4 flex-1 min-w-[280px]">
           <div className="flex flex-col">
-            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
+            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80 text-black">
               Full Name
             </label>
             <input
@@ -456,7 +458,7 @@ function ProfileTab() {
       </div>
       <div className="flex justify-center mt-[8px] md:mt-[40px] mb-2 p-5">
         <div className="space-y-2 w-[472.33px]">
-          <h3 className="text-black-600 text-[16px] leading-[21px] font-body mb-2 opacity-80">
+          <h3 className="text-black-600 text-[16px] leading-[21px] font-body mb-2 opacity-80 text-black">
             Social Links
           </h3>
           <div className="flex items-center gap-2">
