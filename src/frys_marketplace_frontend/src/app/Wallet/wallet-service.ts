@@ -10,6 +10,7 @@ declare global {
         isConnected: () => Promise<boolean>;
         createAgent: (args?: any) => Promise<void>;
         requestBalance: () => Promise<Array<{amount: number, symbol: string}>>;
+        principal: Principal;
         requestTransfer: (arg: {
           to: string,
           amount: number,
@@ -26,7 +27,6 @@ declare global {
     }
   }
 }
-
 export const connectPlug = async () => {
   try {
     const connected = await window.ic.plug.requestConnect();
@@ -79,6 +79,22 @@ export const processPayment = async (id: string, price: number) => {
     return result;
   } catch (error) {
     console.log('Payment params:', { id, price });
+    throw error;
+  }
+};
+
+// transfer funds from wallet to other wallet
+export const transferTokens = async (recipientAddress: string, amount: number) => {
+  try {
+    const isConnected = await checkConnection();
+    if (!isConnected) {
+      throw new Error('Wallet not connected');
+    }
+    
+    const result = await initiatePayment(recipientAddress, amount);
+    return result;
+  } catch (error) {
+    console.error("Transfer failed:", error);
     throw error;
   }
 };
