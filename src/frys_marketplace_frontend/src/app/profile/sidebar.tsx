@@ -39,7 +39,7 @@ import eth from "../../../public/eth.svg";
 import frys from "../../../public/frys.jpeg";
 import qr from "../../../public/qr.png";
 import { Button } from "../../../components/ui/button";
-import { getBalance, initiatePayment, processPayment } from '../Wallet/wallet-service';
+import { getBalance, transferTokens } from '../Wallet/wallet-service';
 
 
 //NFT TAB COMPONENT
@@ -75,15 +75,25 @@ function WalletTab() {
 
   const handleTransfer = async () => {
     try {
-      const paymentId = crypto.randomUUID();
-      await processPayment(paymentId, amount);
-      await initiatePayment(recipientAddress, amount);
+      const result = await transferTokens(recipientAddress, amount);
       alert('Transfer successful!');
+      setRecipientAddress('');
+      setAmount(0);
     } catch (error) {
       alert('Transfer failed. Please try again.');
     }
   };
 
+  const handleReceive = () => {
+    // const principal = await requestConnect();
+    const userAddress = window.ic?.plug?.principal?.toString();
+    if (userAddress) {
+      alert(`Your receiving address is: ${userAddress}`);
+    } else {
+      alert('Please connect your wallet first');
+    }
+  };
+  
   return (
     <div className="bg-[#151415] rounded-md h-full px-2">
       <div className="text-white font-body w-full pt-4 flex items-center justify-center">
