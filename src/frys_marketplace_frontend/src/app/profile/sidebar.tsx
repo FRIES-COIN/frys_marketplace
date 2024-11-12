@@ -17,18 +17,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../components/ui/select";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "../../../components/ui/drawer";
-import { Switch } from "../../../components/ui/switch";
-import { Label } from "../../../components/ui/label";
 import { Input } from "../../../components/ui/input";
 import { CarouselSize } from "./nfts-owned";
 import { useState } from "react";
@@ -134,7 +122,7 @@ function WalletTab() {
       <div className="w-full flex items-center justify-center mt-4">
         <Input
           placeholder="Enter deposit address"
-          className="w-1/2 border-none bg-[#202020] text-white md:h-16 h-10 focus:ring-0 focus:border-0 focus:outline-none"
+          className="md:w-1/2 w-3/4 border-none bg-[#202020] text-white h-10 focus:ring-0 focus:border-0 focus:outline-none"
         />
       </div>
       <div className="flex items-center justify-center mt-4">
@@ -159,7 +147,7 @@ function WalletTab() {
 //SETTINGS TAB COMPONENT
 function SettingsTab() {
   return (
-    <div className="bg-[#050505] rounded-md md:px-2 px-1 py-2 md:m-2">
+    <div className="bg-background rounded-md md:px-2 px-1 py-2 md:m-2">
       <div className="flex flex-col md:flex-row gap-12">
         <div className="flex-1">
           <div className="mb-8">
@@ -306,14 +294,14 @@ function SettingsTab() {
           <h2 className="text-white font-body text-26px mb-2 font-bold">
             Security
           </h2>
-          <div className="bg-[#FFA503] w-full md:w-[370px] md:h-[224px] h-[100px] rounded-[6px] flex flex-col items-center justify-center">
+          <div className="bg-primary w-full md:w-[370px] md:h-[224px] h-[100px] rounded-[6px] flex flex-col items-center justify-center">
             <input
               type="checkbox"
               className="toggle toggle-md"
               id="security"
               defaultChecked
             />
-            <p className="text-gray-500 font-body">
+            <p className="text-gray-500 font-body mt-2">
               Require a pin to transfer funds
             </p>
           </div>
@@ -327,7 +315,7 @@ function SettingsTab() {
 function ProfileTab() {
   const [isEditing, setIsEditing] = useState(false);
   return (
-    <div className="bg-[#FFA503] rounded-md p-2 md:px-5 md:pb-26 md:pt-[120px] md:m-5">
+    <div className="bg-primary rounded-md p-2 md:px-5 md:pb-26 md:pt-[120px] md:m-5">
       <div className="flex items-center justify-between md:mb-2 md:p-11">
         <div className="flex items-center gap-4">
           <div className="relative md:w-20 md:h-20 w-14 h-14">
