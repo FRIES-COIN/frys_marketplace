@@ -3,7 +3,9 @@ mod types;
 mod ordinals;
 mod payment;
 mod frys_interface;
+mod minting;
 
+use crate::minting::NFT;
 use candid::candid_method;
 // use ic_cdk_macros::*;
 
@@ -96,3 +98,5 @@ async fn mint_inscription(request: MintRequest) -> Result<MintResponse, String> 
         }
     }
 }
+
+ic_cdk::export_candid!(); 

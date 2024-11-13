@@ -1,1 +1,70 @@
-service : { payment : (text, float64) -> (text) }
+type Collection = record {
+  creation_time : nat64;
+  floor_price : opt nat64;
+  creator : principal;
+  verified : bool;
+  metadata : CollectionMetadata;
+  name : text;
+  description : text;
+  inscription_count : nat64;
+  total_volume : nat64;
+};
+type CollectionMetadata = record {
+  profile_image : opt text;
+  banner_image : opt text;
+  royalty_percentage : float64;
+  website : opt text;
+  category : text;
+  social_links : vec record { text; text };
+};
+type InscriptionMetadata = record {
+  creator : principal;
+  creation_number : nat64;
+  media_hash : text;
+  external_url : opt text;
+  name : text;
+  description : text;
+  collection_name : text;
+  attributes : vec record { text; text };
+  price : float64;
+  license : opt text;
+};
+type MintRequest = record {
+  metadata : InscriptionMetadata;
+  data : text;
+  content_type : text;
+  frys_amount : nat64;
+};
+type MintResponse = record {
+  sat_point : nat64;
+  rarity_score : float64;
+  inscription_id : nat64;
+  timestamp : nat64;
+};
+type NFT = record {
+  id : nat64;
+  price_in_icp_tokens : nat64;
+  minter_principal_id : principal;
+  collection_id : nat64;
+  created_at : nat64;
+  nft_description : text;
+  nft_image : vec blob;
+};
+type Result = variant { Ok : Collection; Err : text };
+type Result_1 = variant { Ok : MintResponse; Err : text };
+type Result_2 = variant { Ok : NFT; Err : text };
+type SystemStats = record {
+  total_collections : nat64;
+  total_inscriptions : nat64;
+  total_frys_locked : nat64;
+};
+service : () -> {
+  create_collection : (text) -> (Result);
+  get_collection_floor : (text) -> (opt nat64) query;
+  get_collection_info : (text) -> (opt Collection) query;
+  get_collection_stats : (text) -> (opt Collection) query;
+  get_stats : () -> (SystemStats) query;
+  mint_inscription : (MintRequest) -> (Result_1);
+  mint_nft : (vec blob, nat64, text, nat64) -> (Result_2);
+  payment : (text, float64) -> (text);
+}

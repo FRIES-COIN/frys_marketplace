@@ -89,5 +89,3 @@ async fn payment(id: String, price: f64) -> String {
         }
     }
 }
-
-ic_cdk::export_candid!();
