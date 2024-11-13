@@ -5,7 +5,7 @@ mod payment;
 mod frys_interface;
 
 use candid::candid_method;
-use ic_cdk_macros::*;
+// use ic_cdk_macros::*;
 
 use crate::state::STATE;
 use crate::types::{
@@ -16,7 +16,7 @@ use crate::types::{
 };
 
 // Initialize state
-#[init]
+// #[init]
 #[candid_method(init)]
 fn init() {
     STATE.with(|state| {
@@ -28,7 +28,7 @@ fn init() {
 }
 
 // System stats query
-#[query]
+// #[query]
 #[candid_method(query)]
 fn get_stats() -> SystemStats {
     STATE.with(|state| {
@@ -42,7 +42,7 @@ fn get_stats() -> SystemStats {
 }
 
 // Collection queries
-#[query]
+// #[query]
 #[candid_method(query)]
 fn get_collection_info(name: String) -> Option<Collection> {
     STATE.with(|state| {
@@ -51,7 +51,7 @@ fn get_collection_info(name: String) -> Option<Collection> {
     })
 }
 
-#[query]
+// #[query]
 #[candid_method(query)]
 fn get_collection_floor(name: String) -> Option<u64> {
     STATE.with(|state| {
@@ -60,7 +60,7 @@ fn get_collection_floor(name: String) -> Option<u64> {
     })
 }
 
-#[query]
+// #[query]
 #[candid_method(query)]
 fn get_collection_stats(name: String) -> Option<Collection> {
     STATE.with(|state| {
@@ -69,7 +69,7 @@ fn get_collection_stats(name: String) -> Option<Collection> {
     })
 }
 
-#[update]
+// #[update]
 #[candid_method(update)]
 async fn mint_inscription(request: MintRequest) -> Result<MintResponse, String> {
     let caller = ic_cdk::caller();
