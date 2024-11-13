@@ -98,3 +98,29 @@ export const transferTokens = async (recipientAddress: string, amount: number) =
     throw error;
   }
 };
+
+export const getPrincipalID = async () => {
+  try {
+    const isConnected = await checkConnection();
+    if (!isConnected) {
+      throw new Error('Wallet not connected');
+    }
+    return window.ic.plug.principalId;
+  } catch (error) {
+    console.error("Failed to get principal ID:", error);
+    throw error;
+  }
+};
+
+export const getConnectedWalletAgent = async () => {
+  try {
+    const isConnected = await checkConnection();
+    if (!isConnected) {
+      throw new Error('Wallet not connected');
+    }
+    return window.ic.plug.agent;
+  } catch (error) {
+    console.error("Failed to get connected wallet agent:", error);
+    throw error;
+  }
+} 

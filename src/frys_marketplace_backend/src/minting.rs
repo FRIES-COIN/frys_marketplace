@@ -2,7 +2,7 @@ use candid::{CandidType, Principal};
 use serde::{Deserialize, Serialize};
 use std::cell::RefCell;
 use std::collections::HashMap;
-use ic_cdk::{post_upgrade, pre_upgrade, storage, update};
+use ic_cdk::{post_upgrade, pre_upgrade, storage, update, query};
 
 #[derive(Clone, Debug, CandidType, Serialize, Deserialize)]
 pub struct Collection {
@@ -25,10 +25,10 @@ pub struct NFT {
 }
 
 thread_local! {
-    static COLLECTIONS: RefCell<HashMap<u64, Collection>> = RefCell::new(HashMap::new());
-    static NFTS: RefCell<HashMap<u64, NFT>> = RefCell::new(HashMap::new());
-    static NEXT_COLLECTION_ID: RefCell<u64> = RefCell::new(0);
-    static NEXT_NFT_ID: RefCell<u64> = RefCell::new(0);
+    pub static COLLECTIONS: RefCell<HashMap<u64, Collection>> = RefCell::new(HashMap::new());
+    pub static NFTS: RefCell<HashMap<u64, NFT>> = RefCell::new(HashMap::new());
+    pub static NEXT_COLLECTION_ID: RefCell<u64> = RefCell::new(0);
+    pub static NEXT_NFT_ID: RefCell<u64> = RefCell::new(0);
 }
 
 // #[pre_upgrade]
@@ -119,4 +119,44 @@ fn mint_nft(
     });
 
     Ok(nft)
+}
+
+#[query(name = "get_all_nfts")]
+fn get_all_nfts() -> Vec<NFT> {
+    NFTS.with(|nfts| {
+        nfts.borrow()
+            .values()
+            .cloned()
+            .collect()
+    })
+}
+
+#[query(name = "get_all_collections")]
+fn get_all_collections() -> Vec<Collection> {
+    COLLECTIONS.with(|collections| {
+        collections.borrow()
+            .values()
+            .cloned()
+            .collect()
+    })
+}
+
+#[query(name = "get_collection_nfts")]
+fn get_collection_nfts(collection_id: u64) -> Vec<NFT> {
+    NFTS.with(|nfts| {
+        nfts.borrow()
+            .values()
+            .filter(|nft| nft.collection_id == collection_id)
+            .cloned()
+            .collect()
+    })
+}
+
+#[query(name = "get_nft_by_id")]
+fn get_nft_by_id(nft_id: u64) -> Option<NFT> {
+    NFTS.with(|nfts| {
+        nfts.borrow()
+            .get(&nft_id)
+            .cloned()
+    })
 }

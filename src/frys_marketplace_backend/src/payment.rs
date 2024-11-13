@@ -11,7 +11,7 @@ use std::cell::RefCell;
 use std::collections::HashMap;
 
 #[derive(CandidType, Deserialize, Serialize, Clone)]
-struct Payment {
+pub struct Payment {
     id: String,
     block_height: Nat,
     amount: f64,
@@ -19,24 +19,10 @@ struct Payment {
 }
 
 thread_local! {
-    static PAYMENT_STORE: RefCell<HashMap<String, Payment>> = RefCell::new(HashMap::new());
-    static LEDGER_CANISTER_ID: RefCell<Principal> = RefCell::new(
+    pub static PAYMENT_STORE: RefCell<HashMap<String, Payment>> = RefCell::new(HashMap::new());
+    pub static LEDGER_CANISTER_ID: RefCell<Principal> = RefCell::new(
         Principal::from_text("ryjl3-tyaaa-aaaaa-aaaba-cai").unwrap()
     );
-}
-
-// Persisting storage
-#[pre_upgrade]
-fn pre_upgrade() {
-    let payments = PAYMENT_STORE.with(|store| store.borrow().clone());
-    storage::stable_save((payments,)).expect("Failed to save payments");
-}
-
-#[post_upgrade]
-fn post_upgrade() {
-    let (payments,): (HashMap<String, Payment>,) =
-        storage::stable_restore().expect("Failed to restore payments");
-    PAYMENT_STORE.with(|store| *store.borrow_mut() = payments);
 }
 
 #[update(name = "payment")]
