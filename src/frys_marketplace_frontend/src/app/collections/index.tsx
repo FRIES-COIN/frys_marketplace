@@ -143,6 +143,16 @@ function CollectionCard({ collection }: { collection: ICollection }) {
   );
 }
 
+function LoadingCard() {
+  return (
+    <div className="relative h-[450px] w-[370px] lg:w-[400px] border-[12px] border-white rounded-[20px] overflow-hidden">
+      <div className="animate-pulse bg-gray-300 h-full w-full rounded-[10px]">
+        <div className="h-full w-full bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300 animate-shimmer bg-[length:200%_100%]"></div>
+      </div>
+    </div>
+  );
+}
+
 function CollectionsPage() {
   const [loading, setLoading] = useState(true);
   const [nftImage, setNFTImages] = useState(); 
@@ -205,21 +215,29 @@ function CollectionsPage() {
       </h1>
       <CollectionsHeader />
       <section className="mt-8 md:mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 space-y-2 md:gap-4 md:pl-0 pl-4">
-        {nfts.map((nft) => (
-          <CollectionCard 
-            collection={{
-              id: Number(nft.id),
-              image: nft.image_url,
-              name: nft.nft_description,
-              number: Number(nft.collection_id),
-              price: Number(nft.price_in_icp_tokens) / 100000000, // Convert from e8s to ICP
-              likes: 0, // Add default value or get from backend
-              expiresIn: "24h", // Add default value or get from backend
-              stock: 1 // Add default value or get from backend
-            }} 
-            key={Number(nft.id)} 
-          />
-        ))}
+        {loading ? (
+          <>
+            <LoadingCard />
+            <LoadingCard />
+            <LoadingCard />
+          </>
+        ) : (
+          nfts.map((nft) => (
+            <CollectionCard 
+              collection={{
+                id: Number(nft.id),
+                image: nft.image_url,
+                name: nft.nft_description,
+                number: Number(nft.collection_id),
+                price: Number(nft.price_in_icp_tokens) / 100000000,
+                likes: 0,
+                expiresIn: "24h",
+                stock: 1
+              }} 
+              key={Number(nft.id)} 
+            />
+          ))
+        )}
       </section>
       <div className="flex items-center justify-center my-12">
         <ButtonsCard className="bg-black text-white mt-4 font-body border-none w-1/4 py-4">
