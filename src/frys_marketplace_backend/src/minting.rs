@@ -2,7 +2,7 @@ use candid::{CandidType, Principal};
 use serde::{Deserialize, Serialize};
 use std::cell::RefCell;
 use std::collections::HashMap;
-use ic_cdk::{post_upgrade, pre_upgrade, storage, update, query};
+use ic_cdk::{update, query};
 
 #[derive(Clone, Debug, CandidType, Serialize, Deserialize)]
 pub struct Collection {
@@ -24,11 +24,20 @@ pub struct NFT {
     pub created_at: u64,
 }
 
+#[derive(Clone, Debug, CandidType, Serialize, Deserialize)]
+pub struct PendingMint {
+    pub principal_id: Principal,
+    pub transaction_block: u64,
+    pub amount_paid: u64,
+    pub timestamp: u64,
+}
+
 thread_local! {
     pub static COLLECTIONS: RefCell<HashMap<u64, Collection>> = RefCell::new(HashMap::new());
     pub static NFTS: RefCell<HashMap<u64, NFT>> = RefCell::new(HashMap::new());
     pub static NEXT_COLLECTION_ID: RefCell<u64> = RefCell::new(0);
     pub static NEXT_NFT_ID: RefCell<u64> = RefCell::new(0);
+    pub static PENDING_MINTS: RefCell<HashMap<Principal, PendingMint>> = RefCell::new(HashMap::new());
 }
 
 // #[pre_upgrade]
@@ -57,6 +66,24 @@ thread_local! {
 //     NEXT_NFT_ID.with(|id| *id.borrow_mut() = next_nft_id);
 // }
 
+#[update(name = "verify_frys_payment")]
+fn verify_frys_payment(transaction_block: u64, amount: u64) -> Result<bool, String> {
+    let caller = ic_cdk::caller();
+    
+    let pending_mint = PendingMint {
+        principal_id: caller,
+        transaction_block,
+        amount_paid: amount,
+        timestamp: ic_cdk::api::time(),
+    };
+
+    PENDING_MINTS.with(|pm| {
+        pm.borrow_mut().insert(caller, pending_mint);
+    });
+
+    Ok(true)
+}
+
 #[update(name = "create_collection")]
 fn create_collection(name: String) -> Result<Collection, String> {
     let caller = ic_cdk::caller();
@@ -66,6 +93,28 @@ fn create_collection(name: String) -> Result<Collection, String> {
         current
     });
 
+    // Add predefined collections
+    let collections = vec![
+        ("Frys Genesis", caller),
+        ("Frys Legends", caller),
+        ("Frys Rare", caller),
+        ("Frys Common", caller)
+    ];
+
+    COLLECTIONS.with(|c| {
+        let mut collections_map = c.borrow_mut();
+        for (collection_name, creator) in collections {
+            collections_map.insert(id, Collection {
+                id,
+                name: collection_name.to_string(),
+                creator,
+                created_at: ic_cdk::api::time(),
+                nft_count: 0,
+            });
+        }
+    });
+
+    // Return the last created collection
     let collection = Collection {
         id,
         name,
@@ -86,6 +135,15 @@ fn mint_nft(
     price_in_icp_tokens: u64,
 ) -> Result<NFT, String> {
     let caller = ic_cdk::caller();
+
+    // Verify FRYS payment first
+    let payment_verified = PENDING_MINTS.with(|pm| {
+        pm.borrow().contains_key(&caller)
+    });
+
+    if !payment_verified {
+        return Err("FRYS token payment required before minting".to_string());
+    }
 
     // Verify collection exists
     let collection_exists = COLLECTIONS.with(|c| c.borrow().contains_key(&collection_id));

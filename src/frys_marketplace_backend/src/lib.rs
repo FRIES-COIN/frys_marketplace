@@ -8,14 +8,14 @@ mod minting;
 use std::collections::HashMap;
 
 use crate::minting::Collection;
-use candid::candid_method;
+use candid::Principal;
 use minting::NFTS;
-use minting::{ COLLECTIONS, NFT, NEXT_COLLECTION_ID, NEXT_NFT_ID };
+use minting::{ COLLECTIONS, NFT, NEXT_COLLECTION_ID, NEXT_NFT_ID, PendingMint, PENDING_MINTS };
 use payment::Payment;
 use payment::PAYMENT_STORE;
 // use ic_cdk_macros::*;
 
-use crate::state::STATE;
+// use crate::state::STATE;
 use ic_cdk::{post_upgrade, pre_upgrade, storage };
 
 // use crate::types::{
@@ -108,25 +108,40 @@ use ic_cdk::{post_upgrade, pre_upgrade, storage };
 // }
 
 // Persisting storage
-#[pre_upgrade]
+// #[pre_upgrade]
 fn pre_upgrade() {
-    let payments = PAYMENT_STORE.with(|store| store.borrow().clone());
-    storage::stable_save((payments,)).expect("Failed to save payments");
+    // Create empty state if this is first deployment
+    let state = (
+        PAYMENT_STORE.with(|store| store.borrow().clone()),
+        COLLECTIONS.with(|c| c.borrow().clone()),
+        NFTS.with(|n| n.borrow().clone()),
+        PENDING_MINTS.with(|pm| pm.borrow().clone()),
+        NEXT_COLLECTION_ID.with(|id| *id.borrow()),
+        NEXT_NFT_ID.with(|id| *id.borrow())
+    );
     
-    let collections = COLLECTIONS.with(|c| c.borrow().clone());
-    let nfts = NFTS.with(|n| n.borrow().clone());
-    let next_collection_id = NEXT_COLLECTION_ID.with(|id| *id.borrow());
-    let next_nft_id = NEXT_NFT_ID.with(|id| *id.borrow());
-    
-    storage::stable_save((collections, nfts, next_collection_id, next_nft_id))
-        .expect("Failed to save state");
+    storage::stable_save((state,)).expect("Failed to save state");
 }
 
-#[post_upgrade]
+// #[post_upgrade]
 fn post_upgrade() {
-    let (payments,): (HashMap<String, Payment>,) =
-        storage::stable_restore().expect("Failed to restore payments");
+    let (state,): ((
+        HashMap<String, Payment>,
+        HashMap<u64, Collection>,
+        HashMap<u64, NFT>,
+        HashMap<Principal, PendingMint>,
+        u64,
+        u64
+    ),) = storage::stable_restore().expect("Failed to restore state");
+
+    let (payments, collections, nfts, pending_mints, next_collection_id, next_nft_id) = state;
+
     PAYMENT_STORE.with(|store| *store.borrow_mut() = payments);
+    COLLECTIONS.with(|c| *c.borrow_mut() = collections);
+    NFTS.with(|n| *n.borrow_mut() = nfts);
+    PENDING_MINTS.with(|pm| *pm.borrow_mut() = pending_mints);
+    NEXT_COLLECTION_ID.with(|id| *id.borrow_mut() = next_collection_id);
+    NEXT_NFT_ID.with(|id| *id.borrow_mut() = next_nft_id);
 }
 
 ic_cdk::export_candid!(); 

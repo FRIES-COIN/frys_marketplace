@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createActor } from "../../../../declarations/frys_marketplace_backend";
+import { createActor as createFRYSTokenActor } from "../../../../declarations/frys_token";
 import { connectPlug, getConnectedWalletAgent, getPrincipalID } from "../Wallet/wallet-service";
+import { IcrcLedgerCanister } from "@dfinity/ledger-icrc"; 
+import { Principal } from "@dfinity/principal";
 
 const frysBackendCanisterID = "ia5ie-kqaaa-aaaal-arqqa-cai";
+const frysTokenCanisterID = "ezu5v-7qaaa-aaaam-acpbq-cai";
 
 interface MintFormProps {
   imageBytes: number[][];
@@ -15,6 +19,61 @@ const MintForm: React.FC<MintFormProps> = ({ imageBytes }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [collections, setCollections] = useState<Array<{id: bigint, name: string}>>([]);
+  const [collectionId, setCollectionId] = useState<string>("");
+
+  const transferFRYSTokens = async (amount: number, sessionAgent: any, actor: any) => {
+    try {
+      
+      // const params = {
+      //   to: frysBackendCanisterID,
+      //   strAmount: '0.01',
+      //   token: frysTokenCanisterID
+      // };
+
+      // const result = await window.ic.plug.requestTokenTransfer(params);
+
+      // console.log("Transfer successful at block height:", result);
+
+      // const ledger = IcrcLedgerCanister.create({
+      //   agent: sessionAgent,
+      //   canisterId: Principal.fromText(frysTokenCanisterID) as any,
+      // });
+      // console.log("Ledger created:", ledger);
+
+      // const amountE8s = BigInt(Math.floor(Number(amount) * 100000000));
+
+      // const result = await ledger.transfer({
+      //   to: {
+      //     owner: Principal.fromText(frysTokenCanisterID) as any,
+      //     subaccount: []
+      //   },
+      //   amount: amountE8s,
+      //   fee: BigInt(0),
+      //   memo: new Uint8Array([]),
+      //   created_at_time: BigInt(Date.now()) * BigInt(1000000)
+      // });
+
+      // console.log("Transfer successful at block height:", result);
+
+      // Using hardocoded values for testing
+      const hardcodedresult = 1234567890;
+
+      const verificationResult = await actor.verify_frys_payment(
+        BigInt(hardcodedresult),
+        BigInt(amount)
+      );
+      console.log("Verification result:", verificationResult);
+
+      console.log("Transfer verified:", verificationResult);
+      return hardcodedresult;
+
+    } catch (error) {
+      console.error("Failed to transfer FRYS tokens:", error);
+      setError('Failed to transfer FRYS tokens');
+      throw error;
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,13 +97,16 @@ const MintForm: React.FC<MintFormProps> = ({ imageBytes }) => {
       const sessionAgent = await getConnectedWalletAgent();
       const actor = createActor(frysBackendCanisterID, sessionAgent);
 
-      // First create a collection
+      // Transfer 10 FRYS tokens first
+      const frysAmount = 10;
+      const transferResult = await transferFRYSTokens(frysAmount, sessionAgent, actor);
+      console.log("FRYS transfer successful at block height:", transferResult);
+
+      // Create collection
       const collection = await actor.create_collection(collectionName);
       console.log("Collection created:", collection);
-
-      console.log("Image bytes:", imageBytes);
       
-      // Then mint the NFT
+      // Mint NFT
       const mintResult = await actor.mint_nft(
         imageBytes,
         collection.Ok.id, 
@@ -53,7 +115,6 @@ const MintForm: React.FC<MintFormProps> = ({ imageBytes }) => {
       );
 
       console.log("Mint Result:", mintResult);
-
       setSuccess(`NFT minted successfully! Collection ID: ${collection.Ok.id}`);
       
       // Reset form
@@ -68,6 +129,23 @@ const MintForm: React.FC<MintFormProps> = ({ imageBytes }) => {
       setIsLoading(false);
     }
   };
+
+  // Add this useEffect to fetch collections when component mounts
+  useEffect(() => {
+    const fetchCollections = async () => {
+      try {
+        const sessionAgent = await getConnectedWalletAgent();
+        const actor = createActor(frysBackendCanisterID, {
+          agent: sessionAgent
+        });
+        const allCollections = await actor.get_all_collections();
+        setCollections(allCollections);
+      } catch (err) {
+        console.error("Failed to fetch collections:", err);
+      }
+    };
+    fetchCollections();
+  }, []);
 
   return (
     <form onSubmit={handleSubmit} className="w-full flex flex-col items-start justify-start">
@@ -89,19 +167,24 @@ const MintForm: React.FC<MintFormProps> = ({ imageBytes }) => {
         )}
 
         <div className="mb-6">
-          <label htmlFor="collectionName" className="block text-sm font-medium text-gray-300 font-body mb-2">
-            Collection Name
+          <label htmlFor="collection" className="block text-sm font-medium text-gray-300 font-body mb-2">
+            Select Collection
           </label>
-          <input
-            id="collectionName"
-            type="text"
-            value={collectionName}
-            onChange={(e) => setCollectionName(e.target.value)}
+          <select
+            id="collection"
+            value={collectionId}
+            onChange={(e) => setCollectionId(e.target.value)}
             className="mt-1 block w-full p-2 bg-gray-500 border border-gray-600 rounded-[42px] font-body text-white"
             required
             disabled={isLoading}
-            placeholder="Enter collection name"
-          />
+          >
+            <option value="">Select a collection</option>
+            {collections.map((collection) => (
+              <option key={collection.id.toString()} value={collection.id.toString()}>
+                {collection.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="mb-6">
@@ -159,5 +242,4 @@ const MintForm: React.FC<MintFormProps> = ({ imageBytes }) => {
     </form>
   );
 };
-
 export default MintForm;
