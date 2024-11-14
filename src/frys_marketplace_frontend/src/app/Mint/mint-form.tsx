@@ -81,6 +81,12 @@ const MintForm: React.FC<MintFormProps> = ({ imageBytes }) => {
     setError(null);
     setSuccess(null);
 
+    if (!collectionId) {
+      setError("Please select a collection");
+      setIsLoading(false);
+      return;
+    }
+
     if (price === undefined) {
       setError("Please enter a price");
       setIsLoading(false);
@@ -101,24 +107,20 @@ const MintForm: React.FC<MintFormProps> = ({ imageBytes }) => {
       const frysAmount = 10;
       const transferResult = await transferFRYSTokens(frysAmount, sessionAgent, actor);
       console.log("FRYS transfer successful at block height:", transferResult);
-
-      // Create collection
-      const collection = await actor.create_collection(collectionName);
-      console.log("Collection created:", collection);
       
-      // Mint NFT
+      // Mint NFT with selected collection ID
       const mintResult = await actor.mint_nft(
         imageBytes,
-        collection.Ok.id, 
+        BigInt(collectionId), 
         imageDescription,
         BigInt(price! * 1e8)
       );
 
       console.log("Mint Result:", mintResult);
-      setSuccess(`NFT minted successfully! Collection ID: ${collection.Ok.id}`);
+      setSuccess(`NFT minted successfully! Collection ID: ${collectionId}`);
       
       // Reset form
-      setCollectionName("");
+      setCollectionId("");
       setImageDescription("");
       setPrice(undefined);
 
@@ -129,6 +131,7 @@ const MintForm: React.FC<MintFormProps> = ({ imageBytes }) => {
       setIsLoading(false);
     }
   };
+
 
   // Add this useEffect to fetch collections when component mounts
   useEffect(() => {
