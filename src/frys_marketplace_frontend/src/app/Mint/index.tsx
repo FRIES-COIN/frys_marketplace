@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MintForm from "./mint-form";
 import { IconCloudUpload } from "@tabler/icons-react";
 
