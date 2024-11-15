@@ -8,6 +8,7 @@ import {
   IconRosetteDiscountFilled,
   IconWallet,
 } from "@tabler/icons-react";
+import { Principal } from '@dfinity/principal';
 import { collections, ICollection } from "./collections";
 import { ButtonsCard } from "../../../components/ui/tailwindcss-buttons";
 import { useEffect, useState } from "react";
@@ -155,24 +156,25 @@ function LoadingCard() {
 
 function CollectionsPage() {
   const [loading, setLoading] = useState(true);
-  const [nftImage, setNFTImages] = useState(); 
+  const [nftImage, setNFTImages] = useState();
   const [nfts, setNfts] = useState<Array<{
     id: bigint;
     collection_id: bigint;
     nft_description: string;
     price_in_icp_tokens: bigint;
     created_at: bigint;
-    minter_principal_id: string;
+    minter_principal_id: Principal;
     image_url: string;
+    nft_image: Array<Uint8Array | number[]>;
   }>>([]);
-  
+
   useEffect(() => {
     fetchNFTs();
   }, []);
 
   const fetchNFTs = async () => {
     try {
-      const connectedWallet = await connectPlug(); 
+      const connectedWallet = await connectPlug();
       if (!connectedWallet) {
         console.error("No connected wallet found.");
         return;
@@ -180,24 +182,24 @@ function CollectionsPage() {
       const sessionAgent = await getConnectedWalletAgent();
       const actor = createActor(frysBackendCanisterID, sessionAgent);
       const allNFTs = await actor.get_all_nfts();
-      
+
       const processedNFTs = allNFTs.map(nft => {
         const byteArray = Object.values(nft.nft_image[0]);
         const uint8Array = new Uint8Array(byteArray);
-        
+
         let binaryString = '';
         uint8Array.forEach(byte => {
           binaryString += String.fromCharCode(byte);
         });
         const base64String = btoa(binaryString);
         const imageUrl = `data:image/jpeg;base64,${base64String}`;
-        
+
         return {
           ...nft,
           image_url: imageUrl
         };
       });
-  
+
       setNfts(processedNFTs);
     } catch (error) {
       console.error("Failed to fetch NFTs:", error);
@@ -206,7 +208,7 @@ function CollectionsPage() {
     }
   };
 
-  console.log("NFTs:", nfts); 
+  console.log("NFTs:", nfts);
 
   return (
     <div className="bg-primary max-w-[96rem] mx-auto my-0 rounded-3xl px-4 pt-6 pb-4">
@@ -223,9 +225,9 @@ function CollectionsPage() {
           </>
         ) : (
           nfts.map((nft) => (
-            <CollectionCard 
+            <CollectionCard
               collection={{
-                id: Number(nft.id),
+                id: String(nft.id),
                 image: nft.image_url,
                 name: nft.nft_description,
                 number: Number(nft.collection_id),
@@ -233,8 +235,8 @@ function CollectionsPage() {
                 likes: 0,
                 expiresIn: "24h",
                 stock: 1
-              }} 
-              key={Number(nft.id)} 
+              }}
+              key={String(nft.id)}
             />
           ))
         )}

@@ -11,6 +11,7 @@ declare global {
         createAgent: (args?: any) => Promise<void>;
         requestBalance: () => Promise<Array<{amount: number, symbol: string}>>;
         principal: Principal;
+        agent: any;
         requestTransfer: (arg: {
           to: string,
           amount: number,
@@ -90,7 +91,7 @@ export const transferTokens = async (recipientAddress: string, amount: number) =
     if (!isConnected) {
       throw new Error('Wallet not connected');
     }
-    
+
     const result = await initiatePayment(recipientAddress, amount);
     return result;
   } catch (error) {
@@ -105,7 +106,7 @@ export const getPrincipalID = async () => {
     if (!isConnected) {
       throw new Error('Wallet not connected');
     }
-    return window.ic.plug.principalId;
+    return window.ic.plug.principal;
   } catch (error) {
     console.error("Failed to get principal ID:", error);
     throw error;
@@ -118,9 +119,9 @@ export const getConnectedWalletAgent = async () => {
     if (!isConnected) {
       throw new Error('Wallet not connected');
     }
-    return window.ic.plug.agent;
+    return (window.ic.plug as any).agent;
   } catch (error) {
     console.error("Failed to get connected wallet agent:", error);
     throw error;
   }
-} 
+}
