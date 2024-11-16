@@ -116,7 +116,7 @@ function Navbar() {
           </Link>
           <div className="flex items-center space-x-4 mx-2">
             <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center">
-              <Link to="/profile">
+              <Link to="/profile" onClick={() => setIsOpen(!isOpen)}>
                 <img
                   src={avatar}
                   alt="Profile"
@@ -127,17 +127,17 @@ function Navbar() {
               </Link>
             </div>
             {/* Desktop Cook button */}
-            <Link to="/profile">
+            {/* <Link to="/profile">
               <button className="bg-transparent border-[2.66px] border-[#ffa503] font-body rounded-[17.47px] text-white px-4 py-2 flex items-center hover:bg-[#ffa503] hover:text-black transition-all duration-500">
                 <span className="mr-2">COOK</span>
                 <FaRocket />
               </button>
-            </Link>
+            </Link> */}
 
             {/* Mobile Cook button */}
-            <Link to="/profile">
+            <Link to="/mint" onClick={() => setIsOpen(!isOpen)}>
               <button className="bg-transparent border-[2.66px] border-[#ffa503] font-body rounded-[17.47px] text-white px-4 py-2 flex items-center hover:bg-[#ffa503] hover:text-black transition-all duration-500">
-                <span className="mr-2 text-2xl">COOK</span>
+                <span className="mr-2 font-body font-bold text-2xl">COOK</span>
                 <FaRocket />
               </button>
             </Link>

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { createActor } from "../../../../declarations/frys_marketplace_backend";
 import { getConnectedWalletAgent, connectPlug } from "../Wallet/wallet-service";
-
 import { Card, CardContent } from "../../../components/ui/card";
 import {
   Carousel,
