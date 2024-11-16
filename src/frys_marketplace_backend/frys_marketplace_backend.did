@@ -1,1 +1,29 @@
-service : { payment : (text, float64) -> (text) }
+type Collection = record {
+  id : nat64;
+  creator : principal;
+  name : text;
+  created_at : nat64;
+  nft_count : nat64;
+};
+type NFT = record {
+  id : nat64;
+  price_in_icp_tokens : nat64;
+  minter_principal_id : principal;
+  collection_id : nat64;
+  created_at : nat64;
+  nft_description : text;
+  nft_image : vec blob;
+};
+type Result = variant { Ok : Collection; Err : text };
+type Result_1 = variant { Ok : NFT; Err : text };
+type Result_2 = variant { Ok : bool; Err : text };
+service : {
+  create_collection : (text) -> (Result);
+  get_all_collections : () -> (vec Collection) query;
+  get_all_nfts : () -> (vec NFT) query;
+  get_collection_nfts : (nat64) -> (vec NFT) query;
+  get_nft_by_id : (nat64) -> (opt NFT) query;
+  mint_nft : (vec blob, nat64, text, nat64) -> (Result_1);
+  payment : (text, float64) -> (text);
+  verify_frys_payment : (nat64, nat64) -> (Result_2);
+}
