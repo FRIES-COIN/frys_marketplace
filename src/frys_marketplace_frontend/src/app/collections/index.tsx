@@ -208,7 +208,7 @@ function CollectionsPage() {
     }
   };
 
-  console.log("NFTs:", nfts);
+  // console.log("NFTs:", nfts);
 
   return (
     <div className="bg-primary max-w-[96rem] mx-auto my-0 rounded-3xl px-4 pt-6 pb-4">
