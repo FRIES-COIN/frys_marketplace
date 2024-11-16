@@ -12,6 +12,7 @@ import {
 } from "../../../components/ui/carousel";
 import { collections, ICollection } from "../collections/collections";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const frysBackendCanisterID = "ia5ie-kqaaa-aaaal-arqqa-cai";
 
@@ -76,8 +77,15 @@ export function CarouselSize() {
       className="w-full max-w-7xl"
     >
       {nfts.length === 0 && (
-        <div className="flex items-center justify-center h-96">
-          <h1 className="text-2xl font-body">No NFTs found.</h1>
+        <div className="flex flex-col items-center justify-center h-96 p-2">
+          <h1 className="text-base font-body">
+            You have not minted any NFTs yet😔
+          </h1>
+          <Link to="/mint" className="text-blue-500 font-bold ml-2">
+            <button className="bg-black text-white font-bold py-2 px-8 rounded-md my-4 font-body">
+              Mint NFT
+            </button>
+          </Link>
         </div>
       )}
       <CarouselContent className="w-full">
