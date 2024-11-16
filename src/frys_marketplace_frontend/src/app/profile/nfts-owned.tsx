@@ -75,6 +75,11 @@ export function CarouselSize() {
       }}
       className="w-full max-w-7xl"
     >
+      {nfts.length === 0 && (
+        <div className="flex items-center justify-center h-96">
+          <h1 className="text-2xl font-body">No NFTs found.</h1>
+        </div>
+      )}
       <CarouselContent className="w-full">
         {nfts.map((nft: any, index) => (
           <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
