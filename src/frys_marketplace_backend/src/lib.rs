@@ -13,6 +13,7 @@ use minting::NFTS;
 use minting::{ COLLECTIONS, NFT, NEXT_COLLECTION_ID, NEXT_NFT_ID, PendingMint, PENDING_MINTS };
 use payment::Payment;
 use payment::PAYMENT_STORE;
+use crate::payment::TokenType;
 // use ic_cdk_macros::*;
 
 // use crate::state::STATE;
@@ -144,4 +145,4 @@ fn post_upgrade() {
     NEXT_NFT_ID.with(|id| *id.borrow_mut() = next_nft_id);
 }
 
-ic_cdk::export_candid!(); 
+ic_cdk::export_candid!();
