@@ -52,6 +52,7 @@ function WalletTab() {
   const [balance, setBalance] = useState<Array<{ amount: number, symbol: string }>>([]);
   const [recipientAddress, setRecipientAddress] = useState('');
   const [amount, setAmount] = useState(0);
+  const [selectedToken, setSelectedToken] = useState<'ICP' | 'ckBTC'>('ICP');
 
   useEffect(() => {
     const fetchBalance = async () => {
@@ -63,7 +64,7 @@ function WalletTab() {
 
   const handleTransfer = async () => {
     try {
-      const result = await transferTokens(recipientAddress, amount);
+      const result = await transferTokens(recipientAddress, amount, selectedToken);
       alert('Transfer successful!');
       setRecipientAddress('');
       setAmount(0);
@@ -90,13 +91,13 @@ function WalletTab() {
             <SelectValue placeholder="Choose token" className="flex items-center gap-2 placeholder:text-gray-500" />
           </SelectTrigger>
           <SelectContent className="bg-[#202020] w-[14rem] border-none">
-            <SelectItem value="btc" className="flex items-center gap-2 justify-between w-full mt-4">
+            <SelectItem value="btc" onClick={() => setSelectedToken('ckBTC')} className="flex items-center gap-2 justify-between w-full mt-4">
               <div className="w-full flex flex-row items-center gap-2">
                 <img src={btc} alt="btc" className="w-8 h-8" />
                 <p className="uppercase font-body font-semibold text-gray-500">btc</p>
               </div>
             </SelectItem>
-            <SelectItem value="icp" className="flex items-center gap-2 justify-between w-full mt-4">
+            <SelectItem value="ICP" onClick={() => setSelectedToken('ICP')} className="flex items-center gap-2 justify-between w-full mt-4">
               <div className="w-full flex flex-row items-center gap-2">
                 <img src={icp} alt="icp" className="w-8 h-8" />
                 <p className="uppercase font-body font-semibold text-gray-500">icp</p>

@@ -17,6 +17,7 @@ type NFT = record {
 type Result = variant { Ok : Collection; Err : text };
 type Result_1 = variant { Ok : NFT; Err : text };
 type Result_2 = variant { Ok : bool; Err : text };
+type TokenType = variant { ICP; CKBTC };
 service : {
   create_collection : (text) -> (Result);
   get_all_collections : () -> (vec Collection) query;
@@ -24,6 +25,6 @@ service : {
   get_collection_nfts : (nat64) -> (vec NFT) query;
   get_nft_by_id : (nat64) -> (opt NFT) query;
   mint_nft : (vec blob, nat64, text, nat64) -> (Result_1);
-  payment : (text, float64) -> (text);
+  payment : (text, float64, TokenType) -> (text);
   verify_frys_payment : (nat64, nat64) -> (Result_2);
 }
