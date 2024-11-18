@@ -1,3 +1,4 @@
+import { Principal } from "@dfinity/principal";
 import {
   IconArrowsSort,
   IconBulbFilled,
@@ -197,6 +198,7 @@ function CollectionsPage() {
         return {
           ...nft,
           image_url: imageUrl,
+          minter_principal_id: nft.minter_principal_id.toText(),
         };
       });
 
@@ -227,7 +229,7 @@ function CollectionsPage() {
           nfts.map((nft) => (
             <CollectionCard
               collection={{
-                id: Number(nft.id),
+                id: nft.id.toString(),
                 image: nft.image_url,
                 name: nft.nft_description,
                 number: Number(nft.collection_id),

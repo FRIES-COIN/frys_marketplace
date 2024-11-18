@@ -58,6 +58,7 @@ export function CarouselSize() {
         return {
           ...nft,
           image_url: imageUrl,
+          minter_principal_id: nft.minter_principal_id.toText(),
         };
       });
 

@@ -5,18 +5,10 @@
       "package": "frys_marketplace_backend",
       "type": "rust"
     },
-    "frys_token": {
-      "candid": "src/frys_token/frys_token.did",
-      "package": "frys_token",
-      "type": "rust"
-    },
+
     "frys_marketplace_frontend": {
-      "dependencies": [
-        "frys_marketplace_backend"
-      ],
-      "source": [
-        "src/frys_marketplace_frontend/dist"
-      ],
+      "dependencies": ["frys_marketplace_backend"],
+      "source": ["src/frys_marketplace_frontend/dist"],
       "type": "assets",
       "workspace": "frys_marketplace_frontend"
     }

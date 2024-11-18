@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { createActor } from "../../../../declarations/frys_marketplace_backend";
-import { createActor as createFRYSTokenActor } from "../../../../declarations/frys_token";
 import {
   connectPlug,
   getConnectedWalletAgent,
   getPrincipalID,
 } from "../Wallet/wallet-service";
-import { IcrcLedgerCanister } from "@dfinity/ledger-icrc";
-import { Principal } from "@dfinity/principal";
 
 const frysBackendCanisterID = "ia5ie-kqaaa-aaaal-arqqa-cai";
 const frysTokenCanisterID = "ezu5v-7qaaa-aaaam-acpbq-cai";
