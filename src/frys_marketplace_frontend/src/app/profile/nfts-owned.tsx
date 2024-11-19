@@ -47,7 +47,6 @@ export function CarouselSize() {
       const processedNFTs = allNFTs.map((nft) => {
         const byteArray = Object.values(nft.nft_image[0]);
         const uint8Array = new Uint8Array(byteArray);
-
         let binaryString = "";
         uint8Array.forEach((byte) => {
           binaryString += String.fromCharCode(byte);

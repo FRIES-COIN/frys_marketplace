@@ -1,31 +1,36 @@
-import {useState} from "react";
+import { useState } from "react";
 import { cn } from "../../../lib/utils";
 import { NFT } from "./nft-data";
 import gif from "../../../public/gif.gif";
 import { AvatarsCard } from "./avatar-card";
-import { connectPlug, processPayment } from '../Wallet/wallet-service';
+import { connectPlug, processPayment } from "../Wallet/wallet-service";
 
 function NFTCard({ nft }: { nft: NFT }) {
-  const [selectedToken, setSelectedToken] = useState<'ICP' | 'ckBTC'>('ICP');
+  const [selectedToken, setSelectedToken] = useState<"ICP" | "ckBTC">("ICP");
 
   const handleBuyClick = async () => {
     try {
       // First ensure wallet is connected
       const connected = await connectPlug();
       if (!connected) {
-        console.log('Please connect your wallet first');
+        console.log("Please connect your wallet first");
         return;
       }
 
       // Process the payment with selected token
-      const tokenObject = selectedToken === 'ICP' ? { ICP: null } : { CKBTC: null };
-      const result = await processPayment(nft.id.toString(), nft.price, tokenObject);
-      console.log('Purchase successful:', result);
+      const tokenObject =
+        selectedToken === "ICP" ? { ICP: null } : { CKBTC: null };
+      const result = await processPayment(
+        nft.id.toString(),
+        nft.price,
+        tokenObject
+      );
+      console.log("Purchase successful:", result);
     } catch (error) {
-      console.error('Purchase failed:', error);
+      console.error("Purchase failed:", error);
     }
   };
-  
+
   return (
     <div className="md:max-w-sm max-w-xl w-full my-2 h-[400px]">
       <div
@@ -58,15 +63,21 @@ function NFTCard({ nft }: { nft: NFT }) {
                 {nft.price} ICP
               </p>
               <div>
-                <select 
-                  value={selectedToken} 
-                  onChange={(e) => setSelectedToken(e.target.value as 'ICP' | 'ckBTC')}
-                  className="mr-2 rounded-xl px-2 py-1"
+                <select
+                  value={selectedToken}
+                  onChange={(e) =>
+                    setSelectedToken(e.target.value as "ICP" | "ckBTC")
+                  }
+                  className="mr-2 rounded-xl px-2 py-2 text-white font-bold font-body bg-transparent border-2 border-primary"
                 >
-                  <option value="ICP">ICP</option>
-                  <option value="ckBTC">ckBTC</option>
+                  <option value="ICP" className="mx-2">
+                    ICP
+                  </option>
+                  <option value="ckBTC" className="mx-2">
+                    ckBTC
+                  </option>
                 </select>
-                <button 
+                <button
                   onClick={handleBuyClick}
                   className="border-primary border-[2px] text-white rounded-xl py-2 px-8 font-body font-semibold hover:bg-primary transition-colors"
                 >
