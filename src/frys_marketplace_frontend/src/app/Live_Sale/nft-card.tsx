@@ -1,11 +1,18 @@
 import { useState } from "react";
 import { cn } from "../../../lib/utils";
-import { NFT } from "./nft-data";
-import gif from "../../../public/gif.gif";
-import { AvatarsCard } from "./avatar-card";
 import { connectPlug, processPayment } from "../Wallet/wallet-service";
+import { LoadingCard } from "../collections";
+export interface INFT {
+  id: bigint;
+  collection_id: bigint;
+  nft_description: string;
+  price_in_icp_tokens: bigint;
+  created_at: bigint;
+  minter_principal_id: string;
+  image_url: string;
+}
 
-function NFTCard({ nft }: { nft: NFT }) {
+function NFTCard({ nft, loading }: { nft: INFT; loading: boolean }) {
   const [selectedToken, setSelectedToken] = useState<"ICP" | "ckBTC">("ICP");
 
   const handleBuyClick = async () => {
@@ -22,7 +29,7 @@ function NFTCard({ nft }: { nft: NFT }) {
         selectedToken === "ICP" ? { ICP: null } : { CKBTC: null };
       const result = await processPayment(
         nft.id.toString(),
-        nft.price,
+        Number(nft.price_in_icp_tokens),
         tokenObject
       );
       console.log("Purchase successful:", result);
@@ -44,25 +51,29 @@ function NFTCard({ nft }: { nft: NFT }) {
           `bg-cover`
         )}
         style={{
-          backgroundImage: `url(${nft.image})`,
+          backgroundImage: `url(${nft.image_url})`,
         }}
       >
-        <div className="relative z-50 backdrop-blur-lg w-full p-2 rounded-xl">
-          <div className="w-1/2 mb-[-36px]">
-            <AvatarsCard avatars={nft.avatars} />
+        <div className="relative z-50 backdrop-blur-lg w-full p-2 rounded-xl h-1/3">
+          <div className="-mb-4">
+            <h1 className="text-white text-xl font-bold font-body">
+              #{Number(nft.collection_id)}
+            </h1>
           </div>
           <div className="flex items-center justify-between">
             <div className="px-2">
-              <h1 className="text-white text-lg font-bold font-body">
-                {nft.name}
+              <h1 className="text-white text-sm font-bold font-body">
+                {nft.nft_description}
               </h1>
-              <h1 className="text-primary font-body underline">{nft.chef}</h1>
+              <h1 className="text-primary font-body underline cursor-pointer">
+                {nft.minter_principal_id.substring(0, 8)}...
+              </h1>
             </div>
             <div>
               <p className="text-white text-xl font-bold font-body text-center my-2">
-                {nft.price} ICP
+                {Number(nft.price_in_icp_tokens) / 100000000} ICP
               </p>
-              <div>
+              <div className="flex items-center gap-1">
                 <select
                   value={selectedToken}
                   onChange={(e) =>

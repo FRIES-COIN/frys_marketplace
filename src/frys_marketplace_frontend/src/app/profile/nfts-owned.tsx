@@ -75,7 +75,7 @@ export function CarouselSize() {
       }}
       className="w-full max-w-7xl"
     >
-      {nfts.length === 0 && (
+      {!loading && nfts.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-96 p-2">
           <h1 className="text-base font-body">
             You have not minted any NFTs yet😔
@@ -86,7 +86,13 @@ export function CarouselSize() {
             </button>
           </Link>
         </div>
-      )}
+      ) : null}
+      {loading ? (
+        <div className="flex justify-center items-center mt-12">
+          <span className="loading loading-infinity loading-lg bg-black"></span>
+        </div>
+      ) : null}
+
       <CarouselContent className="w-full">
         {nfts.map((nft: any, index) => (
           <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
