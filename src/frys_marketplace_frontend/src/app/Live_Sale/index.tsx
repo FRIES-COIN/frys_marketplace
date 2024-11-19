@@ -70,6 +70,11 @@ function LiveSale() {
             <span className="loading loading-infinity loading-lg bg-primary"></span>
           </div>
         ) : null}
+        {nfts.length === 0 && !loading ? (
+          <div className="w-full flex justify-center items-center">
+            <span className="text-lg text-gray-500">No NFTs available</span>
+          </div>
+        ) : null}
         <div className="md:grid flex items-center justify-center flex-col md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 w-full">
           {nfts.map((nft: INFT) => (
             <NFTCard nft={nft} key={nft.id} loading={loading} />
