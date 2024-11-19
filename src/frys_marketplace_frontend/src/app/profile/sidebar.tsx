@@ -25,9 +25,11 @@ import btc from "../../../public/btc.svg";
 import icp from "../../../public/icp.svg";
 import eth from "../../../public/eth.svg";
 import frys from "../../../public/frys.jpeg";
+import { QRCodeSVG } from 'qrcode.react';
 import qr from "../../../public/qr.png";
 import { Button } from "../../../components/ui/button";
 import { getBalance, transferTokens } from "../Wallet/wallet-service";
+import { getPrincipalID } from "../Wallet/wallet-service";
 
 //NFT TAB COMPONENT
 function NFTTab() {
@@ -54,6 +56,7 @@ function WalletTab() {
   const [recipientAddress, setRecipientAddress] = useState("");
   const [amount, setAmount] = useState(0);
   const [selectedToken, setSelectedToken] = useState<'ICP' | 'ckBTC'>('ICP');
+  const [principalId, setPrincipalId] = useState<string>('');
 
   useEffect(() => {
     const fetchBalance = async () => {
@@ -61,6 +64,18 @@ function WalletTab() {
       setBalance(walletBalance);
     };
     fetchBalance();
+  }, []);
+
+  useEffect(() => {
+    const fetchPrincipalId = async () => {
+      try {
+        const id = await getPrincipalID();
+        setPrincipalId(id);
+      } catch (error) {
+        console.error('failed to get principal Id');
+      }
+    };
+    fetchPrincipalId();
   }, []);
 
   const handleTransfer = async () => {
@@ -157,9 +172,14 @@ function WalletTab() {
       </div>
 
       <div>
-        <img
-          src={qr}
+      <QRCodeSVG
+          value={principalId}
           className="xl:w-[15%] md:w-[20%] h-56 md:h-auto mx-auto mt-8 rounded-md"
+          size={224}
+          bgColor={"#ffffff"}
+          fgColor={"#000000"}
+          level={"L"}
+          includeMargin={false}
         />
       </div>
 
@@ -187,7 +207,7 @@ function WalletTab() {
         >
           Send
         </Button>
-        <Button className="bg-primary text-white w-1/4 mx-auto mt-4 font-body">
+        <Button onClick={handleReceive} className="bg-primary text-white w-1/4 mx-auto mt-4 font-body">
           Receive
         </Button>
       </div>
