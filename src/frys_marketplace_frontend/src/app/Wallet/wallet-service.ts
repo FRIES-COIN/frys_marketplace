@@ -2,6 +2,9 @@ import { Actor } from '@dfinity/agent';
 import { Principal } from '@dfinity/principal';
 import { frys_marketplace_backend } from '../../../../declarations/frys_marketplace_backend';
 
+const frysMarketplaceCanisterId = "ia5ie-kqaaa-aaaal-arqqa-cai"; 
+const whiteList = [frysMarketplaceCanisterId];
+
 declare global {
   interface Window {
     ic: {
@@ -126,4 +129,4 @@ export const getConnectedWalletAgent = async () => {
     console.error("Failed to get connected wallet agent:", error);
     throw error;
   }
-} 
+}
