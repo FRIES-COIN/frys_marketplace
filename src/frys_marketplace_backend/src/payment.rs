@@ -87,25 +87,25 @@ async fn payment(id: String, price: f64, token_type: TokenType) -> String {
     }
 }
 
-#[pre_upgrade]
-fn pre_upgrade() {
-    let payment_store = PAYMENT_STORE.with(|store| store.borrow().clone());
-    let icp_ledger = ICP_LEDGER_ID.with(|id| id.borrow().clone());
-    let ckbtc_ledger = CKBTC_LEDGER_ID.with(|id| id.borrow().clone());
+// #[pre_upgrade]
+// fn pre_upgrade() {
+//     let payment_store = PAYMENT_STORE.with(|store| store.borrow().clone());
+//     let icp_ledger = ICP_LEDGER_ID.with(|id| id.borrow().clone());
+//     let ckbtc_ledger = CKBTC_LEDGER_ID.with(|id| id.borrow().clone());
     
-    storage::stable_save((payment_store, icp_ledger, ckbtc_ledger))
-        .expect("Failed to save state");
-}
+//     storage::stable_save((payment_store, icp_ledger, ckbtc_ledger))
+//         .expect("Failed to save state");
+// }
 
-#[post_upgrade]
-fn post_upgrade() {
-    let (payment_store, icp_ledger, ckbtc_ledger): (
-        HashMap<String, Payment>,
-        Principal,
-        Principal,
-    ) = storage::stable_restore().expect("Failed to restore state");
+// #[post_upgrade]
+// fn post_upgrade() {
+//     let (payment_store, icp_ledger, ckbtc_ledger): (
+//         HashMap<String, Payment>,
+//         Principal,
+//         Principal,
+//     ) = storage::stable_restore().expect("Failed to restore state");
 
-    PAYMENT_STORE.with(|store| *store.borrow_mut() = payment_store);
-    ICP_LEDGER_ID.with(|id| *id.borrow_mut() = icp_ledger);
-    CKBTC_LEDGER_ID.with(|id| *id.borrow_mut() = ckbtc_ledger);
-}
+//     PAYMENT_STORE.with(|store| *store.borrow_mut() = payment_store);
+//     ICP_LEDGER_ID.with(|id| *id.borrow_mut() = icp_ledger);
+//     CKBTC_LEDGER_ID.with(|id| *id.borrow_mut() = ckbtc_ledger);
+// }
