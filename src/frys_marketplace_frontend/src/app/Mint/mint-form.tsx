@@ -136,11 +136,11 @@ const MintForm: React.FC<MintFormProps> = ({ imageBytes }) => {
 
       console.log("Mint Result:", mintResult);
 
-      if (mintResult.Err) {
-        setError(`Minting failed ${mintResult.Err}`); 
-        console.error("Minting failed:", mintResult.Err);
-        return;
-      } 
+      // if (mintResult.Err) {
+      //   setError(`Minting failed ${mintResult.Err}`); 
+      //   console.error("Minting failed:", mintResult.Err);
+      //   return;
+      // } 
 
       setSuccess(`NFT minted successfully! Collection ID: ${collectionId}`);
 

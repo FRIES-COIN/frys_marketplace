@@ -1,5 +1,8 @@
 {
   "frys_marketplace_backend": {
     "ic": "ia5ie-kqaaa-aaaal-arqqa-cai"
+  },
+  "frys_marketplace_frontend": {
+    "ic": "eeiss-taaaa-aaaal-arr5a-cai"
   }
 }
