@@ -20,6 +20,7 @@ pub struct Payment {
 
 #[derive(CandidType, Deserialize, Serialize, Clone)]
 pub enum TokenType {
+    FRYS,
     ICP,
     CKBTC,
 }
@@ -32,6 +33,9 @@ thread_local! {
     pub static CKBTC_LEDGER_ID: RefCell<Principal> = RefCell::new(
         Principal::from_text("mxzaz-hqaaa-aaaar-qaada-cai").unwrap()
     );
+    pub static FRYS_LEDGER_ID: RefCell<Principal> = RefCell::new(
+        Principal::from_text("ezu5v-7qaaa-aaaam-acpbq-cai").unwrap()
+    );
 }
 
 #[update(name = "payment")]
@@ -39,6 +43,7 @@ async fn payment(id: String, price: f64, token_type: TokenType) -> String {
     let ledger_canister_id = match token_type {
         TokenType::ICP => ICP_LEDGER_ID.with(|id| id.borrow().clone()),
         TokenType::CKBTC => CKBTC_LEDGER_ID.with(|id| id.borrow().clone()),
+        TokenType::FRYS => FRYS_LEDGER_ID.with(|id|id.borrow().clone()),
     };
 
     let transfer_args = TransferFromArgs {
@@ -47,7 +52,7 @@ async fn payment(id: String, price: f64, token_type: TokenType) -> String {
             subaccount: None,
         },
         to: Account {
-            owner: ic_cdk::id(),
+            owner: Principal::from_text("mdpn6-pyg7q-bwfjn-cxmnr-cciq7-7aqig-kxkt7-bk2ps-nzuqn-mst5t-hqe").unwrap(),
             subaccount: None,
         },
         amount: Nat::from(price as u64),
@@ -86,7 +91,6 @@ async fn payment(id: String, price: f64, token_type: TokenType) -> String {
         }
     }
 }
-
 // #[pre_upgrade]
 // fn pre_upgrade() {
 //     let payment_store = PAYMENT_STORE.with(|store| store.borrow().clone());
