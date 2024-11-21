@@ -122,10 +122,8 @@ function WalletTab() {
               className="flex items-center gap-2 justify-between w-full mt-4"
             >
               <div className="w-full flex flex-row items-center gap-2">
-                <img src={ckbtc} alt="btc" className="w-8 h-8" />
-                <p className="uppercase font-body font-semibold text-gray-500">
-                  btc
-                </p>
+                <img src={ckbtc} alt="btc" className="w-8 h-8 rounded-full" />
+                <p className=" font-body font-semibold text-gray-500">ckBTC</p>
               </div>
             </SelectItem>
             <SelectItem
@@ -145,10 +143,8 @@ function WalletTab() {
               className="flex items-center gap-2 justify-between w-full mt-4"
             >
               <div className="w-full flex flex-row items-center gap-2">
-                <img src={cketh} alt="eth" className="w-8 h-8" />
-                <p className="uppercase font-body font-semibold text-gray-500">
-                  eth
-                </p>
+                <img src={cketh} alt="eth" className="w-8 h-8 rounded-full" />
+                <p className=" font-body font-semibold text-gray-500">ckETH</p>
               </div>
             </SelectItem>
             <SelectItem
@@ -403,7 +399,7 @@ function SettingsTab() {
 function ProfileTab() {
   const [isEditing, setIsEditing] = useState(false);
   return (
-    <div className="bg-primary rounded-md p-2 md:px-5 md:pb-26 md:pt-[120px] md:m-5">
+    <div className="bg-primary rounded-md p-2 md:px-5 md:pb-26 md:pt-[10px] md:m-5">
       <div className="flex items-center justify-between md:mb-2 md:p-11">
         <div className="flex items-center gap-4">
           <div className="relative md:w-20 md:h-20 w-14 h-14">
@@ -532,7 +528,7 @@ function ProfileTab() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center mt-[8px] md:mt-[40px] mb-2 p-5">
+      {/* <div className="flex justify-center mt-[8px] md:mt-[40px] mb-2 p-5">
         <div className="space-y-2 w-[472.33px]">
           <h3 className="text-black-600 text-[16px] leading-[21px] font-body mb-2 opacity-80 text-black">
             Social Links
@@ -570,7 +566,7 @@ function ProfileTab() {
             />
           </div>{" "}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
