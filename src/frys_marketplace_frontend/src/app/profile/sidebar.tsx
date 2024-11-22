@@ -147,12 +147,12 @@ function WalletTab() {
           </SelectTrigger>
           <SelectContent className="bg-[#202020] w-[14rem] border-none">
             <SelectItem
-              value="btc"
+              value="ckbtc"
               onClick={() => setSelectedToken("CKBTC")}
               className="flex items-center gap-2 justify-between w-full mt-4"
             >
               <div className="w-full flex flex-row items-center gap-2">
-                <img src={btc} alt="btc" className="w-8 h-8" />
+                <img src={ckbtc} alt="btc" className="w-8 h-8" />
                 <p className="uppercase font-body font-semibold text-gray-500">
                   CKBTC
                 </p>
