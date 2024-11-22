@@ -1,3 +1,13 @@
 export const get_exchange_rate = async () => {
-  return 10541.565968197;
+  try {
+    const response = await fetch('https://api.example.com/exchange-rate'); // Replace with a real API endpoint
+    if (!response.ok) {
+      throw new Error('Failed to fetch exchange rate');
+    }
+    const data = await response.json();
+    return data.rate; // Adjust based on the API response structure
+  } catch (error) {
+    console.error("Error fetching exchange rate:", error);
+    throw error;
+  }
 };

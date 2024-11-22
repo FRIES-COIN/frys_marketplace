@@ -2,6 +2,7 @@ import { Actor } from '@dfinity/agent';
 import { Principal } from '@dfinity/principal';
 import { frys_marketplace_backend } from '../../../../declarations/frys_marketplace_backend';
 import { TokenType } from '../../../../declarations/frys_marketplace_backend/frys_marketplace_backend.did';
+import { get_exchange_rate } from '../services/exchangeRateService';
 
 const frysMarketplaceCanisterId = "ia5ie-kqaaa-aaaal-arqqa-cai";
 const whiteList = [frysMarketplaceCanisterId];
@@ -138,8 +139,3 @@ export const getConnectedWalletAgent = async () => {
     throw error;
   }
 }
-
-export const get_exchange_rate = async () => {
-  // Fetch the exchange rate from a reliable source or service
-  return 10541.565968197; // Example rate, replace with actual fetching logic
-};

@@ -100,9 +100,13 @@ function WalletTab() {
 
   useEffect(() => {
     const fetchExchangeRate = async () => {
-      const rate = await get_exchange_rate();
-      if (typeof rate === 'number') {
-        setExchangeRate(rate);
+      try {
+        const rate = await get_exchange_rate();
+        if (typeof rate === 'number') {
+          setExchangeRate(rate);
+        }
+      } catch (error) {
+        console.error("Failed to fetch exchange rate:", error);
       }
     };
     fetchExchangeRate();

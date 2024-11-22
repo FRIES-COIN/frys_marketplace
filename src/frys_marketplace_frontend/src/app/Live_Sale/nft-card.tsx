@@ -20,13 +20,17 @@ function NFTCard({ nft, loading }: { nft: INFT; loading: boolean }) {
 
   useEffect(() => {
     const updatePrice = async () => {
-      if (selectedToken === "ckBTC") {
-        const rate = await get_exchange_rate();
-        const icpAmount = Number(nft.price_in_icp_tokens) / 100000000;
-        const ckbtcAmount = icpAmount / rate;
-        setConvertedPrice(ckbtcAmount * 100000000);
-      } else {
-        setConvertedPrice(Number(nft.price_in_icp_tokens));
+      try {
+        if (selectedToken === "ckBTC") {
+          const rate = await get_exchange_rate();
+          const icpAmount = Number(nft.price_in_icp_tokens) / 100000000;
+          const ckbtcAmount = icpAmount / rate;
+          setConvertedPrice(ckbtcAmount * 100000000);
+        } else {
+          setConvertedPrice(Number(nft.price_in_icp_tokens));
+        }
+      } catch (error) {
+        console.error("Failed to update price:", error);
       }
     };
     updatePrice();
