@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "../../../lib/utils";
 import { connectPlug, processPayment } from "../Wallet/wallet-service";
 import { LoadingCard } from "../collections";
+import { get_exchange_rate } from '../services/exchangeRateService';
+
 export interface INFT {
   id: bigint;
   collection_id: bigint;
@@ -14,22 +16,39 @@ export interface INFT {
 
 function NFTCard({ nft, loading }: { nft: INFT; loading: boolean }) {
   const [selectedToken, setSelectedToken] = useState<"ICP" | "ckBTC">("ICP");
+  const [convertedPrice, setConvertedPrice] = useState<number>(Number(nft.price_in_icp_tokens));
+
+  useEffect(() => {
+    const updatePrice = async () => {
+      try {
+        if (selectedToken === "ckBTC") {
+          const rate = await get_exchange_rate();
+          const icpAmount = Number(nft.price_in_icp_tokens) / 100000000;
+          const ckbtcAmount = icpAmount / rate;
+          setConvertedPrice(ckbtcAmount * 100000000);
+        } else {
+          setConvertedPrice(Number(nft.price_in_icp_tokens));
+        }
+      } catch (error) {
+        console.error("Failed to update price:", error);
+      }
+    };
+    updatePrice();
+  }, [selectedToken, nft.price_in_icp_tokens]);
 
   const handleBuyClick = async () => {
     try {
-      // First ensure wallet is connected
       const connected = await connectPlug();
       if (!connected) {
         console.log("Please connect your wallet first");
         return;
       }
 
-      // Process the payment with selected token
       const tokenObject =
         selectedToken === "ICP" ? { ICP: null } : { CKBTC: null };
       const result = await processPayment(
         nft.id.toString(),
-        Number(nft.price_in_icp_tokens),
+        Number(convertedPrice),
         tokenObject
       );
       console.log("Purchase successful:", result);
@@ -71,7 +90,7 @@ function NFTCard({ nft, loading }: { nft: INFT; loading: boolean }) {
             </div>
             <div>
               <p className="text-white text-xl font-bold font-body text-center my-2">
-                {Number(nft.price_in_icp_tokens) / 100000000} ICP
+                {(convertedPrice / 100000000).toFixed(8)} {selectedToken}
               </p>
               <div className="flex items-center gap-1">
                 <select
@@ -101,5 +120,4 @@ function NFTCard({ nft, loading }: { nft: INFT; loading: boolean }) {
       </div>
     </div>
   );
-}
-export default NFTCard;
+}export default NFTCard;

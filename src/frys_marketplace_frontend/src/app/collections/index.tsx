@@ -13,7 +13,7 @@ import { collections, ICollection } from "./collections";
 import { ButtonsCard } from "../../../components/ui/tailwindcss-buttons";
 import { useEffect, useState } from "react";
 import { createActor } from "../../../../declarations/frys_marketplace_backend";
-import { getConnectedWalletAgent, connectPlug } from "../Wallet/wallet-service";
+import { getConnectedWalletAgent, connectPlug, checkConnection } from "../Wallet/wallet-service";
 
 export const frysBackendCanisterID = "ia5ie-kqaaa-aaaal-arqqa-cai";
 
@@ -168,9 +168,21 @@ function CollectionsPage() {
       image_url: string;
     }>
   >([]);
+  const [isConnected, setIsconnected] = useState(false);
 
   useEffect(() => {
     fetchNFTs();
+  }, []);
+
+  useEffect(() => {
+    const init = async () => {
+      const connected = await checkConnection();
+      setIsconnected(connected);
+    };
+
+    if (!isConnected) {
+      init();
+    }
   }, []);
 
   const fetchNFTs = async () => {
@@ -187,7 +199,6 @@ function CollectionsPage() {
       const processedNFTs = allNFTs.map((nft) => {
         const byteArray = Object.values(nft.nft_image[0]);
         const uint8Array = new Uint8Array(byteArray);
-
         let binaryString = "";
         uint8Array.forEach((byte) => {
           binaryString += String.fromCharCode(byte);
@@ -210,6 +221,7 @@ function CollectionsPage() {
     }
   };
 
+  console.log("NFTs:", nfts);
   // console.log("NFTs:", nfts);
 
   return (
