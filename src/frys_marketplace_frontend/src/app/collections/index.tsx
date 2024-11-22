@@ -9,7 +9,6 @@ import {
   IconRosetteDiscountFilled,
   IconWallet,
 } from "@tabler/icons-react";
-import { Principal } from '@dfinity/principal';
 import { collections, ICollection } from "./collections";
 import { ButtonsCard } from "../../../components/ui/tailwindcss-buttons";
 import { useEffect, useState } from "react";
@@ -197,15 +196,9 @@ function CollectionsPage() {
       const actor = createActor(frysBackendCanisterID, sessionAgent);
       const allNFTs = await actor.get_all_nfts();
 
-      const processedNFTs = allNFTs.map(nft => {
-
       const processedNFTs = allNFTs.map((nft) => {
         const byteArray = Object.values(nft.nft_image[0]);
         const uint8Array = new Uint8Array(byteArray);
-
-        let binaryString = '';
-        uint8Array.forEach(byte => {
-
         let binaryString = "";
         uint8Array.forEach((byte) => {
           binaryString += String.fromCharCode(byte);

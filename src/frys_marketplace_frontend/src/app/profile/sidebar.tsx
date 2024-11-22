@@ -75,7 +75,7 @@ function WalletTab() {
     const fetchPrincipalId = async () => {
       try {
         const id = await getPrincipalID();
-        setPrincipalId(id);
+        setPrincipalId(id.toString());
       } catch (error) {
         console.error("failed to get principal Id");
       }
@@ -122,7 +122,7 @@ function WalletTab() {
     if (from === 'ICP' && to === 'CKBTC') {
       return value * exchangeRate;
     } else if (from === 'CKBTC' && to === 'ICP') {
-      return value /exchangeRate;
+      return value / exchangeRate;
     }
     return value;
   };

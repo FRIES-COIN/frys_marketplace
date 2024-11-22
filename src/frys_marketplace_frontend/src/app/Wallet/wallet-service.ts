@@ -1,6 +1,7 @@
 import { Actor } from '@dfinity/agent';
 import { Principal } from '@dfinity/principal';
 import { frys_marketplace_backend } from '../../../../declarations/frys_marketplace_backend';
+import { TokenType } from '../../../../declarations/frys_marketplace_backend/frys_marketplace_backend.did';
 
 const frysMarketplaceCanisterId = "ia5ie-kqaaa-aaaal-arqqa-cai";
 const whiteList = [frysMarketplaceCanisterId];
@@ -41,7 +42,7 @@ export const connectPlug = async () => {
       await window.ic.plug.createAgent();
       return true;
     }
-    
+
     // Only request connection if not already connected
     const connected = await window.ic.plug.requestConnect();
     if (connected) {
@@ -87,8 +88,6 @@ export const initiatePayment = async (recipientAddress: string, amount: number, 
   }
 };
 
-type TokenType = { ICP: null } | { CKBTC: null } | { FRYS: null };
-
 export const processPayment = async (id: string, price: number, tokenType: TokenType) => {
   try {
     const result = await frys_marketplace_backend.payment(id, price, tokenType);
@@ -105,8 +104,6 @@ export const transferTokens = async (recipientAddress: string, amount: number, t
     if (!isConnected) {
       throw new Error('Wallet not connected');
     }
-
-    const result = await initiatePayment(recipientAddress, amount);
 
     const result = await initiatePayment(recipientAddress, amount, tokenType);
     return result;
@@ -142,4 +139,7 @@ export const getConnectedWalletAgent = async () => {
   }
 }
 
-}
+export const get_exchange_rate = async () => {
+  // Fetch the exchange rate from a reliable source or service
+  return 10541.565968197; // Example rate, replace with actual fetching logic
+};

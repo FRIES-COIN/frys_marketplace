@@ -22,7 +22,6 @@ function NFTCard({ nft, loading }: { nft: INFT; loading: boolean }) {
     const updatePrice = async () => {
       if (selectedToken === "ckBTC") {
         const rate = await get_exchange_rate();
-        // Convert ICP amount to ckBTC by dividing
         const icpAmount = Number(nft.price_in_icp_tokens) / 100000000;
         const ckbtcAmount = icpAmount / rate;
         setConvertedPrice(ckbtcAmount * 100000000);
@@ -35,19 +34,17 @@ function NFTCard({ nft, loading }: { nft: INFT; loading: boolean }) {
 
   const handleBuyClick = async () => {
     try {
-      // First ensure wallet is connected
       const connected = await connectPlug();
       if (!connected) {
         console.log("Please connect your wallet first");
         return;
       }
 
-      // Process the payment with selected token
       const tokenObject =
         selectedToken === "ICP" ? { ICP: null } : { CKBTC: null };
       const result = await processPayment(
         nft.id.toString(),
-        Number(nft.price_in_icp_tokens),
+        Number(convertedPrice),
         tokenObject
       );
       console.log("Purchase successful:", result);
