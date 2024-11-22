@@ -1,3 +1,4 @@
+import { Principal } from "@dfinity/principal";
 import {
   IconArrowsSort,
   IconBulbFilled,
@@ -15,7 +16,7 @@ import { useEffect, useState } from "react";
 import { createActor } from "../../../../declarations/frys_marketplace_backend";
 import { getConnectedWalletAgent, connectPlug } from "../Wallet/wallet-service";
 
-const frysBackendCanisterID = "ia5ie-kqaaa-aaaal-arqqa-cai";
+export const frysBackendCanisterID = "ia5ie-kqaaa-aaaal-arqqa-cai";
 
 function CollectionsHeader() {
   return (
@@ -144,7 +145,7 @@ function CollectionCard({ collection }: { collection: ICollection }) {
   );
 }
 
-function LoadingCard() {
+export function LoadingCard() {
   return (
     <div className="relative h-[450px] w-[370px] lg:w-[400px] border-[12px] border-white rounded-[20px] overflow-hidden">
       <div className="animate-pulse bg-gray-300 h-full w-full rounded-[10px]">
@@ -157,16 +158,17 @@ function LoadingCard() {
 function CollectionsPage() {
   const [loading, setLoading] = useState(true);
   const [nftImage, setNFTImages] = useState();
-  const [nfts, setNfts] = useState<Array<{
-    id: bigint;
-    collection_id: bigint;
-    nft_description: string;
-    price_in_icp_tokens: bigint;
-    created_at: bigint;
-    minter_principal_id: Principal;
-    image_url: string;
-    nft_image: Array<Uint8Array | number[]>;
-  }>>([]);
+  const [nfts, setNfts] = useState<
+    Array<{
+      id: bigint;
+      collection_id: bigint;
+      nft_description: string;
+      price_in_icp_tokens: bigint;
+      created_at: bigint;
+      minter_principal_id: string;
+      image_url: string;
+    }>
+  >([]);
 
   useEffect(() => {
     fetchNFTs();
@@ -184,11 +186,16 @@ function CollectionsPage() {
       const allNFTs = await actor.get_all_nfts();
 
       const processedNFTs = allNFTs.map(nft => {
+
+      const processedNFTs = allNFTs.map((nft) => {
         const byteArray = Object.values(nft.nft_image[0]);
         const uint8Array = new Uint8Array(byteArray);
 
         let binaryString = '';
         uint8Array.forEach(byte => {
+
+        let binaryString = "";
+        uint8Array.forEach((byte) => {
           binaryString += String.fromCharCode(byte);
         });
         const base64String = btoa(binaryString);
@@ -196,7 +203,8 @@ function CollectionsPage() {
 
         return {
           ...nft,
-          image_url: imageUrl
+          image_url: imageUrl,
+          minter_principal_id: nft.minter_principal_id.toText(),
         };
       });
 
@@ -209,6 +217,7 @@ function CollectionsPage() {
   };
 
   console.log("NFTs:", nfts);
+  // console.log("NFTs:", nfts);
 
   return (
     <div className="bg-primary max-w-[96rem] mx-auto my-0 rounded-3xl px-4 pt-6 pb-4">
@@ -227,23 +236,27 @@ function CollectionsPage() {
           nfts.map((nft) => (
             <CollectionCard
               collection={{
-                id: String(nft.id),
+                id: nft.id.toString(),
                 image: nft.image_url,
                 name: nft.nft_description,
                 number: Number(nft.collection_id),
                 price: Number(nft.price_in_icp_tokens) / 100000000,
                 likes: 0,
                 expiresIn: "24h",
-                stock: 1
+                stock: 1,
               }}
-              key={String(nft.id)}
+              key={Number(nft.id)}
             />
           ))
         )}
       </section>
       <div className="flex items-center justify-center my-12">
         <ButtonsCard className="bg-black text-white mt-4 font-body border-none w-1/4 py-4">
-          Show More
+          {!loading && nfts.length > 0 ? "Load more" : null}
+          {!loading && nfts.length === 0 ? "No NFTs found" : null}
+          {loading ? (
+            <span className="loading loading-infinity loading-lg bg-primary"></span>
+          ) : null}
         </ButtonsCard>
       </div>
     </div>

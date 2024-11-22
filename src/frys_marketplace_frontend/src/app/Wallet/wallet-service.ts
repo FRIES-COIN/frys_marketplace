@@ -2,10 +2,14 @@ import { Actor } from '@dfinity/agent';
 import { Principal } from '@dfinity/principal';
 import { frys_marketplace_backend } from '../../../../declarations/frys_marketplace_backend';
 
+const frysMarketplaceCanisterId = "ia5ie-kqaaa-aaaal-arqqa-cai";
+const whiteList = [frysMarketplaceCanisterId];
+
 declare global {
   interface Window {
     ic: {
       plug: {
+        [x: string]: any;
         requestConnect: () => Promise<boolean>;
         isConnected: () => Promise<boolean>;
         createAgent: (args?: any) => Promise<void>;
@@ -15,6 +19,7 @@ declare global {
         requestTransfer: (arg: {
           to: string,
           amount: number,
+          token?: 'ICP' | 'ckBTC',
           opts?: {
             fee?: number,
             memo?: number,
@@ -60,11 +65,12 @@ export const getBalance = async () => {
   }
 };
 
-export const initiatePayment = async (recipientAddress: string, amount: number) => {
+export const initiatePayment = async (recipientAddress: string, amount: number, tokenType: 'ICP' | 'ckBTC') => {
   try {
     const result = await window.ic.plug.requestTransfer({
       to: recipientAddress,
       amount: amount,
+      token: tokenType,
     });
     return result;
   } catch (error) {
@@ -73,19 +79,19 @@ export const initiatePayment = async (recipientAddress: string, amount: number) 
   }
 };
 
-export const processPayment = async (id: string, price: number) => {
+export const processPayment = async (id: string, price: number, tokenType: { ICP: null } | { CKBTC: null }) => {
   try {
-    const result = await frys_marketplace_backend.payment(id, price);
+    const result = await frys_marketplace_backend.payment(id, price, tokenType);
 
     return result;
   } catch (error) {
-    console.log('Payment params:', { id, price });
+    console.log('Payment params:', { id, price, tokenType });
     throw error;
   }
 };
 
 // transfer funds from wallet to other wallet
-export const transferTokens = async (recipientAddress: string, amount: number) => {
+export const transferTokens = async (recipientAddress: string, amount: number, tokenType: 'ICP' | 'ckBTC') => {
   try {
     const isConnected = await checkConnection();
     if (!isConnected) {
@@ -93,6 +99,8 @@ export const transferTokens = async (recipientAddress: string, amount: number) =
     }
 
     const result = await initiatePayment(recipientAddress, amount);
+
+    const result = await initiatePayment(recipientAddress, amount, tokenType);
     return result;
   } catch (error) {
     console.error("Transfer failed:", error);
@@ -124,4 +132,6 @@ export const getConnectedWalletAgent = async () => {
     console.error("Failed to get connected wallet agent:", error);
     throw error;
   }
+}
+
 }

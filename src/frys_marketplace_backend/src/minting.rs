@@ -2,7 +2,7 @@ use candid::{CandidType, Principal};
 use serde::{Deserialize, Serialize};
 use std::cell::RefCell;
 use std::collections::HashMap;
-use ic_cdk::{update, query};
+use ic_cdk::{query, update};
 
 #[derive(Clone, Debug, CandidType, Serialize, Deserialize)]
 pub struct Collection {
@@ -38,33 +38,39 @@ thread_local! {
     pub static NEXT_COLLECTION_ID: RefCell<u64> = RefCell::new(0);
     pub static NEXT_NFT_ID: RefCell<u64> = RefCell::new(0);
     pub static PENDING_MINTS: RefCell<HashMap<Principal, PendingMint>> = RefCell::new(HashMap::new());
+    pub static MINT_PASSWORD: RefCell<String> = RefCell::new(String::from(""));
 }
 
-// #[pre_upgrade]
-// fn pre_upgrade() {
-//     let collections = COLLECTIONS.with(|c| c.borrow().clone());
-//     let nfts = NFTS.with(|n| n.borrow().clone());
-//     let next_collection_id = NEXT_COLLECTION_ID.with(|id| *id.borrow());
-//     let next_nft_id = NEXT_NFT_ID.with(|id| *id.borrow());
-    
-//     storage::stable_save((collections, nfts, next_collection_id, next_nft_id))
-//         .expect("Failed to save state");
+// Approved callers
+// #[query]
+// pub fn is_allowed_principal() -> bool {
+//     let allowed_principals = vec![
+//         Principal::from_text("mdpn6-pyg7q-bwfjn-cxmnr-cciq7-7aqig-kxkt7-bk2ps-nzuqn-mst5t-hqe").unwrap(),
+//         Principal::from_text("3r4ur-bi57q-dnrjp-fdl3f-pd5ud-gux43-l6bk6-ff7p3-33zk4-nx7ym-mqe").unwrap(), 
+//         Principal::from_text("3ut3n-6rt35-45boi-6vidq-fur7n-5jlvg-wggto-dqwcr-gwtuk-rst7y-zae").unwrap(), 
+//     ];
+
+//     let caller_principal = caller();
+
+//     allowed_principals.contains(&caller_principal)
 // }
 
-// #[post_upgrade]
-// fn post_upgrade() {
-//     let (collections, nfts, next_collection_id, next_nft_id): (
-//         HashMap<u64, Collection>,
-//         HashMap<u64, NFT>,
-//         u64,
-//         u64,
-//     ) = storage::stable_restore().expect("Failed to restore state");
+#[update(name = "who_am_i")]
+pub fn who_am_i() -> Principal {
+    let caller = ic_cdk::caller();
+    return caller;
+}
 
-//     COLLECTIONS.with(|c| *c.borrow_mut() = collections);
-//     NFTS.with(|n| *n.borrow_mut() = nfts);
-//     NEXT_COLLECTION_ID.with(|id| *id.borrow_mut() = next_collection_id);
-//     NEXT_NFT_ID.with(|id| *id.borrow_mut() = next_nft_id);
-// }
+const AUTHORIZED_PRINCIPALS: [&str; 3] = [
+    "mdpn6-pyg7q-bwfjn-cxmnr-cciq7-7aqig-kxkt7-bk2ps-nzuqn-mst5t-hqe",
+    "3r4ur-bi57q-dnrjp-fdl3f-pd5ud-gux43-l6bk6-ff7p3-33zk4-nx7ym-mqe", 
+    "3ut3n-6rt35-45boi-6vidq-fur7n-5jlvg-wggto-dqwcr-gwtuk-rst7y-zae"
+];
+
+fn is_authorized() -> bool {
+    let caller = ic_cdk::caller().to_text();
+    AUTHORIZED_PRINCIPALS.contains(&caller.as_str())
+}
 
 #[update(name = "verify_frys_payment")]
 fn verify_frys_payment(transaction_block: u64, amount: u64) -> Result<bool, String> {
@@ -86,6 +92,11 @@ fn verify_frys_payment(transaction_block: u64, amount: u64) -> Result<bool, Stri
 
 #[update(name = "create_collection")]
 fn create_collection(name: String) -> Result<Collection, String> {
+   
+    if !is_authorized() {
+        return Err("Unauthorized: Only approved principals can mint NFTs".to_string());
+    }
+
     let caller = ic_cdk::caller();
     let id = NEXT_COLLECTION_ID.with(|id| {
         let current = *id.borrow();
@@ -133,6 +144,7 @@ fn mint_nft(
     collection_id: u64,
     nft_description: String,
     price_in_icp_tokens: u64,
+    password: String,
 ) -> Result<NFT, String> {
     let caller = ic_cdk::caller();
 
@@ -143,6 +155,17 @@ fn mint_nft(
 
     if !payment_verified {
         return Err("FRYS token payment required before minting".to_string());
+    }
+
+    // if !is_authorized() {
+    //     return Err("Unauthorized: Only approved principals can mint NFTs".to_string());
+    // }
+
+    let stored_password = MINT_PASSWORD.with(|p| p.borrow().clone());
+    // let stored_password = "FRYS@2024#1234".to_string(); 
+    
+    if password != stored_password {
+        return Err("Invalid password for minting".to_string());
     }
 
     // Verify collection exists
@@ -177,6 +200,40 @@ fn mint_nft(
     });
 
     Ok(nft)
+}
+
+#[update(name = "delete_nft")]
+fn delete_nft(nft_id: u64) -> Result<(), String> {
+    // let caller = ic_cdk::caller();
+    
+    if !is_authorized() {
+        return Err("Unauthorized: Only approved principals can mint NFTs".to_string());
+    }
+    // Get the NFT first to check ownership and update collection count
+    let nft = NFTS.with(|nfts| {
+        nfts.borrow()
+            .get(&nft_id)
+            .cloned()
+    });
+
+    match nft {
+        Some(nft) => {
+            // Decrement collection NFT count
+            COLLECTIONS.with(|c| {
+                if let Some(collection) = c.borrow_mut().get_mut(&nft.collection_id) {
+                    collection.nft_count = collection.nft_count.saturating_sub(1);
+                }
+            });
+
+            // Remove the NFT
+            NFTS.with(|nfts| {
+                nfts.borrow_mut().remove(&nft_id);
+            });
+
+            Ok(())
+        },
+        None => Err("NFT not found".to_string())
+    }
 }
 
 #[query(name = "get_all_nfts")]

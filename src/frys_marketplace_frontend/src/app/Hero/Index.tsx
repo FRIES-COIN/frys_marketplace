@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 function Hero() {
   const [isMobile, setIsMobile] = useState(false);
@@ -28,13 +29,15 @@ function Hero() {
           <span className="text-white font-title">and cook your way to </span>
           <span className="text-white font-title">the top.</span>
         </h1>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="bg-[#FFA503] text-white font-semibold font-body py-3 px-10 md:px-16 rounded-lg text-lg md:text-xl uppercase tracking-wide shadow-[0_0_20px_rgba(255,165,3,0.7)] hover:shadow-[0_0_30px_rgba(255,165,3,0.9)] transition-all duration-300"
-        >
-          explore
-        </motion.button>
+        <Link to="/collections">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-[#FFA503] text-white font-semibold font-body py-3 px-10 md:px-16 rounded-lg text-lg md:text-xl uppercase tracking-wide shadow-[0_0_20px_rgba(255,165,3,0.7)] hover:shadow-[0_0_30px_rgba(255,165,3,0.9)] transition-all duration-300"
+          >
+            explore
+          </motion.button>
+        </Link>
       </motion.div>
 
       {/* Right image */}

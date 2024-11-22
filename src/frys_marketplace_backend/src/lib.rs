@@ -9,14 +9,25 @@ use std::collections::HashMap;
 
 use crate::minting::Collection;
 use candid::Principal;
-use minting::NFTS;
+use minting::{MINT_PASSWORD, NFTS};
 use minting::{ COLLECTIONS, NFT, NEXT_COLLECTION_ID, NEXT_NFT_ID, PendingMint, PENDING_MINTS };
 use payment::Payment;
 use payment::PAYMENT_STORE;
+use crate::payment::TokenType;
 // use ic_cdk_macros::*;
 
 // use crate::state::STATE;
 use ic_cdk::{post_upgrade, pre_upgrade, storage };
+
+use ic_cdk::init;
+
+#[init]
+fn init() {
+    MINT_PASSWORD.with(|password| {
+        *password.borrow_mut() = std::env::var("MINT_PASSWORD")
+            .unwrap_or_else(|_| String::from(""));
+    });
+}
 
 // use crate::types::{
 //     SystemStats,
@@ -144,4 +155,4 @@ fn post_upgrade() {
     NEXT_NFT_ID.with(|id| *id.borrow_mut() = next_nft_id);
 }
 
-ic_cdk::export_candid!(); 
+ic_cdk::export_candid!();
