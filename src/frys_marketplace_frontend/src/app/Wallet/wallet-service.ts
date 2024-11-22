@@ -18,7 +18,7 @@ declare global {
         requestTransfer: (arg: {
           to: string,
           amount: number,
-          token?: 'ICP' | 'ckBTC',
+          token?: 'FRYS'|'ICP' | 'CKBTC',
           opts?: {
             fee?: number,
             memo?: number,
@@ -34,6 +34,14 @@ declare global {
 }
 export const connectPlug = async () => {
   try {
+    // First check if already connected
+    const isConnected = await window.ic.plug.isConnected();
+    if (isConnected) {
+      await window.ic.plug.createAgent();
+      return true;
+    }
+    
+    // Only request connection if not already connected
     const connected = await window.ic.plug.requestConnect();
     if (connected) {
       await window.ic.plug.createAgent();
@@ -64,7 +72,7 @@ export const getBalance = async () => {
   }
 };
 
-export const initiatePayment = async (recipientAddress: string, amount: number, tokenType: 'ICP' | 'ckBTC') => {
+export const initiatePayment = async (recipientAddress: string, amount: number, tokenType: 'FRYS' | 'ICP' | 'CKBTC') => {
   try {
     const result = await window.ic.plug.requestTransfer({
       to: recipientAddress,
@@ -78,19 +86,19 @@ export const initiatePayment = async (recipientAddress: string, amount: number, 
   }
 };
 
-export const processPayment = async (id: string, price: number, tokenType: { ICP: null } | { CKBTC: null }) => {
+type TokenType = { ICP: null } | { CKBTC: null } | { FRYS: null };
+
+export const processPayment = async (id: string, price: number, tokenType: TokenType) => {
   try {
     const result = await frys_marketplace_backend.payment(id, price, tokenType);
-
     return result;
   } catch (error) {
     console.log('Payment params:', { id, price, tokenType });
     throw error;
   }
 };
-
 // transfer funds from wallet to other wallet
-export const transferTokens = async (recipientAddress: string, amount: number, tokenType: 'ICP' | 'ckBTC') => {
+export const transferTokens = async (recipientAddress: string, amount: number, tokenType: 'FRYS' | 'ICP' | 'CKBTC') => {
   try {
     const isConnected = await checkConnection();
     if (!isConnected) {
