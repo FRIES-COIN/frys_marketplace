@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createActor, frys_marketplace_backend } from "../../../../declarations/frys_marketplace_backend";
 import {
+  checkConnection,
   connectPlug,
   getConnectedWalletAgent,
   getPrincipalID,
@@ -14,6 +15,7 @@ interface MintFormProps {
 }
 
 const MintForm: React.FC<MintFormProps> = ({ imageBytes }) => {
+  const [isConnected, setIsConnected] = useState(false);
   const [collectionName, setCollectionName] = useState("");
   const [imageDescription, setImageDescription] = useState("");
   const [price, setPrice] = useState<number | undefined>(undefined);
@@ -26,7 +28,19 @@ const MintForm: React.FC<MintFormProps> = ({ imageBytes }) => {
   const [collectionId, setCollectionId] = useState<string>("");
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [password, setPassword] = useState("");
+  const [selectedPriceToken, setSelectedPriceToken] = useState<'ICP' | 'CKBTC' | 'FRYS'>('CKBTC');
 
+  useEffect(() => {
+    const init = async () => {
+      const connected = await checkConnection();
+      setIsConnected(connected);
+    };
+    
+    if (!isConnected) {
+      init();
+    }
+  }, []);
+  
   const transferFRYSTokens = async (
     amount: number,
     sessionAgent: any,
@@ -244,13 +258,29 @@ const MintForm: React.FC<MintFormProps> = ({ imageBytes }) => {
               placeholder="What's your NFT about?"
             />
           </div>
-
           <div className="mb-8">
             <label
-              htmlFor="price"
+              htmlFor="priceToken"
               className="block text-sm font-medium text-gray-300 font-body mb-2"
             >
-              Price (in ICP)
+              Price Currency
+            </label>
+            <select
+              id="priceToken"
+              value={selectedPriceToken}
+              onChange={(e) => setSelectedPriceToken(e.target.value as 'ICP' | 'CKBTC' | 'FRYS')}
+              className="mt-1 block w-full p-2 bg-gray-500 border border-gray-600 rounded-[42px] font-body text-white"
+            >
+              <option value="ICP">ICP</option>
+              <option value="CKBTC">ckBTC</option>
+              <option value="FRYS">FRYS</option>
+            </select>
+
+            <label
+              htmlFor="price"
+              className="block text-sm font-medium text-gray-300 font-body mb-2 mt-4"
+            >
+              Price (in {selectedPriceToken})
             </label>
             <input
               id="price"
@@ -263,7 +293,6 @@ const MintForm: React.FC<MintFormProps> = ({ imageBytes }) => {
               placeholder="Enter price"
             />
           </div>
-
           <button
             type="submit"
             disabled={isLoading}

@@ -14,7 +14,7 @@ import { collections, ICollection } from "./collections";
 import { ButtonsCard } from "../../../components/ui/tailwindcss-buttons";
 import { useEffect, useState } from "react";
 import { createActor } from "../../../../declarations/frys_marketplace_backend";
-import { getConnectedWalletAgent, connectPlug } from "../Wallet/wallet-service";
+import { getConnectedWalletAgent, connectPlug, checkConnection } from "../Wallet/wallet-service";
 
 export const frysBackendCanisterID = "ia5ie-kqaaa-aaaal-arqqa-cai";
 
@@ -169,9 +169,21 @@ function CollectionsPage() {
       image_url: string;
     }>
   >([]);
+  const [isConnected, setIsconnected] = useState(false);
 
   useEffect(() => {
     fetchNFTs();
+  }, []);
+
+  useEffect(() => {
+    const init = async () => {
+      const connected = await checkConnection();
+      setIsconnected(connected);
+    };
+
+    if (!isConnected) {
+      init();
+    }
   }, []);
 
   const fetchNFTs = async () => {

@@ -32,6 +32,7 @@ import qr from "../../../public/qr.png";
 import { Button } from "../../../components/ui/button";
 import { getBalance, transferTokens } from "../Wallet/wallet-service";
 import { getPrincipalID } from "../Wallet/wallet-service";
+import { get_exchange_rate } from "../services/exchangeRateService";
 
 //NFT TAB COMPONENT
 function NFTTab() {
@@ -57,8 +58,10 @@ function WalletTab() {
   >([]);
   const [recipientAddress, setRecipientAddress] = useState("");
   const [amount, setAmount] = useState(0);
-  const [selectedToken, setSelectedToken] = useState<"ICP" | "ckBTC">("ICP");
-  const [principalId, setPrincipalId] = useState<string>("");
+  const [selectedToken, setSelectedToken] = useState<'ICP' | 'CKBTC' | 'FRYS'>('ICP');
+  const [principalId, setPrincipalId] = useState<string>('');
+  const [exchangeRate, setExchangeRate] = useState(0);
+  const [convertedAmount, setConvertedAmount] = useState(0);
 
   useEffect(() => {
     const fetchBalance = async () => {
@@ -95,6 +98,16 @@ function WalletTab() {
     }
   };
 
+  useEffect(() => {
+    const fetchExchangeRate = async () => {
+      const rate = await get_exchange_rate();
+      if (typeof rate === 'number') {
+        setExchangeRate(rate);
+      }
+    };
+    fetchExchangeRate();
+  }, []);
+
   const handleReceive = () => {
     // const principal = await requestConnect();
     const userAddress = window.ic?.plug?.principal?.toString();
@@ -104,6 +117,23 @@ function WalletTab() {
       alert("Please connect your wallet first");
     }
   };
+
+  const convertAmount = (value: number, from: 'ICP' | 'CKBTC', to: 'ICP' | 'CKBTC') => {
+    if (from === 'ICP' && to === 'CKBTC') {
+      return value * exchangeRate;
+    } else if (from === 'CKBTC' && to === 'ICP') {
+      return value /exchangeRate;
+    }
+    return value;
+  };
+
+  const handleTokenChange = (newToken: 'ICP' | 'CKBTC' | 'FRYS') => {
+    if (newToken === 'ICP' || newToken === 'CKBTC') {
+      const newAmount = convertAmount(amount, selectedToken as 'ICP' | 'CKBTC', newToken);
+      setConvertedAmount(newAmount);
+    }
+    setSelectedToken(newToken);
+  }
 
   return (
     <div className="bg-[#151415] rounded-md h-full px-2">
@@ -116,25 +146,19 @@ function WalletTab() {
             />
           </SelectTrigger>
           <SelectContent className="bg-[#202020] w-[14rem] border-none">
-            <SelectItem
-              value="btc"
-              onClick={() => setSelectedToken("ckBTC")}
-              className="flex items-center gap-2 justify-between w-full mt-4"
-            >
+            <SelectItem value="btc" onClick={() => handleTokenChange('CKBTC')} className="flex items-center gap-2 justify-between w-full mt-4">
               <div className="w-full flex flex-row items-center gap-2">
-                <img src={ckbtc} alt="btc" className="w-8 h-8 rounded-full" />
-                <p className=" font-body font-semibold text-gray-500">ckBTC</p>
+                <img src={btc} alt="btc" className="w-8 h-8" />
+                <p className="uppercase font-body font-semibold text-gray-500">
+                  CKBTC
+                </p>
               </div>
             </SelectItem>
-            <SelectItem
-              value="ICP"
-              onClick={() => setSelectedToken("ICP")}
-              className="flex items-center gap-2 justify-between w-full mt-4"
-            >
+            <SelectItem value="ICP" onClick={() => handleTokenChange('ICP')} className="flex items-center gap-2 justify-between w-full mt-4">
               <div className="w-full flex flex-row items-center gap-2">
                 <img src={icp} alt="icp" className="w-8 h-8" />
                 <p className="uppercase font-body font-semibold text-gray-500">
-                  icp
+                  ICP
                 </p>
               </div>
             </SelectItem>
@@ -170,6 +194,14 @@ function WalletTab() {
           placeholder="0.0000"
           className="md:w-1/4 border-none bg-[#202020] h-16 focus:ring-0 focus:border-0 focus:outline-none"
         />
+      </div>
+
+      <div className="text-white font-body mt-4 text-center">
+        {convertedAmount > 0 && (
+          <p className="text-gray-500">
+            converted: {convertedAmount.toFixed(8)} {selectedToken}
+          </p>
+        )}
       </div>
 
       {/* Balance Display */}
