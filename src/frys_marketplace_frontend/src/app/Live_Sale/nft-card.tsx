@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { cn } from "../../../lib/utils";
-import { connectPlug, processPayment } from "../Wallet/wallet-service";
-import { LoadingCard } from "../collections";
+import { connectPlug, initiatePayment, processPayment } from "../Wallet/wallet-service";
+import { frysBackendCanisterID, LoadingCard } from "../collections";
 import { get_exchange_rate } from '../services/exchangeRateService';
 
 export interface INFT {
@@ -15,22 +15,25 @@ export interface INFT {
 }
 
 function NFTCard({ nft, loading }: { nft: INFT; loading: boolean }) {
-  const [selectedToken, setSelectedToken] = useState<"ICP" | "ckBTC">("ICP");
+  const [selectedToken, setSelectedToken] = useState<"ICP" | "CKBTC">("ICP");
   const [convertedPrice, setConvertedPrice] = useState<number>(Number(nft.price_in_icp_tokens));
 
   useEffect(() => {
     const updatePrice = async () => {
-      if (selectedToken === "ckBTC") {
+      if (selectedToken === "CKBTC") {
         const rate = await get_exchange_rate();
-        // Convert ICP amount to ckBTC by dividing
-        const icpAmount = Number(nft.price_in_icp_tokens) / 100000000;
-        const ckbtcAmount = icpAmount / rate;
-        setConvertedPrice(ckbtcAmount * 100000000);
+        if (rate !== undefined) {
+          // Convert ICP amount to ckBTC by dividing
+          const icpAmount = Number(nft.price_in_icp_tokens) / 100000000;
+          const ckbtcAmount = icpAmount / rate;
+          setConvertedPrice(ckbtcAmount * 100000000);
+        } else {
+          console.error("Failed to get exchange rate");
+        }
       } else {
         setConvertedPrice(Number(nft.price_in_icp_tokens));
       }
-    };
-    updatePrice();
+    }; updatePrice();
   }, [selectedToken, nft.price_in_icp_tokens]);
 
   const handleBuyClick = async () => {
@@ -41,6 +44,13 @@ function NFTCard({ nft, loading }: { nft: INFT; loading: boolean }) {
         console.log("Please connect your wallet first");
         return;
       }
+
+      // First approve the spending
+      await initiatePayment(
+        frysBackendCanisterID,
+        Number(nft.price_in_icp_tokens),
+        selectedToken
+      );
 
       // Process the payment with selected token
       const tokenObject =
@@ -95,14 +105,14 @@ function NFTCard({ nft, loading }: { nft: INFT; loading: boolean }) {
                 <select
                   value={selectedToken}
                   onChange={(e) =>
-                    setSelectedToken(e.target.value as "ICP" | "ckBTC")
+                    setSelectedToken(e.target.value as "ICP" | "CKBTC")
                   }
                   className="mr-2 rounded-xl px-2 py-2 text-white font-bold font-body bg-transparent border-2 border-primary"
                 >
                   <option value="ICP" className="mx-2">
                     ICP
                   </option>
-                  <option value="ckBTC" className="mx-2">
+                  <option value="CKBTC" className="mx-2">
                     ckBTC
                   </option>
                 </select>
@@ -119,4 +129,4 @@ function NFTCard({ nft, loading }: { nft: INFT; loading: boolean }) {
       </div>
     </div>
   );
-}export default NFTCard;
+} export default NFTCard;
