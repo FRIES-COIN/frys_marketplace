@@ -22,15 +22,18 @@ function NFTCard({ nft, loading }: { nft: INFT; loading: boolean }) {
     const updatePrice = async () => {
       if (selectedToken === "ckBTC") {
         const rate = await get_exchange_rate();
-        // Convert ICP amount to ckBTC by dividing
-        const icpAmount = Number(nft.price_in_icp_tokens) / 100000000;
-        const ckbtcAmount = icpAmount / rate;
-        setConvertedPrice(ckbtcAmount * 100000000);
+        if (rate !== undefined) {
+          // Convert ICP amount to ckBTC by dividing
+          const icpAmount = Number(nft.price_in_icp_tokens) / 100000000;
+          const ckbtcAmount = icpAmount / rate;
+          setConvertedPrice(ckbtcAmount * 100000000);
+        } else {
+          console.error("Failed to get exchange rate");
+        }
       } else {
         setConvertedPrice(Number(nft.price_in_icp_tokens));
       }
-    };
-    updatePrice();
+    };    updatePrice();
   }, [selectedToken, nft.price_in_icp_tokens]);
 
   const handleBuyClick = async () => {
