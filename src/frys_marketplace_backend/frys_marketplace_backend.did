@@ -18,7 +18,7 @@ type Result = variant { Ok : Collection; Err : text };
 type Result_1 = variant { Ok; Err : text };
 type Result_2 = variant { Ok : NFT; Err : text };
 type Result_3 = variant { Ok : bool; Err : text };
-type TokenType = variant { ICP; CKBTC };
+type TokenType = variant { ICP; FRYS; CKBTC };
 service : () -> {
   create_collection : (text) -> (Result);
   delete_nft : (nat64) -> (Result_1);

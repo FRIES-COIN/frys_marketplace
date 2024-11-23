@@ -22,14 +22,17 @@ import { CarouselSize } from "./nfts-owned";
 import { useState, useEffect } from "react";
 type Tab = "nft" | "wallet" | "settings" | "profile" | "logout";
 import btc from "../../../public/btc.svg";
+import ckbtc from "../../../public/ckbtc.png";
+import cketh from "../../../public/cketh.png";
 import icp from "../../../public/icp.svg";
 import eth from "../../../public/eth.svg";
 import frys from "../../../public/frys.jpeg";
-import { QRCodeSVG } from 'qrcode.react';
+import { QRCodeSVG } from "qrcode.react";
 import qr from "../../../public/qr.png";
 import { Button } from "../../../components/ui/button";
 import { getBalance, transferTokens } from "../Wallet/wallet-service";
 import { getPrincipalID } from "../Wallet/wallet-service";
+import { get_exchange_rate } from "../services/exchangeRateService";
 
 //NFT TAB COMPONENT
 function NFTTab() {
@@ -55,8 +58,10 @@ function WalletTab() {
   >([]);
   const [recipientAddress, setRecipientAddress] = useState("");
   const [amount, setAmount] = useState(0);
-  const [selectedToken, setSelectedToken] = useState<'ICP' | 'ckBTC'>('ICP');
-  const [principalId, setPrincipalId] = useState<string>('');
+  const [selectedToken, setSelectedToken] = useState<"ICP" | "CKBTC" | "FRYS">("ICP");
+  const [principalId, setPrincipalId] = useState<string>("");
+  const [exchangeRate, setExchangeRate] = useState(0);
+  const [convertedAmount, setConvertedAmount] = useState(0);
 
   useEffect(() => {
     const fetchBalance = async () => {
@@ -72,7 +77,7 @@ function WalletTab() {
         const id = await getPrincipalID();
         setPrincipalId(id);
       } catch (error) {
-        console.error('failed to get principal Id');
+        console.error("failed to get principal Id");
       }
     };
     fetchPrincipalId();
@@ -80,14 +85,27 @@ function WalletTab() {
 
   const handleTransfer = async () => {
     try {
-      const result = await transferTokens(recipientAddress, amount, selectedToken);
-      alert('Transfer successful!');
-      setRecipientAddress('');
+      const result = await transferTokens(
+        recipientAddress,
+        amount,
+        selectedToken as "ICP" | "CKBTC" | "FRYS"
+      );
+      alert("Transfer successful!");
+      setRecipientAddress("");
       setAmount(0);
     } catch (error) {
       alert("Transfer failed. Please try again.");
     }
   };
+  useEffect(() => {
+    const fetchExchangeRate = async () => {
+      const rate = await get_exchange_rate();
+      if (typeof rate === 'number') {
+        setExchangeRate(rate);
+      }
+    };
+    fetchExchangeRate();
+  }, []);
 
   const handleReceive = () => {
     // const principal = await requestConnect();
@@ -98,6 +116,24 @@ function WalletTab() {
       alert("Please connect your wallet first");
     }
   };
+
+  const convertAmount = (value: number, from: 'ICP' | 'CKBTC', to: 'ICP' | 'CKBTC') => {
+    if (from === 'ICP' && to === 'CKBTC') {
+      return value * exchangeRate;
+    } else if (from === 'CKBTC' && to === 'ICP') {
+      return value /exchangeRate;
+    }
+    return value;
+  };
+
+  const handleTokenChange = (newToken: 'ICP' | 'CKBTC' | 'FRYS') => {
+    if (newToken === 'ICP' || newToken === 'CKBTC') {
+      const newAmount = convertAmount(amount, selectedToken as 'ICP' | 'CKBTC', newToken);
+      setConvertedAmount(newAmount);
+    }
+
+    setSelectedToken(newToken);
+  }
 
   return (
     <div className="bg-[#151415] rounded-md h-full px-2">
@@ -110,19 +146,27 @@ function WalletTab() {
             />
           </SelectTrigger>
           <SelectContent className="bg-[#202020] w-[14rem] border-none">
-            <SelectItem value="btc" onClick={() => setSelectedToken('ckBTC')} className="flex items-center gap-2 justify-between w-full mt-4">
+            <SelectItem
+              value="ckbtc"
+              onClick={() => setSelectedToken("CKBTC")}
+              className="flex items-center gap-2 justify-between w-full mt-4"
+            >
               <div className="w-full flex flex-row items-center gap-2">
-                <img src={btc} alt="btc" className="w-8 h-8" />
+                <img src={ckbtc} alt="btc" className="w-8 h-8" />
                 <p className="uppercase font-body font-semibold text-gray-500">
-                  btc
+                  CKBTC
                 </p>
               </div>
             </SelectItem>
-            <SelectItem value="ICP" onClick={() => setSelectedToken('ICP')} className="flex items-center gap-2 justify-between w-full mt-4">
+            <SelectItem
+              value="ICP"
+              onClick={() => setSelectedToken("ICP")}
+              className="flex items-center gap-2 justify-between w-full mt-4"
+            >
               <div className="w-full flex flex-row items-center gap-2">
                 <img src={icp} alt="icp" className="w-8 h-8" />
                 <p className="uppercase font-body font-semibold text-gray-500">
-                  icp
+                  ICP
                 </p>
               </div>
             </SelectItem>
@@ -131,10 +175,8 @@ function WalletTab() {
               className="flex items-center gap-2 justify-between w-full mt-4"
             >
               <div className="w-full flex flex-row items-center gap-2">
-                <img src={eth} alt="eth" className="w-8 h-8" />
-                <p className="uppercase font-body font-semibold text-gray-500">
-                  eth
-                </p>
+                <img src={cketh} alt="eth" className="w-8 h-8 rounded-full" />
+                <p className=" font-body font-semibold text-gray-500">ckETH</p>
               </div>
             </SelectItem>
             <SelectItem
@@ -162,6 +204,14 @@ function WalletTab() {
         />
       </div>
 
+      <div className="text-white font-body mt-4 text-center">
+        {convertedAmount > 0 && (
+          <p className="text-gray-500">
+            converted: {convertedAmount.toFixed(8)} {selectedToken}
+          </p>
+        )}
+      </div>
+
       {/* Balance Display */}
       <div className="text-white font-body mt-4 text-center">
         {balance.map((item, index) => (
@@ -172,7 +222,7 @@ function WalletTab() {
       </div>
 
       <div>
-      <QRCodeSVG
+        <QRCodeSVG
           value={principalId}
           className="xl:w-[15%] md:w-[20%] h-56 md:h-auto mx-auto mt-8 rounded-md"
           size={224}
@@ -207,7 +257,10 @@ function WalletTab() {
         >
           Send
         </Button>
-        <Button onClick={handleReceive} className="bg-primary text-white w-1/4 mx-auto mt-4 font-body">
+        <Button
+          onClick={handleReceive}
+          className="bg-primary text-white w-1/4 mx-auto mt-4 font-body"
+        >
           Receive
         </Button>
       </div>
@@ -386,7 +439,7 @@ function SettingsTab() {
 function ProfileTab() {
   const [isEditing, setIsEditing] = useState(false);
   return (
-    <div className="bg-primary rounded-md p-2 md:px-5 md:pb-26 md:pt-[120px] md:m-5">
+    <div className="bg-primary rounded-md p-2 md:px-5 md:pb-26 md:pt-[10px] md:m-5">
       <div className="flex items-center justify-between md:mb-2 md:p-11">
         <div className="flex items-center gap-4">
           <div className="relative md:w-20 md:h-20 w-14 h-14">
@@ -515,7 +568,7 @@ function ProfileTab() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center mt-[8px] md:mt-[40px] mb-2 p-5">
+      {/* <div className="flex justify-center mt-[8px] md:mt-[40px] mb-2 p-5">
         <div className="space-y-2 w-[472.33px]">
           <h3 className="text-black-600 text-[16px] leading-[21px] font-body mb-2 opacity-80 text-black">
             Social Links
@@ -553,7 +606,7 @@ function ProfileTab() {
             />
           </div>{" "}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
