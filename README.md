@@ -1,98 +1,56 @@
-# FRYS COIN MARKETPLACE
 
-### Connecting frys enthusiasts through blockchain, NFTs, and real-world utility
+# FRYS MARKETPLACE
 
-## ABOUT FRYS
+#  Fries Coin
+Fries Coin is a unique blockchain project built on the **Internet Computer**, designed to unite a global community of fries lovers through innovation and real-world utility. Our mission is to create a fun, engaging, and purpose-driven ecosystem that rewards participation while driving the adoption of cutting-edge blockchain technology.
 
-Fries Coin (FRYS) is a revolutionary
-meme coin with a utility twist,
-designed for all fries lovers around
-the world. Built on the Internet
-Computer (ICP) blockchain, Fries Coin
-aims to become the go-to currency
-for purchasing fries and related
-products at restaurants and food
-outlets globally.
+## Key Features
+- **Fries NFT Marketplace**: An upcoming Bitcoin Layer 2 ordinals platform revolutionizing digital art and collectibles. The marketplace enables artists, collectors, and enthusiasts to seamlessly buy, sell, and trade fry-themed and other unique digital assets using Bitcoin.
+- **Innovative Blockchain Ecosystem**: Combining the **security of Bitcoin** with the **scalability of the Internet Computer**, Fries Coin delivers a trusted hub for creative expression and community engagement.
+- **Community-Centric Vision**: Built for a global community, Fries Coin rewards participation and promotes blockchain technology adoption in an accessible and exciting way.
 
-## STORY BEHIND FRYS COIN
 
-Fries Coin was conceived by a
-group of friends who share an
-unwavering love for french
-fries.
-Their vision was to create a
-fun, engaging, and valuable
-token that unites fries
-enthusiasts worldwide.
 
-## PROBLEM STATEMENT
+## Technology Stack
+- **Blockchain**: Internet Computer and Bitcoin (Layer 2 integration).
+- **NFT Marketplace**: Ordinals platform optimized for fry-themed and creative digital assets.
+- **Smart Contracts**: Self-executing code to ensure transparency and security in transactions.
 
-- ### Lack of Community-Centered, Utility-Based Tokens
+## Bitcoin Ordinals NFT Platform
 
-Most meme tokens lack a strong community purpose and meaningful
-utility, resulting in short-lived engagement and minimal user retention.
-Fry enthusiasts and food lovers lack a niche digital currency that
-brings them together in a fun and value-driven community.
+The FRYS Coin Marketplace is not just a trading platform; it is also a Bitcoin Ordinals NFT platform built on the Internet Computer Protocol (ICP). Leveraging cutting-edge chain key technology and Bitcoin's robust infrastructure, our platform allows users to create, buy, and sell Ordinal NFTs. 
 
-- ### Gap Between Digital Tokens and Real-World Experience
+Ordinal NFTs represent unique digital assets that are inscribed on individual satoshis, enabling true ownership and provenance on the Bitcoin blockchain. This innovative approach combines the security and decentralization of Bitcoin with the flexibility of NFTs, allowing creators and collectors to engage in a vibrant marketplace for digital art and collectibles. 
 
-Existing meme tokens rarely translate into tangible benefits or
-experiences in everyday life, leaving holders without practical use for
-their investments.
+Join us in exploring the future of digital ownership with Ordinal NFTs! 
 
-- ### Missed Opportunities in Food and Dining Partnerships
 
-The food and dining industries represent a huge, untapped market for
-blockchain integration, especially with community-driven tokens.
+Welcome to the FRYS Coin Marketplace! This platform allows users to buy, sell, and trade digital assets seamlessly. Built with a focus on user experience and security, FRYS Coin Marketplace aims to provide a reliable and efficient trading environment for all users.
 
-## SOLUTION
+## How to Get Started
+1. Visit [https://eeiss-taaaa-aaaal-arr5a-cai.icp0.io/] to learn more about the project.
+2. Stay tuned for updates on the Fries NFT Marketplace development and launch.
+3. Join our community of artists, collectors, and enthusiasts to start building the future of fry-themed NFTs and beyond.
 
-### Fries Coin: A Fry-Themed Digital Currency with Real Utility
 
-- ### Community-Centered Digital Currency for Fry Lovers
+## Demo
 
-Fries Coin is designed to bring together fry lovers across the globe into a single, passionate community.
-Fries Coin offers value through unique engagement, promotions, and airdrops tailored specifically for fry enthusiasts.
+You can view a live demo of the FRYS Coin Marketplace at the following link: [https://drive.google.com/drive/folders/1eWwdipbVa3l1AnDOmMX4eaHCLygxMkzR?usp=drive_link](#)
 
-- ### Seamless Integration with Major ICP Exchanges
+## Screenshots
+![Screenshot from 2024-11-24 07-49-41](https://github.com/user-attachments/assets/0efd1fb1-eadd-4937-98c9-e9995672b9e3)
+![Screenshot from 2024-11-24 07-49-57](https://github.com/user-attachments/assets/0748c024-7fa1-4ab3-8b17-22dbb7050640)
+![Screenshot from 2024-11-24 07-59-22](https://github.com/user-attachments/assets/6ed09364-3797-4fbb-aa30-1f376a4e1e97)
 
-Fries Coin is listed on ICP major exchanges like ICPex and ICPSwap, allowing seamless transactions and rising liquidity.
 
-- ### Real-World Use and Partnerships
 
-Fries Coin aims to partner with food outlets and brands, enabling users to redeem fries and other perks directly with the token.
 
-## TOKENOMICS
+## Contact
+For inquiries, collaboration, or support, reach out to us at:
+- **Website**: [friescoin.xyz](https://friescoin.xyz)
+- **Email**: [friescoin@gmail.com](friescoin@gmail.com)
+- **Socials**: [friescoin.xyz](https://friescoin.xyz)
 
-### Total Supply
 
-**210,000,000** FRYS tokens have been created as the Total supply.
-
-### Distribution and Issuance Schedule
-
-- Early Contributors and Team: 5%
-- ICP Hubs: 5%
-- Community Building, Rewards, and Airdrop: 5%
-- Liquidity:15%
-
-## MILESTONES ACHIEVED
-
-### Token Launch & Initial Liquidity
-
-- Platform Launch: Successfully launched the Fries Coin token on the Internet
-  Computer (ICP) blockchain.
-- Liquidity Secured: Added liquidity on major ICP exchanges (ICPSwap and
-  ICPEx), making FRYS accessible to a wide user base and ensuring market
-  stability.
-
-### Community Growth & Engagement
-
-- Social Media Expansion: Twitter following increased from 2000 to 5,000, and
-  Telegram membership grew from 160 to 1700 members.
-- Open Chat Success: The community on Open Chat expanded from 200 to 875
-  members, strengthening our network of fries enthusiasts and ICP supporters.
-
-### Technical Advancements & Platform Development
-
-NFT Marketplace to launch: Finalizing Technical work for the FRYS NFT
-Marketplace. It will feature unique Bitcoin Ordinal NFTs.
+## License
+This project is licensed under the MIT License. See the `LICENSE` file for details.
