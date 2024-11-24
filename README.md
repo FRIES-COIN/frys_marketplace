@@ -39,9 +39,7 @@ You can view a live demo of the FRYS Coin Marketplace at the following link: [ht
 
 ## Screenshots
 ![Screenshot from 2024-11-24 07-49-41](https://github.com/user-attachments/assets/0efd1fb1-eadd-4937-98c9-e9995672b9e3)
-![Screenshot from 2024-11-24 07-49-57](https://github.com/user-attachments/assets/0748c024-7fa1-4ab3-8b17-22dbb7050640)
-
-
+![Screenshot from 2024-11-24 07-59-22](https://github.com/user-attachments/assets/853af35b-58c9-4461-a65e-33b4cdc3fa01)
 
 
 
