@@ -17,33 +17,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../components/ui/select";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "../../../components/ui/drawer";
-import { Switch } from "../../../components/ui/switch";
-import { Label } from "../../../components/ui/label";
 import { Input } from "../../../components/ui/input";
 import { CarouselSize } from "./nfts-owned";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 type Tab = "nft" | "wallet" | "settings" | "profile" | "logout";
 import btc from "../../../public/btc.svg";
+import ckbtc from "../../../public/ckbtc.png";
+import cketh from "../../../public/cketh.png";
 import icp from "../../../public/icp.svg";
 import eth from "../../../public/eth.svg";
 import frys from "../../../public/frys.jpeg";
+import { QRCodeSVG } from "qrcode.react";
 import qr from "../../../public/qr.png";
 import { Button } from "../../../components/ui/button";
+import { getBalance, transferTokens } from "../Wallet/wallet-service";
+import { getPrincipalID } from "../Wallet/wallet-service";
+import { get_exchange_rate } from "../services/exchangeRateService";
 
 //NFT TAB COMPONENT
 function NFTTab() {
   return (
-    <div className="bg-primary rounded-md h-full w-full max-w-7xl overflow-hidden md:mx-4">
+    <div className="bg-primary rounded-md h-full w-full max-w-7xl overflow-hidden md:mx-4 text-black">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold font-body px-2 mt-12 mx-2">
           Overview
@@ -59,6 +53,88 @@ function NFTTab() {
 
 //WALLET TAB COMPONENT
 function WalletTab() {
+  const [balance, setBalance] = useState<
+    Array<{ amount: number; symbol: string }>
+  >([]);
+  const [recipientAddress, setRecipientAddress] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [selectedToken, setSelectedToken] = useState<"ICP" | "CKBTC" | "FRYS">("ICP");
+  const [principalId, setPrincipalId] = useState<string>("");
+  const [exchangeRate, setExchangeRate] = useState(0);
+  const [convertedAmount, setConvertedAmount] = useState(0);
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const walletBalance = await getBalance();
+      setBalance(walletBalance);
+    };
+    fetchBalance();
+  }, []);
+
+  useEffect(() => {
+    const fetchPrincipalId = async () => {
+      try {
+        const id = await getPrincipalID();
+        setPrincipalId(id);
+      } catch (error) {
+        console.error("failed to get principal Id");
+      }
+    };
+    fetchPrincipalId();
+  }, []);
+
+  const handleTransfer = async () => {
+    try {
+      const result = await transferTokens(
+        recipientAddress,
+        amount,
+        selectedToken as "ICP" | "CKBTC" | "FRYS"
+      );
+      alert("Transfer successful!");
+      setRecipientAddress("");
+      setAmount(0);
+    } catch (error) {
+      alert("Transfer failed. Please try again.");
+    }
+  };
+  useEffect(() => {
+    const fetchExchangeRate = async () => {
+      const rate = await get_exchange_rate();
+      if (typeof rate === 'number') {
+        setExchangeRate(rate);
+      }
+    };
+    fetchExchangeRate();
+  }, []);
+
+  const handleReceive = () => {
+    // const principal = await requestConnect();
+    const userAddress = window.ic?.plug?.principal?.toString();
+    if (userAddress) {
+      alert(`Your receiving address is: ${userAddress}`);
+    } else {
+      alert("Please connect your wallet first");
+    }
+  };
+
+  const convertAmount = (value: number, from: 'ICP' | 'CKBTC', to: 'ICP' | 'CKBTC') => {
+    if (from === 'ICP' && to === 'CKBTC') {
+      return value * exchangeRate;
+    } else if (from === 'CKBTC' && to === 'ICP') {
+      return value /exchangeRate;
+    }
+    return value;
+  };
+
+  const handleTokenChange = (newToken: 'ICP' | 'CKBTC' | 'FRYS') => {
+    if (newToken === 'ICP' || newToken === 'CKBTC') {
+      const newAmount = convertAmount(amount, selectedToken as 'ICP' | 'CKBTC', newToken);
+      setConvertedAmount(newAmount);
+    }
+
+    setSelectedToken(newToken);
+  }
+
   return (
     <div className="bg-[#151415] rounded-md h-full px-2">
       <div className="text-white font-body w-full pt-4 flex items-center justify-center">
@@ -71,24 +147,26 @@ function WalletTab() {
           </SelectTrigger>
           <SelectContent className="bg-[#202020] w-[14rem] border-none">
             <SelectItem
-              value="btc"
+              value="ckbtc"
+              onClick={() => setSelectedToken("CKBTC")}
               className="flex items-center gap-2 justify-between w-full mt-4"
             >
               <div className="w-full flex flex-row items-center gap-2">
-                <img src={btc} alt="btc" className="w-8 h-8" />
+                <img src={ckbtc} alt="btc" className="w-8 h-8" />
                 <p className="uppercase font-body font-semibold text-gray-500">
-                  btc
+                  CKBTC
                 </p>
               </div>
             </SelectItem>
             <SelectItem
-              value="icp"
+              value="ICP"
+              onClick={() => setSelectedToken("ICP")}
               className="flex items-center gap-2 justify-between w-full mt-4"
             >
               <div className="w-full flex flex-row items-center gap-2">
                 <img src={icp} alt="icp" className="w-8 h-8" />
                 <p className="uppercase font-body font-semibold text-gray-500">
-                  icp
+                  ICP
                 </p>
               </div>
             </SelectItem>
@@ -97,10 +175,8 @@ function WalletTab() {
               className="flex items-center gap-2 justify-between w-full mt-4"
             >
               <div className="w-full flex flex-row items-center gap-2">
-                <img src={eth} alt="eth" className="w-8 h-8" />
-                <p className="uppercase font-body font-semibold text-gray-500">
-                  eth
-                </p>
+                <img src={cketh} alt="eth" className="w-8 h-8 rounded-full" />
+                <p className=" font-body font-semibold text-gray-500">ckETH</p>
               </div>
             </SelectItem>
             <SelectItem
@@ -121,22 +197,51 @@ function WalletTab() {
           </SelectContent>
         </Select>
         <Input
+          value={amount}
+          onChange={(e) => setAmount(Number(e.target.value))}
           placeholder="0.0000"
           className="md:w-1/4 border-none bg-[#202020] h-16 focus:ring-0 focus:border-0 focus:outline-none"
         />
       </div>
+
+      <div className="text-white font-body mt-4 text-center">
+        {convertedAmount > 0 && (
+          <p className="text-gray-500">
+            converted: {convertedAmount.toFixed(8)} {selectedToken}
+          </p>
+        )}
+      </div>
+
+      {/* Balance Display */}
+      <div className="text-white font-body mt-4 text-center">
+        {balance.map((item, index) => (
+          <p key={index} className="text-gray-500">
+            {item.symbol}: {item.amount}
+          </p>
+        ))}
+      </div>
+
       <div>
-        <img
-          src={qr}
+        <QRCodeSVG
+          value={principalId}
           className="xl:w-[15%] md:w-[20%] h-56 md:h-auto mx-auto mt-8 rounded-md"
+          size={224}
+          bgColor={"#ffffff"}
+          fgColor={"#000000"}
+          level={"L"}
+          includeMargin={false}
         />
       </div>
+
       <div className="w-full flex items-center justify-center mt-4">
         <Input
+          value={recipientAddress}
+          onChange={(e) => setRecipientAddress(e.target.value)}
           placeholder="Enter deposit address"
-          className="w-1/2 border-none bg-[#202020] text-white md:h-16 h-10 focus:ring-0 focus:border-0 focus:outline-none"
+          className="md:w-1/2 w-3/4 border-none bg-[#202020] text-white h-10 focus:ring-0 focus:border-0 focus:outline-none"
         />
       </div>
+
       <div className="flex items-center justify-center mt-4">
         <p className="text-center font-body text-xs leading-relaxed text-gray-500 md:w-1/2">
           Always start with small amounts of transactions whether you are newbie
@@ -144,11 +249,18 @@ function WalletTab() {
           crypto industry.
         </p>
       </div>
+
       <div className="flex items-center justify-between">
-        <Button className="bg-primary text-white w-1/4 mx-auto mt-4 font-body">
+        <Button
+          onClick={handleTransfer}
+          className="bg-primary text-white w-1/4 mx-auto mt-4 font-body"
+        >
           Send
         </Button>
-        <Button className="bg-primary text-white w-1/4 mx-auto mt-4 font-body">
+        <Button
+          onClick={handleReceive}
+          className="bg-primary text-white w-1/4 mx-auto mt-4 font-body"
+        >
           Receive
         </Button>
       </div>
@@ -159,7 +271,7 @@ function WalletTab() {
 //SETTINGS TAB COMPONENT
 function SettingsTab() {
   return (
-    <div className="bg-[#050505] rounded-md md:px-2 px-1 py-2 md:m-2">
+    <div className="bg-background rounded-md md:px-2 px-1 py-2 md:m-2">
       <div className="flex flex-col md:flex-row gap-12">
         <div className="flex-1">
           <div className="mb-8">
@@ -306,14 +418,14 @@ function SettingsTab() {
           <h2 className="text-white font-body text-26px mb-2 font-bold">
             Security
           </h2>
-          <div className="bg-[#FFA503] w-full md:w-[370px] md:h-[224px] h-[100px] rounded-[6px] flex flex-col items-center justify-center">
+          <div className="bg-primary w-full md:w-[370px] md:h-[224px] h-[100px] rounded-[6px] flex flex-col items-center justify-center">
             <input
               type="checkbox"
               className="toggle toggle-md"
               id="security"
               defaultChecked
             />
-            <p className="text-gray-500 font-body">
+            <p className="text-gray-500 font-body mt-2">
               Require a pin to transfer funds
             </p>
           </div>
@@ -327,7 +439,7 @@ function SettingsTab() {
 function ProfileTab() {
   const [isEditing, setIsEditing] = useState(false);
   return (
-    <div className="bg-[#FFA503] rounded-md p-2 md:px-5 md:pb-26 md:pt-[120px] md:m-5">
+    <div className="bg-primary rounded-md p-2 md:px-5 md:pb-26 md:pt-[10px] md:m-5">
       <div className="flex items-center justify-between md:mb-2 md:p-11">
         <div className="flex items-center gap-4">
           <div className="relative md:w-20 md:h-20 w-14 h-14">
@@ -350,7 +462,9 @@ function ProfileTab() {
             />
           </div>
           <div className="text-center md:text-left">
-            <p className="text-black-500 font-medium font-body">Alexa Rawles</p>
+            <p className="text-black-500 font-medium font-body text-black">
+              Alexa Rawles
+            </p>
             <p className="text-gray-500 font-body">alexarawles@gmail.com</p>
           </div>
         </div>
@@ -359,10 +473,10 @@ function ProfileTab() {
         </button>
       </div>
 
-      <div className="flex flex-col md:flex-row flex-wrap gap-4 md:p-5 mt-2">
+      <div className="flex flex-col md:flex-row flex-wrap gap-4 md:p-5 mt-2 text-black">
         <div className="space-y-4 flex-1 min-w-[280px]">
           <div className="flex flex-col">
-            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
+            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80 text-black">
               Full Name
             </label>
             <input
@@ -378,7 +492,7 @@ function ProfileTab() {
             <textarea
               placeholder="Tell us about yourself"
               className="w-full md:h-[52px] h-[42px]  bg-[#F9F9F9] rounded-[8px] px-4 text-[#000000] pt-2 placeholder-gray-500 font-body"
-              disabled={!isEditing}
+              // disabled={!isEditing}
             />
           </div>
           <div className="flex flex-col">
@@ -454,9 +568,9 @@ function ProfileTab() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center mt-[8px] md:mt-[40px] mb-2 p-5">
+      {/* <div className="flex justify-center mt-[8px] md:mt-[40px] mb-2 p-5">
         <div className="space-y-2 w-[472.33px]">
-          <h3 className="text-black-600 text-[16px] leading-[21px] font-body mb-2 opacity-80">
+          <h3 className="text-black-600 text-[16px] leading-[21px] font-body mb-2 opacity-80 text-black">
             Social Links
           </h3>
           <div className="flex items-center gap-2">
@@ -492,7 +606,7 @@ function ProfileTab() {
             />
           </div>{" "}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
