@@ -1,26 +1,58 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { cn } from "../../../lib/utils";
-import { NFT } from "./nft-data";
-import gif from "../../../public/gif.gif";
-import { AvatarsCard } from "./avatar-card";
-import { connectPlug, processPayment } from '../Wallet/wallet-service';
+import { connectPlug, processPayment } from "../Wallet/wallet-service";
+import { LoadingCard } from "../collections";
+import { get_exchange_rate } from '../services/exchangeRateService';
 
-function NFTCard({ nft }: { nft: NFT }) {
+export interface INFT {
+  id: bigint;
+  collection_id: bigint;
+  nft_description: string;
+  price_in_icp_tokens: bigint;
+  created_at: bigint;
+  minter_principal_id: string;
+  image_url: string;
+}
+
+function NFTCard({ nft, loading }: { nft: INFT; loading: boolean }) {
+  const [selectedToken, setSelectedToken] = useState<"ICP" | "ckBTC">("ICP");
+  const [convertedPrice, setConvertedPrice] = useState<number>(Number(nft.price_in_icp_tokens));
+
+  useEffect(() => {
+    const updatePrice = async () => {
+      if (selectedToken === "ckBTC") {
+        const rate = await get_exchange_rate();
+        // Convert ICP amount to ckBTC by dividing
+        const icpAmount = Number(nft.price_in_icp_tokens) / 100000000;
+        const ckbtcAmount = icpAmount / rate;
+        setConvertedPrice(ckbtcAmount * 100000000);
+      } else {
+        setConvertedPrice(Number(nft.price_in_icp_tokens));
+      }
+    };
+    updatePrice();
+  }, [selectedToken, nft.price_in_icp_tokens]);
+
   const handleBuyClick = async () => {
     try {
       // First ensure wallet is connected
       const connected = await connectPlug();
       if (!connected) {
-        console.log('Please connect your wallet first');
+        console.log("Please connect your wallet first");
         return;
       }
 
-      // Process the payment
-      const result = await processPayment(nft.id.toString(), nft.price);
-      console.log(nft.id.toString(), nft.price);
-      console.log('Purchase successful:', result);
+      // Process the payment with selected token
+      const tokenObject =
+        selectedToken === "ICP" ? { ICP: null } : { CKBTC: null };
+      const result = await processPayment(
+        nft.id.toString(),
+        Number(nft.price_in_icp_tokens),
+        tokenObject
+      );
+      console.log("Purchase successful:", result);
     } catch (error) {
-      console.error('Purchase failed:', error);
+      console.error("Purchase failed:", error);
     }
   };
 
@@ -37,36 +69,54 @@ function NFTCard({ nft }: { nft: NFT }) {
           `bg-cover`
         )}
         style={{
-          backgroundImage: `url(${nft.image})`,
+          backgroundImage: `url(${nft.image_url})`,
         }}
       >
-        <div className="relative z-50 backdrop-blur-lg w-full p-2 rounded-xl">
-          <div className="w-1/2 mb-[-36px]">
-            <AvatarsCard avatars={nft.avatars} />
+        <div className="relative z-50 backdrop-blur-lg w-full p-2 rounded-xl h-1/3">
+          <div className="-mb-4">
+            <h1 className="text-white text-xl font-bold font-body">
+              #{Number(nft.collection_id)}
+            </h1>
           </div>
           <div className="flex items-center justify-between">
             <div className="px-2">
-              <h1 className="text-white text-lg font-bold font-body">
-                {nft.name}
+              <h1 className="text-white text-sm font-bold font-body">
+                {nft.nft_description}
               </h1>
-              <h1 className="text-primary font-body underline">{nft.chef}</h1>
+              <h1 className="text-primary font-body underline cursor-pointer">
+                {nft.minter_principal_id.substring(0, 8)}...
+              </h1>
             </div>
             <div>
               <p className="text-white text-xl font-bold font-body text-center my-2">
-                {nft.price} ICP
+                {(convertedPrice / 100000000).toFixed(8)} {selectedToken}
               </p>
-              <button 
-                onClick={handleBuyClick}
-                className="border-primary border-[2px] text-white rounded-xl py-2 px-8 font-body font-semibold hover:bg-primary transition-colors"
-              >
-                Buy
-              </button>
+              <div className="flex items-center gap-1">
+                <select
+                  value={selectedToken}
+                  onChange={(e) =>
+                    setSelectedToken(e.target.value as "ICP" | "ckBTC")
+                  }
+                  className="mr-2 rounded-xl px-2 py-2 text-white font-bold font-body bg-transparent border-2 border-primary"
+                >
+                  <option value="ICP" className="mx-2">
+                    ICP
+                  </option>
+                  <option value="ckBTC" className="mx-2">
+                    ckBTC
+                  </option>
+                </select>
+                <button
+                  onClick={handleBuyClick}
+                  className="border-primary border-[2px] text-white rounded-xl py-2 px-8 font-body font-semibold hover:bg-primary transition-colors"
+                >
+                  Buy
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
-
-export default NFTCard;
+}export default NFTCard;

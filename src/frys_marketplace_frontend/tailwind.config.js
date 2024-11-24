@@ -13,7 +13,7 @@ export default {
       },
       colors: {
         background: "#0d0c0c",
-        primary: "#f9a505",
+        primary: "#F8A504",
       },
       keyframes: {
         move: {

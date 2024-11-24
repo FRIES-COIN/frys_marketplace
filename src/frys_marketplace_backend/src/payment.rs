@@ -1,6 +1,5 @@
 use candid::{CandidType, Nat, Principal};
-use ic_cdk::storage;
-use ic_cdk::{api::call, caller, post_upgrade, pre_upgrade, query, update};
+use ic_cdk::{api::call, storage, caller, update, pre_upgrade, post_upgrade};
 use icrc_ledger_types::{
     icrc1::account::Account,
     icrc2::transfer_from::{TransferFromArgs, TransferFromError},
@@ -11,46 +10,49 @@ use std::cell::RefCell;
 use std::collections::HashMap;
 
 #[derive(CandidType, Deserialize, Serialize, Clone)]
-struct Payment {
+pub struct Payment {
     id: String,
     block_height: Nat,
     amount: f64,
     payer: String,
+    token_type: TokenType,
+}
+
+#[derive(CandidType, Deserialize, Serialize, Clone)]
+pub enum TokenType {
+    FRYS,
+    ICP,
+    CKBTC,
 }
 
 thread_local! {
-    static PAYMENT_STORE: RefCell<HashMap<String, Payment>> = RefCell::new(HashMap::new());
-    static LEDGER_CANISTER_ID: RefCell<Principal> = RefCell::new(
+    pub static PAYMENT_STORE: RefCell<HashMap<String, Payment>> = RefCell::new(HashMap::new());
+    pub static ICP_LEDGER_ID: RefCell<Principal> = RefCell::new(
         Principal::from_text("ryjl3-tyaaa-aaaaa-aaaba-cai").unwrap()
+    );
+    pub static CKBTC_LEDGER_ID: RefCell<Principal> = RefCell::new(
+        Principal::from_text("mxzaz-hqaaa-aaaar-qaada-cai").unwrap()
+    );
+    pub static FRYS_LEDGER_ID: RefCell<Principal> = RefCell::new(
+        Principal::from_text("ezu5v-7qaaa-aaaam-acpbq-cai").unwrap()
     );
 }
 
-// Persisting storage
-#[pre_upgrade]
-fn pre_upgrade() {
-    let payments = PAYMENT_STORE.with(|store| store.borrow().clone());
-    storage::stable_save((payments,)).expect("Failed to save payments");
-}
-
-#[post_upgrade]
-fn post_upgrade() {
-    let (payments,): (HashMap<String, Payment>,) =
-        storage::stable_restore().expect("Failed to restore payments");
-    PAYMENT_STORE.with(|store| *store.borrow_mut() = payments);
-}
-
 #[update(name = "payment")]
-async fn payment(id: String, price: f64) -> String {
-    let ledger_canister_id = LEDGER_CANISTER_ID.with(|id| id.borrow().clone());
+async fn payment(id: String, price: f64, token_type: TokenType) -> String {
+    let ledger_canister_id = match token_type {
+        TokenType::ICP => ICP_LEDGER_ID.with(|id| id.borrow().clone()),
+        TokenType::CKBTC => CKBTC_LEDGER_ID.with(|id| id.borrow().clone()),
+        TokenType::FRYS => FRYS_LEDGER_ID.with(|id|id.borrow().clone()),
+    };
 
-    let principal = ledger_canister_id;
     let transfer_args = TransferFromArgs {
         from: Account {
             owner: caller(),
             subaccount: None,
         },
         to: Account {
-            owner: ic_cdk::id(),
+            owner: Principal::from_text("mdpn6-pyg7q-bwfjn-cxmnr-cciq7-7aqig-kxkt7-bk2ps-nzuqn-mst5t-hqe").unwrap(),
             subaccount: None,
         },
         amount: Nat::from(price as u64),
@@ -61,7 +63,7 @@ async fn payment(id: String, price: f64) -> String {
     };
 
     let transfer_result = call::call::<(TransferFromArgs,), (Result<Nat, TransferFromError>,)>(
-        principal,
+        ledger_canister_id,
         "icrc2_transfer_from",
         (transfer_args,),
     )
@@ -74,13 +76,13 @@ async fn payment(id: String, price: f64) -> String {
                 block_height,
                 amount: price,
                 payer: caller().to_string(),
+                token_type,
             };
 
             PAYMENT_STORE.with(|store| store.borrow_mut().insert(id.clone(), payment.clone()));
 
             serde_json::to_string(&payment).unwrap()
         }
-
         Ok((Err(e),)) => {
             serde_json::to_string(&json!({"error": format!("Transfer error: {:?}", e)})).unwrap()
         }
@@ -89,5 +91,25 @@ async fn payment(id: String, price: f64) -> String {
         }
     }
 }
+// #[pre_upgrade]
+// fn pre_upgrade() {
+//     let payment_store = PAYMENT_STORE.with(|store| store.borrow().clone());
+//     let icp_ledger = ICP_LEDGER_ID.with(|id| id.borrow().clone());
+//     let ckbtc_ledger = CKBTC_LEDGER_ID.with(|id| id.borrow().clone());
+    
+//     storage::stable_save((payment_store, icp_ledger, ckbtc_ledger))
+//         .expect("Failed to save state");
+// }
 
-ic_cdk::export_candid!();
+// #[post_upgrade]
+// fn post_upgrade() {
+//     let (payment_store, icp_ledger, ckbtc_ledger): (
+//         HashMap<String, Payment>,
+//         Principal,
+//         Principal,
+//     ) = storage::stable_restore().expect("Failed to restore state");
+
+//     PAYMENT_STORE.with(|store| *store.borrow_mut() = payment_store);
+//     ICP_LEDGER_ID.with(|id| *id.borrow_mut() = icp_ledger);
+//     CKBTC_LEDGER_ID.with(|id| *id.borrow_mut() = ckbtc_ledger);
+// }

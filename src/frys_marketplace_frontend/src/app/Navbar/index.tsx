@@ -35,7 +35,7 @@ function Navbar() {
           </Link>
         </div>
 
-        <div className="md:flex items-center space-x-8 hidden bg-black">
+        <div className="md:flex items-center space-x-8 hidden">
           <Link
             to="/collections"
             className="text-white font-semibold font-body text-[20.96px] leading-[24.84px] w-[131px] h-[25px] hover:text-[#ffa503] hover:text-[22.96px] transition-all duration-500"
@@ -61,10 +61,12 @@ function Navbar() {
               />
             </Link>
           </div>
-          <button className="bg-transparent border-[2.66px] border-[#ffa503] font-body rounded-[17.47px] text-white px-4 py-2 flex items-center hover:bg-[#ffa503] hover:text-black transition-all duration-500">
-            <span className="mr-2">COOK</span>
-            <FaRocket />
-          </button>
+          <Link to="/profile">
+            <button className="bg-transparent border-[2.66px] border-[#ffa503] font-body rounded-[17.47px] text-white px-4 py-2 flex items-center hover:bg-[#ffa503] hover:text-black transition-all duration-500">
+              <span className="mr-2">COOK</span>
+              <FaRocket />
+            </button>
+          </Link>
         </div>
       </div>
       <div className="px-2 bg-black">
@@ -114,7 +116,7 @@ function Navbar() {
           </Link>
           <div className="flex items-center space-x-4 mx-2">
             <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center">
-              <Link to="/profile">
+              <Link to="/profile" onClick={() => setIsOpen(!isOpen)}>
                 <img
                   src={avatar}
                   alt="Profile"
@@ -124,10 +126,21 @@ function Navbar() {
                 />
               </Link>
             </div>
-            <button className="bg-transparent border-[2.66px] border-[#ffa503] font-body rounded-[17.47px] text-white px-4 py-2 flex items-center hover:bg-[#ffa503] hover:text-black transition-all duration-500">
-              <span className="mr-2 text-2xl">COOK</span>
-              <FaRocket />
-            </button>
+            {/* Desktop Cook button */}
+            {/* <Link to="/profile">
+              <button className="bg-transparent border-[2.66px] border-[#ffa503] font-body rounded-[17.47px] text-white px-4 py-2 flex items-center hover:bg-[#ffa503] hover:text-black transition-all duration-500">
+                <span className="mr-2">COOK</span>
+                <FaRocket />
+              </button>
+            </Link> */}
+
+            {/* Mobile Cook button */}
+            <Link to="/mint" onClick={() => setIsOpen(!isOpen)}>
+              <button className="bg-transparent border-[2.66px] border-[#ffa503] font-body rounded-[17.47px] text-white px-4 py-2 flex items-center hover:bg-[#ffa503] hover:text-black transition-all duration-500">
+                <span className="mr-2 font-body font-bold text-2xl">COOK</span>
+                <FaRocket />
+              </button>
+            </Link>
           </div>
         </div>
       </div>
