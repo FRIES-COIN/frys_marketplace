@@ -161,7 +161,7 @@ fn mint_nft(
     //     return Err("Unauthorized: Only approved principals can mint NFTs".to_string());
     // }
 
-    let stored_password = MINT_PASSWORD.with(|p| p.borrow().clone());
+    let stored_password = MINT_PASSWORD.with(|p| p.borrow().clone()); 
     // let stored_password = "FRYS@2024#1234".to_string(); 
     
     if password != stored_password {
