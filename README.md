@@ -40,7 +40,7 @@ You can view a live demo of the FRYS Coin Marketplace at the following link: [ht
 ## Screenshots
 ![Screenshot from 2024-11-24 07-49-41](https://github.com/user-attachments/assets/0efd1fb1-eadd-4937-98c9-e9995672b9e3)
 ![Screenshot from 2024-11-24 07-49-57](https://github.com/user-attachments/assets/0748c024-7fa1-4ab3-8b17-22dbb7050640)
-![Screenshot from 2024-11-24 07-59-22](https://github.com/user-attachments/assets/6ed09364-3797-4fbb-aa30-1f376a4e1e97)
+
 
 
 
@@ -49,7 +49,7 @@ You can view a live demo of the FRYS Coin Marketplace at the following link: [ht
 For inquiries, collaboration, or support, reach out to us at:
 - **Website**: [friescoin.xyz](https://friescoin.xyz)
 - **Email**: [friescoin@gmail.com](friescoin@gmail.com)
-- **Socials**: [friescoin.xyz](https://friescoin.xyz)
+- **Socials**: [linktr.ee/Fries_Coin](https://linktr.ee/Fries_Coin)
 
 
 ## License
