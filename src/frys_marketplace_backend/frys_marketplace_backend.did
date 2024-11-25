@@ -14,6 +14,22 @@ type NFT = record {
   nft_description : text;
   nft_image : vec blob;
 };
+type Payment = record {
+  id : text;
+  payer : text;
+  amount : float64;
+  block_height : nat;
+  token_type : TokenType;
+};
+type PendingTransfer = record {
+  id : text;
+  to : principal;
+  from : principal;
+  timestamp : nat64;
+  amount : nat64;
+  token_type : TokenType;
+  retries : nat32;
+};
 type Result = variant { Ok : Collection; Err : text };
 type Result_1 = variant { Ok; Err : text };
 type Result_2 = variant { Ok : NFT; Err : text };
@@ -24,8 +40,11 @@ service : () -> {
   delete_nft : (nat64) -> (Result_1);
   get_all_collections : () -> (vec Collection) query;
   get_all_nfts : () -> (vec NFT) query;
+  get_canister_icp_balance : () -> (text) query;
   get_collection_nfts : (nat64) -> (vec NFT) query;
   get_nft_by_id : (nat64) -> (opt NFT) query;
+  get_payment_history : () -> (vec Payment) query;
+  get_pending_transfers : () -> (vec PendingTransfer) query;
   mint_nft : (vec blob, nat64, text, nat64, text) -> (Result_2);
   payment : (text, float64, TokenType) -> (text);
   verify_frys_payment : (nat64, nat64) -> (Result_3);
