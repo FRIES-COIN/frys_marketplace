@@ -14,6 +14,7 @@ use minting::{ COLLECTIONS, NFT, NEXT_COLLECTION_ID, NEXT_NFT_ID, PendingMint, P
 use payment::Payment;
 use payment::PAYMENT_STORE;
 use crate::payment::TokenType;
+use crate::payment::PendingTransfer;
 // use ic_cdk_macros::*;
 
 // use crate::state::STATE;

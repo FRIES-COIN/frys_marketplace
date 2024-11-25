@@ -46,24 +46,24 @@ function NFTCard({ nft, loading }: { nft: INFT; loading: boolean }) {
       }
 
       // First approve the spending
-      await initiatePayment(
+      const approvaleResult = await initiatePayment(
         frysBackendCanisterID,
-        Number(nft.price_in_icp_tokens),
+        Number(nft.price_in_icp_tokens) / 100000000,
         selectedToken
       );
 
-      // Process the payment with selected token
-      const tokenObject =
+      if (approvaleResult) {
+        const tokenObject =
         selectedToken === "ICP" ? { ICP: null } : { CKBTC: null };
       const result = await processPayment(
         nft.id.toString(),
         Number(nft.price_in_icp_tokens),
         tokenObject
       );
-      console.log("Purchase successful:", result);
-    } catch (error) {
-      console.error("Purchase failed:", error);
     }
+  } catch (error) {
+    console.error("Purchase failed:", error);
+  }
   };
 
   return (
@@ -99,6 +99,7 @@ function NFTCard({ nft, loading }: { nft: INFT; loading: boolean }) {
             </div>
             <div>
               <p className="text-white text-xl font-bold font-body text-center my-2">
+                {/* {(convertedPrice / 100000000000).toFixed(8)} {selectedToken} */}
                 {(convertedPrice / 100000000).toFixed(8)} {selectedToken}
               </p>
               <div className="flex items-center gap-1">

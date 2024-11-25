@@ -74,29 +74,35 @@ export const getBalance = async () => {
 
 export const initiatePayment = async (recipientAddress: string, amount: number, tokenType: 'FRYS' | 'ICP' | 'CKBTC') => {
   try {
-    const result = await window.ic.plug.requestTransfer({
+    // First approve the allowance
+    const approveResult = await window.ic.plug.requestTransfer({
       to: recipientAddress,
-      amount: amount,
-      token: tokenType,
+      amount: amount * 1e8, // Convert to e8s
+      token: tokenType
     });
-    return result;
+    
+    // Wait for approval confirmation
+    if (approveResult && approveResult.height) {
+      return approveResult;
+    }
+    throw new Error('Approval failed');
   } catch (error) {
-    console.error("Payment failed:", error);
     throw error;
   }
 };
-
 type TokenType = { ICP: null } | { CKBTC: null } | { FRYS: null };
-
 export const processPayment = async (id: string, price: number, tokenType: TokenType) => {
   try {
+    console.log('Processing backend payment:', { id, price, tokenType });
     const result = await frys_marketplace_backend.payment(id, price, tokenType);
+    console.log('Backend payment result:', result);
     return result;
   } catch (error) {
     console.log('Payment params:', { id, price, tokenType });
     throw error;
   }
 };
+
 // transfer funds from wallet to other wallet
 export const transferTokens = async (recipientAddress: string, amount: number, tokenType: 'FRYS' | 'ICP' | 'CKBTC') => {
   try {
