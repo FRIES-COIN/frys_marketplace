@@ -442,11 +442,11 @@ function ProfileTab() {
         <div className="space-y-4 flex-1 min-w-[280px]">
           <div className="flex flex-col">
             <label className="font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80 text-gray-400">
-              Full Name
+              Username
             </label>
             <input
               type="text"
-              placeholder="Enter your full name"
+              placeholder="What should we call you?"
               className="w-full md:h-[52px] h-[42px] bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body"
             />
           </div>
@@ -484,16 +484,6 @@ function ProfileTab() {
         <div className="space-y-4 flex-1 min-w-[280px]">
           <div className="flex flex-col">
             <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
-              Nick Name
-            </label>
-            <input
-              type="text"
-              placeholder="Enter your nickname"
-              className="w-full md:h-[52px] h-[42px]  bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body"
-            />{" "}
-          </div>
-          <div className="flex flex-col">
-            <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
               Country
             </label>
             <select
@@ -509,26 +499,6 @@ function ProfileTab() {
               <option value="uk">United Kingdom</option>
               <option value="ca">Canada</option>
               <option value="au">Australia</option>
-            </select>
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
-              Time Zone
-            </label>
-            <select
-              className="w-full md:h-[52px] h-[42px]  bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body appearance-none cursor-pointer bg-no-repeat bg-right pr-16"
-              style={{
-                backgroundImage:
-                  "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
-                backgroundPosition: "right 16px center",
-              }}
-            >
-              <option value="">Timezone</option>
-              <option value="pst">Pacific Time (PAT)</option>
-              <option value="est">Eastern Time (EAT)</option>
-              <option value="gmt">GMT</option>
-              <option value="ist">IST</option>
             </select>
           </div>
         </div>
@@ -573,7 +543,7 @@ function ProfileTab() {
         </div>
       </div> */}
       <div className="flex mt-4 justify-center md:justify-normal">
-        <button className="bg-primary px-4 py-2 rounded-md font-bold text-white font-body mt-4">
+        <button className="bg-primary px-4 py-2 rounded-md text-white font-body mt-4">
           Update Details
         </button>
       </div>
