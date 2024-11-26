@@ -595,7 +595,7 @@ function Sidebar() {
           }`}
           onClick={() => setTab("nft")}
         >
-          <IconArtboardFilled size={14} className="text-white" />
+          {/* <IconArtboardFilled size={14} className="text-white" /> */}
           <h1 className="text-white font-body">NFTs</h1>
         </div>
         <div
@@ -604,7 +604,7 @@ function Sidebar() {
           }`}
           onClick={() => setTab("wallet")}
         >
-          <IconWallet size={14} className="text-white" />
+          {/* <IconWallet size={14} className="text-white" /> */}
           <h1 className="text-white font-body">Wallet</h1>
         </div>
         <div
@@ -613,7 +613,7 @@ function Sidebar() {
           }`}
           onClick={() => setTab("settings")}
         >
-          <IconSettingsFilled size={14} className="text-white" />
+          {/* <IconSettingsFilled size={14} className="text-white" /> */}
           <h1 className="text-white font-body">Settings</h1>
         </div>
         <div
@@ -622,7 +622,7 @@ function Sidebar() {
           }`}
           onClick={() => setTab("profile")}
         >
-          <IconUserFilled size={14} className="text-white" />
+          {/* <IconUserFilled size={14} className="text-white" /> */}
           <h1 className="text-white font-body transition-all duration-150">
             Profile
           </h1>

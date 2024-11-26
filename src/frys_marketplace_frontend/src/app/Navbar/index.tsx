@@ -69,7 +69,7 @@ function Navbar() {
           </Link>
         </div>
       </div>
-      <div className="px-2 bg-black">
+      <div className="px-2">
         <IconMenu2
           size={44}
           className="md:hidden text-white"
