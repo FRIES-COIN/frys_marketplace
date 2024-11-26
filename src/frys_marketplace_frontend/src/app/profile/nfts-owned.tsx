@@ -76,7 +76,7 @@ export function CarouselSize() {
       className="w-full max-w-7xl"
     >
       {!loading && nfts.length === 0 ? (
-        <div className="flex flex-col items-center justify-center h-96 p-2">
+        <div className="flex flex-col items-center justify-center h-[390px] p-2">
           <h1 className="text-base font-body">
             You have not minted any NFTs yet😔
           </h1>
@@ -89,7 +89,7 @@ export function CarouselSize() {
       ) : null}
       {loading ? (
         <div className="flex justify-center items-center mt-12">
-          <span className="loading loading-infinity loading-lg bg-black"></span>
+          <span className="loading loading-infinity loading-lg bg-primary"></span>
         </div>
       ) : null}
 
@@ -106,13 +106,13 @@ export function CarouselSize() {
                       className="h-64 w-64 object-cover rounded-md"
                     />
                     <div className="font-body flex-col ">
-                      <h1 className="text-lg font-bold">
+                      <h1 className="text-lg font-bold text-gray-400">
                         #{nft.collection_id}
                       </h1>
-                      <h1 className="text-sm">
+                      <h1 className="text-sm text-gray-400">
                         {Number(nft.price_in_icp_tokens) / 100000000} ICP
                       </h1>
-                      <p className="mt-4">Mar 11, 2021</p>
+                      <p className="mt-4 text-gray-400">Mar 11, 2021</p>
                     </div>
                   </div>
                 </CardContent>
@@ -122,8 +122,8 @@ export function CarouselSize() {
         ))}
       </CarouselContent>
       <div className="flex items-center justify-between bg-white w-full">
-        <CarouselNext className="text-white border-none mx-4 px-2 py-1 mt-4 left-10 top-[100%]" />
-        <CarouselPrevious className="text-white border-none mx-4 px-2 py-1 left-0 mt-4 top-[100%]" />
+        <CarouselNext className="text-[#151415] bg-primary border-none mx-4 px-2 py-1 mt-2 left-10 top-[100%]" />
+        <CarouselPrevious className="text-[#151415] bg-primary border-none mx-4 px-2 py-1 left-0 mt-2 top-[100%]" />
       </div>
     </Carousel>
   );

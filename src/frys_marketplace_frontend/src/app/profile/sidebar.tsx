@@ -6,8 +6,11 @@ import {
   IconSettingsFilled,
   IconUserFilled,
   IconWallet,
-  IconLink,
+  IconBrandGithubFilled,
+  IconBrandLinkedinFilled,
+  IconBrandInstagramFilled,
   IconCamera,
+  IconBrandXFilled,
 } from "@tabler/icons-react";
 
 import {
@@ -37,12 +40,12 @@ import { get_exchange_rate } from "../services/exchangeRateService";
 //NFT TAB COMPONENT
 function NFTTab() {
   return (
-    <div className="bg-primary rounded-md h-full w-full max-w-7xl overflow-hidden md:mx-4 text-black">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold font-body px-2 mt-12 mx-2">
+    <div className="bg-background rounded-md min-h-screen w-full max-w-7xl overflow-hidden md:mx-4 text-black">
+      <div className="flex items-center justify-between mt-2">
+        <h1 className="text-2xl font-bold font-body px-2 md:mt-12 mx-2 text-primary">
           Overview
         </h1>
-        <button className="bg-black rounded-[52px] px-6 py-4 text-white font-body mt-12 md:mx-6 mx-2">
+        <button className="bg-primary rounded-[52px] md:px-6 md:py-4 py-2 px-4 text-[#151415] font-body md:mt-12 md:mx-6 mx-2">
           View all
         </button>
       </div>
@@ -58,7 +61,9 @@ function WalletTab() {
   >([]);
   const [recipientAddress, setRecipientAddress] = useState("");
   const [amount, setAmount] = useState(0);
-  const [selectedToken, setSelectedToken] = useState<"ICP" | "CKBTC" | "FRYS">("ICP");
+  const [selectedToken, setSelectedToken] = useState<"ICP" | "CKBTC" | "FRYS">(
+    "ICP"
+  );
   const [principalId, setPrincipalId] = useState<string>("");
   const [exchangeRate, setExchangeRate] = useState(0);
   const [convertedAmount, setConvertedAmount] = useState(0);
@@ -100,7 +105,7 @@ function WalletTab() {
   useEffect(() => {
     const fetchExchangeRate = async () => {
       const rate = await get_exchange_rate();
-      if (typeof rate === 'number') {
+      if (typeof rate === "number") {
         setExchangeRate(rate);
       }
     };
@@ -117,29 +122,37 @@ function WalletTab() {
     }
   };
 
-  const convertAmount = (value: number, from: 'ICP' | 'CKBTC', to: 'ICP' | 'CKBTC') => {
-    if (from === 'ICP' && to === 'CKBTC') {
+  const convertAmount = (
+    value: number,
+    from: "ICP" | "CKBTC",
+    to: "ICP" | "CKBTC"
+  ) => {
+    if (from === "ICP" && to === "CKBTC") {
       return value * exchangeRate;
-    } else if (from === 'CKBTC' && to === 'ICP') {
-      return value /exchangeRate;
+    } else if (from === "CKBTC" && to === "ICP") {
+      return value / exchangeRate;
     }
     return value;
   };
 
-  const handleTokenChange = (newToken: 'ICP' | 'CKBTC' | 'FRYS') => {
-    if (newToken === 'ICP' || newToken === 'CKBTC') {
-      const newAmount = convertAmount(amount, selectedToken as 'ICP' | 'CKBTC', newToken);
+  const handleTokenChange = (newToken: "ICP" | "CKBTC" | "FRYS") => {
+    if (newToken === "ICP" || newToken === "CKBTC") {
+      const newAmount = convertAmount(
+        amount,
+        selectedToken as "ICP" | "CKBTC",
+        newToken
+      );
       setConvertedAmount(newAmount);
     }
 
     setSelectedToken(newToken);
-  }
+  };
 
   return (
-    <div className="bg-[#151415] rounded-md h-full px-2">
+    <div className="bg-background rounded-md h-full px-2">
       <div className="text-white font-body w-full pt-4 flex items-center justify-center">
         <Select>
-          <SelectTrigger className="md:w-1/4 border-none bg-[#202020] h-16 -mr-2">
+          <SelectTrigger className="md:w-1/4 border-none bg-[#202020] h-12 -mr-2">
             <SelectValue
               placeholder="Choose token"
               className="flex items-center gap-2 placeholder:text-gray-500"
@@ -152,7 +165,7 @@ function WalletTab() {
               className="flex items-center gap-2 justify-between w-full mt-4"
             >
               <div className="w-full flex flex-row items-center gap-2">
-                <img src={ckbtc} alt="btc" className="w-8 h-8" />
+                <img src={ckbtc} alt="btc" className="w-8 h-8 rounded-full" />
                 <p className="uppercase font-body font-semibold text-gray-500">
                   CKBTC
                 </p>
@@ -200,7 +213,7 @@ function WalletTab() {
           value={amount}
           onChange={(e) => setAmount(Number(e.target.value))}
           placeholder="0.0000"
-          className="md:w-1/4 border-none bg-[#202020] h-16 focus:ring-0 focus:border-0 focus:outline-none"
+          className="md:w-1/4 border-none bg-[#202020] md:h-16 h-12 focus:ring-0 focus:border-0 focus:outline-none"
         />
       </div>
 
@@ -224,7 +237,7 @@ function WalletTab() {
       <div>
         <QRCodeSVG
           value={principalId}
-          className="xl:w-[15%] md:w-[20%] h-56 md:h-auto mx-auto mt-8 rounded-md"
+          className="xl:w-[15%] md:w-[20%] h-56 md:h-auto mx-auto md:mt-8 mt-2 rounded"
           size={224}
           bgColor={"#ffffff"}
           fgColor={"#000000"}
@@ -242,24 +255,22 @@ function WalletTab() {
         />
       </div>
 
-      <div className="flex items-center justify-center mt-4">
+      <div className="flex items-center justify-center mt-4 md:my4">
         <p className="text-center font-body text-xs leading-relaxed text-gray-500 md:w-1/2">
-          Always start with small amounts of transactions whether you are newbie
-          or an expert and be on the look out for phishing scams going on in the
-          crypto industry.
+          ❌ Never reveal to anyone your private keys or secret phrases.
         </p>
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between my-4">
         <Button
           onClick={handleTransfer}
-          className="bg-primary text-white w-1/4 mx-auto mt-4 font-body"
+          className="bg-primary text-white w-1/4 mx-auto my-4 font-body"
         >
           Send
         </Button>
         <Button
           onClick={handleReceive}
-          className="bg-primary text-white w-1/4 mx-auto mt-4 font-body"
+          className="bg-primary text-white w-1/4 mx-auto my-4 font-body"
         >
           Receive
         </Button>
@@ -272,16 +283,16 @@ function WalletTab() {
 function SettingsTab() {
   return (
     <div className="bg-background rounded-md md:px-2 px-1 py-2 md:m-2">
-      <div className="flex flex-col md:flex-row gap-12">
+      <div className="flex flex-col md:gap-12 gap-6">
         <div className="flex-1">
-          <div className="mb-8">
-            <h2 className="text-white font-body text-26px mb-4 font-bold">
+          <div className="md:mb-8 mb-2">
+            <h2 className="text-primary font-body font-bold text-xl md:text-[26px] md:mb-4">
               Account
             </h2>
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 bg-[#FFA503] py-2 px-4 rounded">
-                <div className="flex-1">
-                  <label className="text-white mb-1 block font-body">
+            <div className="">
+              <div className="flex items-center gap-2 rounded max-w-lg">
+                <div className="flex-1 my-1 md:my-2">
+                  <label className="text-gray-300 mb-1 block font-body">
                     Username
                   </label>
 
@@ -289,19 +300,13 @@ function SettingsTab() {
                     @n
                   </label>
                 </div>
-                <button
-                  className="px-4 py-2 rounded text-white font-body"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, #E052A0 0%, #F15C41 100%)",
-                  }}
-                >
+                <button className="px-4 py-2 rounded text-[#151415] font-body bg-primary">
                   Change
                 </button>
               </div>
-              <div className="flex items-center gap-2 bg-[#FFA503] px-4 py-2 rounded">
+              <div className="flex items-center gap-2 rounded max-w-lg">
                 <div className="flex-1">
-                  <label className="text-white mb-1 block font-body">
+                  <label className="text-gray-300 mb-1 block font-body">
                     Email Address
                   </label>
 
@@ -309,125 +314,90 @@ function SettingsTab() {
                     alexarawles@gmail.com
                   </label>
                 </div>
-                <button
-                  className="px-4 py-2 rounded text-white font-body"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, #E052A0 0%, #F15C41 100%)",
-                  }}
-                >
+                <button className="px-4 py-2 rounded text-[#151415] font-body bg-primary">
                   Change
                 </button>
               </div>
-              <div className="flex items-center gap-2 bg-[#FFA503] px-4 py-2 rounded">
-                <div className="flex-1">
-                  <label className="text-white mb-1 block font-body">
-                    Deletion
-                  </label>
-                  <label className="text-gray-500 mb-1 md:mb-2 block font-body">
-                    alexarawles@gmail.com
-                  </label>
-                </div>
-                <button
-                  className="px-4 py-2 rounded text-white font-body"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, #E052A0 0%, #F15C41 100%)",
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
             </div>
           </div>
 
-          <div className="mb-8">
-            <h2 className="text-white font-body text-26px font-bold mb-1 md:mb-2">
-              Website Notifications
+          <div className="mb-2">
+            <h2 className="text-primary font-body font-bold text-xl md:text-[26px] md:mb-4">
+              Notifications
             </h2>
-            <p className="text-[#9CB3C9] md:mb-4 mb-2 text-18px font-body">
-              What would you like to see when you visit the Indie Hackers
-              website?
-            </p>
-
             <div className="space-y-2 flex flex-col  max-w-md">
-              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
+              <label className="inline-flex items-center gap-2 py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
                   className="text-[#0075FF] rounded border-none focus:ring-0"
                 />
-                <span className="text-white font-body">
-                  Notifications for new followers
+                <span className="text-gray-400 font-body">
+                  New followers alert
                 </span>
               </label>
 
-              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
+              <label className="inline-flex items-center gap-2 py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
                   className="text-[#0075FF] rounded border-none focus:ring-0"
                 />
-                <span className="text-white font-body">
-                  Notifications for likes on your posts
+                <span className="text-gray-400 font-body">
+                  Posts like alert
                 </span>
               </label>
             </div>
           </div>
 
-          <div className="-mt-2">
-            <h2 className="text-white font-body text-26px mb-1 md:mb-2 font-bold">
+          <div className="mb-2">
+            <h2 className="text-primary font-body font-bold text-xl md:text-[26px] md:mb-4">
               Email Notifications
             </h2>
-            <p className="text-[#9CB3C9] mb-2 text-18px font-body">
-              What would you like to be notified of via email?
-            </p>
             <div className="mb-1">
-              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
+              <label className="inline-flex items-center gap-2 py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
                   className="text-[#0075FF] rounded border-none focus:ring-0"
                 />
-                <span className="text-white font-body">
-                  Emails for new followers
+                <span className="text-gray-400 font-body">
+                  New followers alert
                 </span>
               </label>
             </div>
             <div className="flex flex-col max-w-md">
-              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
+              <label className="inline-flex items-center gap-2 py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
                   className="text-[#0075FF] rounded border-none focus:ring-0"
                 />
-                <span className="text-white font-body">
-                  Emails for replies to your posts
+                <span className="text-gray-400 font-body">
+                  Post replies alert
                 </span>
               </label>
 
-              <label className="inline-flex mt-1 items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
+              <label className="inline-flex mt-1 items-center gap-2 py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
                   className="text-[#0075FF] rounded border-none focus:ring-0"
                 />
-                <span className="text-white font-body">
-                  Emails when someone tags you
-                </span>
+                <span className="text-gray-400 font-body">Post tags alert</span>
               </label>
             </div>
           </div>
         </div>
-        <div className="-mt-8 md:mt-0 w-full md:w-[370px] order-last md:order-none">
-          <h2 className="text-white font-body text-26px mb-2 font-bold">
+        <div className="md:mt-0 w-full md:w-[370px] order-last md:order-none">
+          <h2 className="text-primary font-body font-bold text-xl md:text-[26px] md:mb-4">
             Security
           </h2>
-          <div className="bg-primary w-full md:w-[370px] md:h-[224px] h-[100px] rounded-[6px] flex flex-col items-center justify-center">
-            <input
-              type="checkbox"
-              className="toggle toggle-md"
-              id="security"
-              defaultChecked
-            />
+          <div className="w-full md:w-[370px] rounded-[6px] flex flex-col items-start justify-center">
             <p className="text-gray-500 font-body mt-2">
               Require a pin to transfer funds
             </p>
+            <input
+              type="checkbox"
+              className="toggle toggle-md mt-2"
+              id="security"
+              defaultChecked
+            />
           </div>
         </div>
       </div>
@@ -437,177 +407,251 @@ function SettingsTab() {
 
 //PROFILE TAB
 function ProfileTab() {
-  const [isEditing, setIsEditing] = useState(false);
-  return (
-    <div className="bg-primary rounded-md p-2 md:px-5 md:pb-26 md:pt-[10px] md:m-5">
-      <div className="flex items-center justify-between md:mb-2 md:p-11">
-        <div className="flex items-center gap-4">
-          <div className="relative md:w-20 md:h-20 w-14 h-14">
-            <img
-              src="../../../../public/avatar1.svg"
-              alt="Profile"
-              className="w-full h-full rounded-full object-cover"
-            />
-            <label
-              htmlFor="profile-upload"
-              className="absolute bottom-0 right-0 bg-[#4182F9] p-2 rounded-full cursor-pointer"
-            >
-              <IconCamera className="text-white size-4 md:size-6" />
-            </label>
-            <input
-              type="file"
-              id="profile-upload"
-              className="hidden"
-              accept="image/*"
-            />
+  const [isEditing, setIsEditing] = useState(true);
+  function UserProfile({
+    setIsEditing,
+  }: {
+    setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  }) {
+    return (
+      <div className="rounded-md p-2 md:px-5 md:pb-26 md:pt-[10px] md:m-5">
+        <div className="flex items-center justify-between md:mb-2 md:p-11">
+          <div className="flex items-center gap-4">
+            <div className="relative md:w-20 md:h-20 w-14 h-14">
+              <img
+                src="../../../../public/avatar1.svg"
+                alt="Profile"
+                className="w-full h-full rounded-full object-cover"
+              />
+              <label
+                htmlFor="profile-upload"
+                className="absolute bottom-0 right-0 bg-primary p-2 rounded-full cursor-pointer"
+              >
+                <IconCamera className="text-white size-4 md:size-6" />
+              </label>
+              <input
+                type="file"
+                id="profile-upload"
+                className="hidden"
+                accept="image/*"
+              />
+            </div>
+            <div className="text-center md:text-left">
+              <p className="font-medium font-body text-gray-400">
+                Alexa Rawles
+              </p>
+              <p className="text-gray-500 font-body">alexarawles@gmail.com</p>
+            </div>
           </div>
-          <div className="text-center md:text-left">
-            <p className="text-black-500 font-medium font-body text-black">
-              Alexa Rawles
-            </p>
-            <p className="text-gray-500 font-body">alexarawles@gmail.com</p>
-          </div>
+          <button
+            className="bg-primary text-[#151415] px-4 py-2 rounded-md transform transition-transform hover:scale-110 font-body"
+            onClick={() => setIsEditing(true)}
+          >
+            Edit
+          </button>
         </div>
-        <button className="bg-[#4182F9] text-white px-2 py-2 rounded-md transform transition-transform hover:scale-110 font-body h-[44px] w-[93px]">
-          Edit
-        </button>
-      </div>
-
-      <div className="flex flex-col md:flex-row flex-wrap gap-4 md:p-5 mt-2 text-black">
-        <div className="space-y-4 flex-1 min-w-[280px]">
-          <div className="flex flex-col">
-            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80 text-black">
-              Full Name
-            </label>
-            <input
-              type="text"
-              placeholder="Enter your full name"
-              className="w-full md:h-[52px] h-[42px] bg-[#F9F9F9] rounded-[8px] px-4 text-[#000000] placeholder-gray-500 font-body"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
+        <div>
+          <div className="mt-2 md:mt-4">
+            <h1 className="text-xl font-body font-bold md:text-[26px] mb-1 md:mb-2 text-primary">
               About
-            </label>
-            <textarea
-              placeholder="Tell us about yourself"
-              className="w-full md:h-[52px] h-[42px]  bg-[#F9F9F9] rounded-[8px] px-4 text-[#000000] pt-2 placeholder-gray-500 font-body"
-              // disabled={!isEditing}
-            />
+            </h1>
+            <p className="text-gray-400 font-body md:text-lg md:max-w-2xl w-full leading-realxed">
+              This is your about section. Render to display a text area. You can
+              specify its default size with the rows and cols attributes, but by
+              default the user will be able to resize it. To disable resizing,
+              you can specify resize: none in the CSS.
+            </p>
           </div>
-          <div className="flex flex-col">
-            <label className="text-[#000000] font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
-              Language
-            </label>
-            <select
-              className="w-full md:h-[52px] h-[42px]  bg-[#F9F9F9] rounded-[8px] px-4 text-gray-500 placeholder-gray-500 font-body appearance-none cursor-pointer bg-no-repeat bg-right pr-16"
-              style={{
-                backgroundImage:
-                  "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
-                backgroundPosition: "right 16px center",
-              }}
-            >
-              {" "}
-              <option value="">Language</option>
-              <option value="en">English</option>
-              <option value="es">Spanish</option>
-              <option value="fr">French</option>
-              <option value="de">German</option>
-            </select>
+          <div className="mt-4 md:mt-4 flex gap-4">
+            <h1 className="font-body text-primary text-lg font-bold">
+              Language:{" "}
+            </h1>
+            <p className="text-gray-400 text-lg font-body">English</p>
           </div>
-        </div>
-        <div className="space-y-4 flex-1 min-w-[280px]">
-          <div className="flex flex-col">
-            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
-              Nick Name
-            </label>
-            <input
-              type="text"
-              placeholder="Enter your nickname"
-              className="w-full md:h-[52px] h-[42px]  bg-[#F9F9F9] rounded-[8px] px-4 text-[#000000] placeholder-gray-500 font-body"
-            />{" "}
+          <div className="mt-4 md:mt-4 flex gap-4">
+            <h1 className="font-body text-primary text-lg font-bold">
+              Country:{" "}
+            </h1>
+            <p className="text-gray-400 text-lg font-body">Kenya</p>
           </div>
-          <div className="flex flex-col">
-            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
-              Country
-            </label>
-            <select
-              className="w-full md:h-[52px] h-[42px]  bg-[#F9F9F9] rounded-[8px] px-4 text-gray-500 placeholder-gray-500 font-body appearance-none cursor-pointer bg-no-repeat bg-right pr-16"
-              style={{
-                backgroundImage:
-                  "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
-                backgroundPosition: "right 16px center",
-              }}
-            >
-              <option value="">Country</option>
-              <option value="us">United States</option>
-              <option value="uk">United Kingdom</option>
-              <option value="ca">Canada</option>
-              <option value="au">Australia</option>
-            </select>
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-black-500 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
-              Time Zone
-            </label>
-            <select
-              className="w-full md:h-[52px] h-[42px]  bg-[#F9F9F9] rounded-[8px] px-4 text-gray-500 placeholder-gray-500 font-body appearance-none cursor-pointer bg-no-repeat bg-right pr-16"
-              style={{
-                backgroundImage:
-                  "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
-                backgroundPosition: "right 16px center",
-              }}
-            >
-              <option value="">Timezone</option>
-              <option value="pst">Pacific Time (PAT)</option>
-              <option value="est">Eastern Time (EAT)</option>
-              <option value="gmt">GMT</option>
-              <option value="ist">IST</option>
-            </select>
+          <div className="mt-4">
+            <h1 className="text-xl font-body font-bold md:text-[26px] mb-1 md:mb-2 text-primary">
+              Socials
+            </h1>
+            <div className="flex flex-row justify-between md:justify-normal items-center mt-4 md:gap-4">
+              <div className="mx-4 md:mx-0">
+                <IconBrandXFilled
+                  size={40}
+                  className="md:text-xl cursor-pointer hover:text-primary hover:scale-105 ease-in duration-150 transition-all"
+                />
+              </div>
+              <div>
+                <IconBrandGithubFilled
+                  size={40}
+                  className="md:text-xl cursor-pointer hover:text-primary hover:scale-105 ease-in duration-150 transition-all"
+                />
+              </div>
+              <div>
+                <IconBrandLinkedinFilled
+                  size={40}
+                  className="md:text-xl cursor-pointer hover:text-primary hover:scale-105 ease-in duration-150 transition-all"
+                />
+              </div>
+              <div>
+                <IconBrandInstagramFilled
+                  size={40}
+                  className="md:text-xl cursor-pointer hover:text-primary hover:scale-105 ease-in duration-150 transition-all"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      {/* <div className="flex justify-center mt-[8px] md:mt-[40px] mb-2 p-5">
-        <div className="space-y-2 w-[472.33px]">
-          <h3 className="text-black-600 text-[16px] leading-[21px] font-body mb-2 opacity-80 text-black">
-            Social Links
-          </h3>
-          <div className="flex items-center gap-2">
-            <IconLink size={14} className="text-gray-500" />
-            <input
-              type="text"
-              placeholder="LinkedIn"
-              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
-            />
+    );
+  }
+  function EditingUserProfile({
+    setIsEditing,
+  }: {
+    setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  }) {
+    return (
+      <section className="mx-2 bg-background">
+        <div className="flex flex-col md:flex-row flex-wrap gap-4 md:p-5 mt-2 text-black">
+          <div className="space-y-4 flex-1 min-w-[280px]">
+            <div className="flex flex-col">
+              <label className="font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80 text-gray-400">
+                Username
+              </label>
+              <input
+                type="text"
+                placeholder="What should we call you?"
+                className="w-full md:h-[52px] h-[42px] bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label className="font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80 text-gray-400">
+                Email
+              </label>
+              <input
+                type="email"
+                placeholder="Your email address"
+                className="w-full md:h-[52px] h-[42px] bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
+                About
+              </label>
+              <textarea
+                placeholder="Tell us about yourself"
+                rows={5}
+                className="w-full md:h-[52px] h-[42px]  bg-[#282828] rounded-[8px] px-4 text-primary pt-2 placeholder-gray-500 font-body"
+                // disabled={!isEditing}
+              />
+            </div>
+            <div className="flex flex-col">
+              <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
+                Instagram
+              </label>
+              <div className="flex flex-row bg-[#282828] rounded-[8px] items-center">
+                <label className="font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80 text-gray-400">
+                  <IconBrandInstagramFilled size={34} className="mx-2" />
+                </label>
+                <input
+                  type="text"
+                  placeholder="Instagram profile link"
+                  className="w-full md:h-[52px] h-[42px] bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body focus:outline-none"
+                />
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <IconLink size={14} className="text-gray-500" />
-            <input
-              type="text"
-              placeholder="Twitter"
-              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
-            />
+          <div className="space-y-4 flex-1 min-w-[280px]">
+            <div className="flex flex-col">
+              <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
+                Country
+              </label>
+              <select
+                className="w-full md:h-[52px] h-[42px]  bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body appearance-none cursor-pointer bg-no-repeat bg-right pr-16"
+                style={{
+                  backgroundImage:
+                    "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
+                  backgroundPosition: "right 16px center",
+                }}
+              >
+                <option value="">Country</option>
+                <option value="us">United States</option>
+                <option value="uk">United Kingdom</option>
+                <option value="ca">Canada</option>
+                <option value="au">Australia</option>
+              </select>
+            </div>
+            <div className="flex flex-col">
+              <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
+                Language
+              </label>
+              <select
+                className="w-full md:h-[52px] h-[42px]  bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body appearance-none cursor-pointer bg-no-repeat bg-right pr-16"
+                style={{
+                  backgroundImage:
+                    "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
+                  backgroundPosition: "right 16px center",
+                }}
+              >
+                {" "}
+                <option value="">Language</option>
+                <option value="en">English</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+              </select>
+            </div>
+            <div className="flex flex-col">
+              <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
+                Twitter
+              </label>
+              <div className="flex flex-row bg-[#282828] rounded-[8px] items-center">
+                <label className="font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80 text-gray-400">
+                  <IconBrandXFilled size={32} className="mx-2" />
+                </label>
+                <input
+                  type="text"
+                  placeholder="X profile link"
+                  className="w-full md:h-[52px] h-[42px] bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body focus:border-none focus:ring-0 border-none focus:outline-none"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
+                Linkedin
+              </label>
+              <div className="flex flex-row bg-[#282828] rounded-[8px] items-center">
+                <label className="font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80 text-gray-400">
+                  <IconBrandLinkedinFilled size={34} className="mx-2" />
+                </label>
+                <input
+                  type="text"
+                  placeholder="Linkedin profile link"
+                  className="w-full md:h-[52px] h-[42px] bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body focus:border-none focus:ring-0 border-none focus:outline-none"
+                />
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <IconLink size={14} className="text-gray-500" />
-            <input
-              type="text"
-              placeholder="OpenChat"
-              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
-            />
-          </div>
-          <div className="flex items-center gap-2 mb-4">
-            <IconLink size={14} className="text-gray-500" />
-            <input
-              type="text"
-              placeholder="Telegram"
-              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
-            />
-          </div>{" "}
         </div>
-      </div> */}
-    </div>
+        <div className="flex mt-4 justify-center md:justify-normal">
+          <button
+            className="bg-primary px-4 py-2 rounded-md text-[#151415] font-body my-4"
+            onClick={() => setIsEditing(false)}
+          >
+            Update Details
+          </button>
+        </div>
+      </section>
+    );
+  }
+  return isEditing ? (
+    <EditingUserProfile setIsEditing={setIsEditing} />
+  ) : (
+    <UserProfile setIsEditing={setIsEditing} />
   );
 }
 
@@ -615,90 +659,104 @@ function ProfileTab() {
 function Sidebar() {
   const [tab, setTab] = useState<Tab>("nft");
   return (
-    <div className="md:flex h-screen gap-8 w-full">
+    <div className="md:flex min-h-screen gap-8 w-full">
       <div className="md:hidden flex items-center justify-between w-full overflow-scrolls px-2 mb-4">
         <div
           className={`flex items-center gap-1 text-sm cursor-pointer py-2 px-4 rounded-md ${
-            tab === "nft" ? "bg-primary" : ""
+            tab === "nft" ? "bg-primary text-[#151415]" : "text-white"
           }`}
           onClick={() => setTab("nft")}
         >
-          <IconArtboardFilled size={14} className="text-white" />
-          <h1 className="text-white font-body">NFTs</h1>
+          {/* <IconArtboardFilled size={14} className="text-white" /> */}
+          <h1 className="font-body">NFTs</h1>
         </div>
         <div
           className={`flex items-center gap-1 text-sm cursor-pointer py-2 px-4 rounded-md ${
-            tab === "wallet" ? "bg-primary" : ""
+            tab === "wallet" ? "bg-primary text-[#151415]" : "text-white"
           }`}
           onClick={() => setTab("wallet")}
         >
-          <IconWallet size={14} className="text-white" />
-          <h1 className="text-white font-body">Wallet</h1>
+          {/* <IconWallet size={14} className="text-white" /> */}
+          <h1 className="font-body">Wallet</h1>
         </div>
         <div
           className={`flex items-center text-sm gap-1 cursor-pointer py-2 px-4 rounded-md ${
-            tab === "settings" ? "bg-primary" : ""
+            tab === "settings" ? "bg-primary text-[#151415]" : "text-white"
           }`}
           onClick={() => setTab("settings")}
         >
-          <IconSettingsFilled size={14} className="text-white" />
-          <h1 className="text-white font-body">Settings</h1>
+          {/* <IconSettingsFilled size={14} className="text-white" /> */}
+          <h1 className="font-body">Settings</h1>
         </div>
         <div
           className={`flex items-center gap-1 text-sm cursor-pointer py-2 px-4 rounded-md ${
-            tab === "profile" ? "bg-primary" : ""
+            tab === "profile" ? "bg-primary text-[#151415]" : "text-white"
           }`}
           onClick={() => setTab("profile")}
         >
-          <IconUserFilled size={14} className="text-white" />
-          <h1 className="text-white font-body transition-all duration-150">
-            Profile
-          </h1>
+          {/* <IconUserFilled size={14} className="text-white" /> */}
+          <h1 className="font-body transition-all duration-150">Profile</h1>
         </div>
       </div>
       {/* hidden in smaller screen */}
-      <nav className="md:flex pt-12 flex-col justify-between h-3/4 flex-2 hidden">
+      <nav className="md:flex pt-12 flex-col justify-between min-h-1/2 flex-2 hidden">
         <section className="flex flex-col gap-8">
           <div
             className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
-              tab === "nft" ? "bg-primary" : ""
+              tab === "nft" ? "bg-primary text-[#151415]" : "text-white"
             }`}
             onClick={() => setTab("nft")}
           >
-            <IconArtboardFilled size={24} className="text-white" />
-            <h1 className="text-white font-body">NFTs</h1>
+            <IconArtboardFilled
+              size={24}
+              className={`${tab === "nft" ? "text-[#151415]" : "text-white"}`}
+            />
+            <h1 className="font-body">NFTs</h1>
           </div>
           <div
             className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
-              tab === "wallet" ? "bg-primary" : ""
+              tab === "wallet" ? "bg-primary text-[#151415]" : "text-white"
             }`}
             onClick={() => setTab("wallet")}
           >
-            <IconWallet size={24} className="text-white" />
-            <h1 className="text-white font-body">Wallet</h1>
+            <IconWallet
+              size={24}
+              className={`${
+                tab === "wallet" ? "text-[#151415]" : "text-white"
+              }`}
+            />
+            <h1 className="font-body">Wallet</h1>
           </div>
           <div
             className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
-              tab === "settings" ? "bg-primary" : ""
+              tab === "settings" ? "bg-primary text-[#151415]" : "text-white"
             }`}
             onClick={() => setTab("settings")}
           >
-            <IconSettingsFilled size={24} className="text-white" />
-            <h1 className="text-white font-body">Settings</h1>
+            <IconSettingsFilled
+              size={24}
+              className={`${
+                tab === "settings" ? "text-[#151415]" : "text-white"
+              }`}
+            />
+            <h1 className="font-body">Settings</h1>
           </div>
           <div
             className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
-              tab === "profile" ? "bg-primary" : ""
+              tab === "profile" ? "bg-primary text-[#151415]" : "text-white"
             }`}
             onClick={() => setTab("profile")}
           >
-            <IconUserFilled size={24} className="text-white" />
-            <h1 className="text-white font-body transition-all duration-150">
-              Profile
-            </h1>
+            <IconUserFilled
+              size={24}
+              className={`${
+                tab === "profile" ? "text-[#151415]" : "text-white"
+              }`}
+            />
+            <h1 className="font-body transition-all duration-150">Profile</h1>
           </div>
         </section>
-        <section className="flex flex-col gap-8">
+        {/* <section className="flex flex-col gap-8 mb-16">
           <div
             className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
               tab === "logout" ? "bg-primary" : ""
@@ -707,7 +765,7 @@ function Sidebar() {
             <IconLogout size={24} className="text-white" />
             <h1 className="text-white font-body">Log out</h1>
           </div>
-        </section>
+        </section> */}
       </nav>
       <aside className="flex-1 h-3/4 w-full items-center justify-center">
         {tab === "nft" ? (
