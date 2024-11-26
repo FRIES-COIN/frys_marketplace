@@ -261,16 +261,16 @@ function WalletTab() {
         </p>
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between my-4">
         <Button
           onClick={handleTransfer}
-          className="bg-primary text-white w-1/4 mx-auto mt-4 font-body"
+          className="bg-primary text-white w-1/4 mx-auto my-4 font-body"
         >
           Send
         </Button>
         <Button
           onClick={handleReceive}
-          className="bg-primary text-white w-1/4 mx-auto mt-4 font-body"
+          className="bg-primary text-white w-1/4 mx-auto my-4 font-body"
         >
           Receive
         </Button>
@@ -697,7 +697,7 @@ function Sidebar() {
         </div>
       </div>
       {/* hidden in smaller screen */}
-      <nav className="md:flex pt-12 flex-col justify-between h-3/4 flex-2 hidden">
+      <nav className="md:flex pt-12 flex-col justify-between min-h-1/2 flex-2 hidden">
         <section className="flex flex-col gap-8">
           <div
             className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
@@ -738,7 +738,7 @@ function Sidebar() {
             </h1>
           </div>
         </section>
-        <section className="flex flex-col gap-8">
+        {/* <section className="flex flex-col gap-8 mb-16">
           <div
             className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
               tab === "logout" ? "bg-primary" : ""
@@ -747,7 +747,7 @@ function Sidebar() {
             <IconLogout size={24} className="text-white" />
             <h1 className="text-white font-body">Log out</h1>
           </div>
-        </section>
+        </section> */}
       </nav>
       <aside className="flex-1 h-3/4 w-full items-center justify-center">
         {tab === "nft" ? (
