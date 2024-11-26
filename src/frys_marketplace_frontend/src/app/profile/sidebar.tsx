@@ -6,8 +6,11 @@ import {
   IconSettingsFilled,
   IconUserFilled,
   IconWallet,
-  IconLink,
+  IconBrandGithubFilled,
+  IconBrandLinkedinFilled,
+  IconBrandInstagramFilled,
   IconCamera,
+  IconBrandXFilled,
 } from "@tabler/icons-react";
 
 import {
@@ -405,149 +408,191 @@ function SettingsTab() {
 //PROFILE TAB
 function ProfileTab() {
   const [isEditing, setIsEditing] = useState(false);
-  return (
-    <div className="rounded-md p-2 md:px-5 md:pb-26 md:pt-[10px] md:m-5">
-      <div className="flex items-center justify-between md:mb-2 md:p-11">
-        <div className="flex items-center gap-4">
-          <div className="relative md:w-20 md:h-20 w-14 h-14">
-            <img
-              src="../../../../public/avatar1.svg"
-              alt="Profile"
-              className="w-full h-full rounded-full object-cover"
-            />
-            <label
-              htmlFor="profile-upload"
-              className="absolute bottom-0 right-0 bg-primary p-2 rounded-full cursor-pointer"
-            >
-              <IconCamera className="text-white size-4 md:size-6" />
-            </label>
-            <input
-              type="file"
-              id="profile-upload"
-              className="hidden"
-              accept="image/*"
-            />
+  function UserProfile({
+    setIsEditing,
+  }: {
+    setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  }) {
+    return (
+      <div className="rounded-md p-2 md:px-5 md:pb-26 md:pt-[10px] md:m-5">
+        <div className="flex items-center justify-between md:mb-2 md:p-11">
+          <div className="flex items-center gap-4">
+            <div className="relative md:w-20 md:h-20 w-14 h-14">
+              <img
+                src="../../../../public/avatar1.svg"
+                alt="Profile"
+                className="w-full h-full rounded-full object-cover"
+              />
+              <label
+                htmlFor="profile-upload"
+                className="absolute bottom-0 right-0 bg-primary p-2 rounded-full cursor-pointer"
+              >
+                <IconCamera className="text-white size-4 md:size-6" />
+              </label>
+              <input
+                type="file"
+                id="profile-upload"
+                className="hidden"
+                accept="image/*"
+              />
+            </div>
+            <div className="text-center md:text-left">
+              <p className="font-medium font-body text-gray-400">
+                Alexa Rawles
+              </p>
+              <p className="text-gray-500 font-body">alexarawles@gmail.com</p>
+            </div>
           </div>
-          <div className="text-center md:text-left">
-            <p className="font-medium font-body text-gray-400">Alexa Rawles</p>
-            <p className="text-gray-500 font-body">alexarawles@gmail.com</p>
-          </div>
+          <button
+            className="bg-primary text-white px-4 py-2 rounded-md transform transition-transform hover:scale-110 font-body"
+            onClick={() => setIsEditing(true)}
+          >
+            Edit
+          </button>
         </div>
-        <button className="bg-primary text-white px-4 py-2 rounded-md transform transition-transform hover:scale-110 font-body">
-          Edit
-        </button>
-      </div>
-
-      <div className="flex flex-col md:flex-row flex-wrap gap-4 md:p-5 mt-2 text-black">
-        <div className="space-y-4 flex-1 min-w-[280px]">
-          <div className="flex flex-col">
-            <label className="font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80 text-gray-400">
-              Username
-            </label>
-            <input
-              type="text"
-              placeholder="What should we call you?"
-              className="w-full md:h-[52px] h-[42px] bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
+        <div>
+          <div className="mt-2 md:mt-4">
+            <h1 className="text-xl font-body font-bold md:text-[26px] mb-1 md:mb-2 text-primary">
               About
-            </label>
-            <textarea
-              placeholder="Tell us about yourself"
-              className="w-full md:h-[52px] h-[42px]  bg-[#282828] rounded-[8px] px-4 text-primary pt-2 placeholder-gray-500 font-body"
-              // disabled={!isEditing}
-            />
+            </h1>
+            <p className="text-gray-400 font-body md:text-lg">
+              This is your about section.
+            </p>
           </div>
-          <div className="flex flex-col">
-            <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
-              Language
-            </label>
-            <select
-              className="w-full md:h-[52px] h-[42px]  bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body appearance-none cursor-pointer bg-no-repeat bg-right pr-16"
-              style={{
-                backgroundImage:
-                  "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
-                backgroundPosition: "right 16px center",
-              }}
-            >
-              {" "}
-              <option value="">Language</option>
-              <option value="en">English</option>
-              <option value="es">Spanish</option>
-              <option value="fr">French</option>
-              <option value="de">German</option>
-            </select>
+          <div className="mt-4 md:mt-4 flex gap-4">
+            <h1 className="font-body text-primary text-lg font-bold">
+              Language:{" "}
+            </h1>
+            <p className="text-gray-400 text-lg font-body">English</p>
           </div>
-        </div>
-        <div className="space-y-4 flex-1 min-w-[280px]">
-          <div className="flex flex-col">
-            <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
-              Country
-            </label>
-            <select
-              className="w-full md:h-[52px] h-[42px]  bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body appearance-none cursor-pointer bg-no-repeat bg-right pr-16"
-              style={{
-                backgroundImage:
-                  "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
-                backgroundPosition: "right 16px center",
-              }}
-            >
-              <option value="">Country</option>
-              <option value="us">United States</option>
-              <option value="uk">United Kingdom</option>
-              <option value="ca">Canada</option>
-              <option value="au">Australia</option>
-            </select>
+          <div className="mt-4 md:mt-4 flex gap-4">
+            <h1 className="font-body text-primary text-lg font-bold">
+              Country:{" "}
+            </h1>
+            <p className="text-gray-400 text-lg font-body">Kenya</p>
+          </div>
+          <div className="mt-4">
+            <h1 className="text-xl font-body font-bold md:text-[26px] mb-1 md:mb-2 text-primary">
+              Socials
+            </h1>
+            <div className="flex flex-row justify-between md:justify-normal items-center mt-4 md:gap-4">
+              <div className="mx-4 md:mx-0">
+                <IconBrandXFilled
+                  size={40}
+                  className="md:text-xl cursor-pointer hover:text-primary hover:scale-105 ease-in duration-150 transition-all"
+                />
+              </div>
+              <div>
+                <IconBrandGithubFilled
+                  size={40}
+                  className="md:text-xl cursor-pointer hover:text-primary hover:scale-105 ease-in duration-150 transition-all"
+                />
+              </div>
+              <div>
+                <IconBrandLinkedinFilled
+                  size={40}
+                  className="md:text-xl cursor-pointer hover:text-primary hover:scale-105 ease-in duration-150 transition-all"
+                />
+              </div>
+              <div>
+                <IconBrandInstagramFilled
+                  size={40}
+                  className="md:text-xl cursor-pointer hover:text-primary hover:scale-105 ease-in duration-150 transition-all"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      {/* <div className="flex justify-center mt-[8px] md:mt-[40px] mb-2 p-5">
-        <div className="space-y-2 w-[472.33px]">
-          <h3 className="text-black-600 text-[16px] leading-[21px] font-body mb-2 opacity-80 text-black">
-            Social Links
-          </h3>
-          <div className="flex items-center gap-2">
-            <IconLink size={14} className="text-gray-500" />
-            <input
-              type="text"
-              placeholder="LinkedIn"
-              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
-            />
+    );
+  }
+  function EditingUserProfile({
+    setIsEditing,
+  }: {
+    setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  }) {
+    return (
+      <section className="mx-2">
+        <div className="flex flex-col md:flex-row flex-wrap gap-4 md:p-5 mt-2 text-black">
+          <div className="space-y-4 flex-1 min-w-[280px]">
+            <div className="flex flex-col">
+              <label className="font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80 text-gray-400">
+                Username
+              </label>
+              <input
+                type="text"
+                placeholder="What should we call you?"
+                className="w-full md:h-[52px] h-[42px] bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
+                About
+              </label>
+              <textarea
+                placeholder="Tell us about yourself"
+                className="w-full md:h-[52px] h-[42px]  bg-[#282828] rounded-[8px] px-4 text-primary pt-2 placeholder-gray-500 font-body"
+                // disabled={!isEditing}
+              />
+            </div>
+            <div className="flex flex-col">
+              <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
+                Language
+              </label>
+              <select
+                className="w-full md:h-[52px] h-[42px]  bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body appearance-none cursor-pointer bg-no-repeat bg-right pr-16"
+                style={{
+                  backgroundImage:
+                    "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
+                  backgroundPosition: "right 16px center",
+                }}
+              >
+                {" "}
+                <option value="">Language</option>
+                <option value="en">English</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+              </select>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <IconLink size={14} className="text-gray-500" />
-            <input
-              type="text"
-              placeholder="Twitter"
-              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
-            />
+          <div className="space-y-4 flex-1 min-w-[280px]">
+            <div className="flex flex-col">
+              <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
+                Country
+              </label>
+              <select
+                className="w-full md:h-[52px] h-[42px]  bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body appearance-none cursor-pointer bg-no-repeat bg-right pr-16"
+                style={{
+                  backgroundImage:
+                    "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
+                  backgroundPosition: "right 16px center",
+                }}
+              >
+                <option value="">Country</option>
+                <option value="us">United States</option>
+                <option value="uk">United Kingdom</option>
+                <option value="ca">Canada</option>
+                <option value="au">Australia</option>
+              </select>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <IconLink size={14} className="text-gray-500" />
-            <input
-              type="text"
-              placeholder="OpenChat"
-              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
-            />
-          </div>
-          <div className="flex items-center gap-2 mb-4">
-            <IconLink size={14} className="text-gray-500" />
-            <input
-              type="text"
-              placeholder="Telegram"
-              className="w-full h-[28px] bg-[#F6F8FA] text-gray-500 rounded-[6px] border border-[#57606A] text-left px-4 font-body text-[14px]"
-            />
-          </div>{" "}
         </div>
-      </div> */}
-      <div className="flex mt-4 justify-center md:justify-normal">
-        <button className="bg-primary px-4 py-2 rounded-md text-white font-body mt-4">
-          Update Details
-        </button>
-      </div>
-    </div>
+        <div className="flex mt-4 justify-center md:justify-normal">
+          <button
+            className="bg-primary px-4 py-2 rounded-md text-white font-body mt-4"
+            onClick={() => setIsEditing(false)}
+          >
+            Update Details
+          </button>
+        </div>
+      </section>
+    );
+  }
+  return isEditing ? (
+    <EditingUserProfile setIsEditing={setIsEditing} />
+  ) : (
+    <UserProfile setIsEditing={setIsEditing} />
   );
 }
 
