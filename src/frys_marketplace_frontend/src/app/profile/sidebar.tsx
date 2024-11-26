@@ -58,7 +58,9 @@ function WalletTab() {
   >([]);
   const [recipientAddress, setRecipientAddress] = useState("");
   const [amount, setAmount] = useState(0);
-  const [selectedToken, setSelectedToken] = useState<"ICP" | "CKBTC" | "FRYS">("ICP");
+  const [selectedToken, setSelectedToken] = useState<"ICP" | "CKBTC" | "FRYS">(
+    "ICP"
+  );
   const [principalId, setPrincipalId] = useState<string>("");
   const [exchangeRate, setExchangeRate] = useState(0);
   const [convertedAmount, setConvertedAmount] = useState(0);
@@ -100,7 +102,7 @@ function WalletTab() {
   useEffect(() => {
     const fetchExchangeRate = async () => {
       const rate = await get_exchange_rate();
-      if (typeof rate === 'number') {
+      if (typeof rate === "number") {
         setExchangeRate(rate);
       }
     };
@@ -117,23 +119,31 @@ function WalletTab() {
     }
   };
 
-  const convertAmount = (value: number, from: 'ICP' | 'CKBTC', to: 'ICP' | 'CKBTC') => {
-    if (from === 'ICP' && to === 'CKBTC') {
+  const convertAmount = (
+    value: number,
+    from: "ICP" | "CKBTC",
+    to: "ICP" | "CKBTC"
+  ) => {
+    if (from === "ICP" && to === "CKBTC") {
       return value * exchangeRate;
-    } else if (from === 'CKBTC' && to === 'ICP') {
-      return value /exchangeRate;
+    } else if (from === "CKBTC" && to === "ICP") {
+      return value / exchangeRate;
     }
     return value;
   };
 
-  const handleTokenChange = (newToken: 'ICP' | 'CKBTC' | 'FRYS') => {
-    if (newToken === 'ICP' || newToken === 'CKBTC') {
-      const newAmount = convertAmount(amount, selectedToken as 'ICP' | 'CKBTC', newToken);
+  const handleTokenChange = (newToken: "ICP" | "CKBTC" | "FRYS") => {
+    if (newToken === "ICP" || newToken === "CKBTC") {
+      const newAmount = convertAmount(
+        amount,
+        selectedToken as "ICP" | "CKBTC",
+        newToken
+      );
       setConvertedAmount(newAmount);
     }
 
     setSelectedToken(newToken);
-  }
+  };
 
   return (
     <div className="bg-[#151415] rounded-md h-full px-2">
@@ -275,11 +285,11 @@ function SettingsTab() {
       <div className="flex flex-col md:flex-row gap-12">
         <div className="flex-1">
           <div className="mb-8">
-            <h2 className="text-white font-body text-26px mb-4 font-bold">
+            <h2 className="text-primary font-body font-bold text-[26px] mb-4 font-bold">
               Account
             </h2>
             <div className="space-y-1">
-              <div className="flex items-center gap-2 bg-[#FFA503] py-2 px-4 rounded">
+              <div className="flex items-center gap-2 py-2 px-4 rounded">
                 <div className="flex-1">
                   <label className="text-white mb-1 block font-body">
                     Username
@@ -289,17 +299,11 @@ function SettingsTab() {
                     @n
                   </label>
                 </div>
-                <button
-                  className="px-4 py-2 rounded text-white font-body"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, #E052A0 0%, #F15C41 100%)",
-                  }}
-                >
+                <button className="px-4 py-2 rounded text-white font-body bg-primary">
                   Change
                 </button>
               </div>
-              <div className="flex items-center gap-2 bg-[#FFA503] px-4 py-2 rounded">
+              <div className="flex items-center gap-2 px-4 py-2 rounded">
                 <div className="flex-1">
                   <label className="text-white mb-1 block font-body">
                     Email Address
@@ -309,116 +313,81 @@ function SettingsTab() {
                     alexarawles@gmail.com
                   </label>
                 </div>
-                <button
-                  className="px-4 py-2 rounded text-white font-body"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, #E052A0 0%, #F15C41 100%)",
-                  }}
-                >
+                <button className="px-4 py-2 rounded text-white font-body bg-primary">
                   Change
-                </button>
-              </div>
-              <div className="flex items-center gap-2 bg-[#FFA503] px-4 py-2 rounded">
-                <div className="flex-1">
-                  <label className="text-white mb-1 block font-body">
-                    Deletion
-                  </label>
-                  <label className="text-gray-500 mb-1 md:mb-2 block font-body">
-                    alexarawles@gmail.com
-                  </label>
-                </div>
-                <button
-                  className="px-4 py-2 rounded text-white font-body"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, #E052A0 0%, #F15C41 100%)",
-                  }}
-                >
-                  Delete
                 </button>
               </div>
             </div>
           </div>
 
           <div className="mb-8">
-            <h2 className="text-white font-body text-26px font-bold mb-1 md:mb-2">
-              Website Notifications
+            <h2 className="text-primary font-body font-bold text-[26px] mb-1 md:mb-2">
+              Notifications
             </h2>
-            <p className="text-[#9CB3C9] md:mb-4 mb-2 text-18px font-body">
-              What would you like to see when you visit the Indie Hackers
-              website?
-            </p>
-
             <div className="space-y-2 flex flex-col  max-w-md">
-              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
+              <label className="inline-flex items-center gap-2 py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
                   className="text-[#0075FF] rounded border-none focus:ring-0"
                 />
-                <span className="text-white font-body">
-                  Notifications for new followers
+                <span className="text-gray-400 font-body">
+                  New followers alert
                 </span>
               </label>
 
-              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
+              <label className="inline-flex items-center gap-2 py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
                   className="text-[#0075FF] rounded border-none focus:ring-0"
                 />
-                <span className="text-white font-body">
-                  Notifications for likes on your posts
+                <span className="text-gray-400 font-body">
+                  Posts like alert
                 </span>
               </label>
             </div>
           </div>
 
           <div className="-mt-2">
-            <h2 className="text-white font-body text-26px mb-1 md:mb-2 font-bold">
+            <h2 className="text-primary font-body font-bold text-[26px] mb-1 md:mb-2">
               Email Notifications
             </h2>
-            <p className="text-[#9CB3C9] mb-2 text-18px font-body">
-              What would you like to be notified of via email?
-            </p>
             <div className="mb-1">
-              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
+              <label className="inline-flex items-center gap-2 py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
                   className="text-[#0075FF] rounded border-none focus:ring-0"
                 />
-                <span className="text-white font-body">
-                  Emails for new followers
+                <span className="text-gray-400 font-body">
+                  New followers alert
                 </span>
               </label>
             </div>
             <div className="flex flex-col max-w-md">
-              <label className="inline-flex items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
+              <label className="inline-flex items-center gap-2 py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
                   className="text-[#0075FF] rounded border-none focus:ring-0"
                 />
-                <span className="text-white font-body">
-                  Emails for replies to your posts
+                <span className="text-gray-400 font-body">
+                  Post replies alert
                 </span>
               </label>
 
-              <label className="inline-flex mt-1 items-center gap-2 bg-[#FFA503] py-1 px-2 rounded cursor-pointer">
+              <label className="inline-flex mt-1 items-center gap-2 py-1 px-2 rounded cursor-pointer">
                 <input
                   type="checkbox"
                   className="text-[#0075FF] rounded border-none focus:ring-0"
                 />
-                <span className="text-white font-body">
-                  Emails when someone tags you
-                </span>
+                <span className="text-gray-400 font-body">Post tags alert</span>
               </label>
             </div>
           </div>
         </div>
-        <div className="-mt-8 md:mt-0 w-full md:w-[370px] order-last md:order-none">
+        <div className="-mt-2 md:mt-0 w-full md:w-[370px] order-last md:order-none">
           <h2 className="text-white font-body text-26px mb-2 font-bold">
             Security
           </h2>
-          <div className="bg-primary w-full md:w-[370px] md:h-[224px] h-[100px] rounded-[6px] flex flex-col items-center justify-center">
+          <div className="w-full bg-primary md:w-[370px] md:h-[224px] h-[100px] rounded-[6px] flex flex-col items-center justify-center">
             <input
               type="checkbox"
               className="toggle toggle-md"
