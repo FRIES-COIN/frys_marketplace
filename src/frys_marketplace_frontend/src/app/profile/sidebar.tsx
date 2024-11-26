@@ -149,7 +149,7 @@ function WalletTab() {
     <div className="bg-[#151415] rounded-md h-full px-2">
       <div className="text-white font-body w-full pt-4 flex items-center justify-center">
         <Select>
-          <SelectTrigger className="md:w-1/4 border-none bg-[#202020] h-16 -mr-2">
+          <SelectTrigger className="md:w-1/4 border-none bg-[#202020] h-12 -mr-2">
             <SelectValue
               placeholder="Choose token"
               className="flex items-center gap-2 placeholder:text-gray-500"
@@ -162,7 +162,7 @@ function WalletTab() {
               className="flex items-center gap-2 justify-between w-full mt-4"
             >
               <div className="w-full flex flex-row items-center gap-2">
-                <img src={ckbtc} alt="btc" className="w-8 h-8" />
+                <img src={ckbtc} alt="btc" className="w-8 h-8 rounded-full" />
                 <p className="uppercase font-body font-semibold text-gray-500">
                   CKBTC
                 </p>
@@ -210,7 +210,7 @@ function WalletTab() {
           value={amount}
           onChange={(e) => setAmount(Number(e.target.value))}
           placeholder="0.0000"
-          className="md:w-1/4 border-none bg-[#202020] h-16 focus:ring-0 focus:border-0 focus:outline-none"
+          className="md:w-1/4 border-none bg-[#202020] md:h-16 h-12 focus:ring-0 focus:border-0 focus:outline-none"
         />
       </div>
 
@@ -234,7 +234,7 @@ function WalletTab() {
       <div>
         <QRCodeSVG
           value={principalId}
-          className="xl:w-[15%] md:w-[20%] h-56 md:h-auto mx-auto mt-8 rounded-md"
+          className="xl:w-[15%] md:w-[20%] h-56 md:h-auto mx-auto md:mt-8 mt-2 rounded"
           size={224}
           bgColor={"#ffffff"}
           fgColor={"#000000"}
@@ -252,11 +252,9 @@ function WalletTab() {
         />
       </div>
 
-      <div className="flex items-center justify-center mt-4">
+      <div className="flex items-center justify-center mt-4 md:my4">
         <p className="text-center font-body text-xs leading-relaxed text-gray-500 md:w-1/2">
-          Always start with small amounts of transactions whether you are newbie
-          or an expert and be on the look out for phishing scams going on in the
-          crypto industry.
+          ❌ Never reveal to anyone your private keys or secret phrases.
         </p>
       </div>
 
