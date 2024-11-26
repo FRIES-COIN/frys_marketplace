@@ -455,8 +455,11 @@ function ProfileTab() {
             <h1 className="text-xl font-body font-bold md:text-[26px] mb-1 md:mb-2 text-primary">
               About
             </h1>
-            <p className="text-gray-400 font-body md:text-lg">
-              This is your about section.
+            <p className="text-gray-400 font-body md:text-lg md:max-w-2xl w-full leading-realxed">
+              This is your about section. Render to display a text area. You can
+              specify its default size with the rows and cols attributes, but by
+              default the user will be able to resize it. To disable resizing,
+              you can specify resize: none in the CSS.
             </p>
           </div>
           <div className="mt-4 md:mt-4 flex gap-4">
@@ -541,6 +544,7 @@ function ProfileTab() {
               </label>
               <textarea
                 placeholder="Tell us about yourself"
+                rows={5}
                 className="w-full md:h-[52px] h-[42px]  bg-[#282828] rounded-[8px] px-4 text-primary pt-2 placeholder-gray-500 font-body"
                 // disabled={!isEditing}
               />
