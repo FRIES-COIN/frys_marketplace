@@ -526,6 +526,16 @@ function ProfileTab() {
               />
             </div>
             <div className="flex flex-col">
+              <label className="font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80 text-gray-400">
+                Email
+              </label>
+              <input
+                type="email"
+                placeholder="Your email address"
+                className="w-full md:h-[52px] h-[42px] bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body"
+              />
+            </div>
+            <div className="flex flex-col">
               <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
                 About
               </label>
@@ -537,23 +547,18 @@ function ProfileTab() {
             </div>
             <div className="flex flex-col">
               <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
-                Language
+                Instagram
               </label>
-              <select
-                className="w-full md:h-[52px] h-[42px]  bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body appearance-none cursor-pointer bg-no-repeat bg-right pr-16"
-                style={{
-                  backgroundImage:
-                    "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
-                  backgroundPosition: "right 16px center",
-                }}
-              >
-                {" "}
-                <option value="">Language</option>
-                <option value="en">English</option>
-                <option value="es">Spanish</option>
-                <option value="fr">French</option>
-                <option value="de">German</option>
-              </select>
+              <div className="flex flex-row bg-[#282828] rounded-[8px] items-center">
+                <label className="font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80 text-gray-400">
+                  <IconBrandInstagramFilled size={34} className="mx-2" />
+                </label>
+                <input
+                  type="text"
+                  placeholder="Instagram profile link"
+                  className="w-full md:h-[52px] h-[42px] bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body focus:outline-none"
+                />
+              </div>
             </div>
           </div>
           <div className="space-y-4 flex-1 min-w-[280px]">
@@ -576,11 +581,61 @@ function ProfileTab() {
                 <option value="au">Australia</option>
               </select>
             </div>
+            <div className="flex flex-col">
+              <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
+                Language
+              </label>
+              <select
+                className="w-full md:h-[52px] h-[42px]  bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body appearance-none cursor-pointer bg-no-repeat bg-right pr-16"
+                style={{
+                  backgroundImage:
+                    "url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5%22%2F%3E%3C%2Fsvg%3E')",
+                  backgroundPosition: "right 16px center",
+                }}
+              >
+                {" "}
+                <option value="">Language</option>
+                <option value="en">English</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+              </select>
+            </div>
+            <div className="flex flex-col">
+              <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
+                Twitter
+              </label>
+              <div className="flex flex-row bg-[#282828] rounded-[8px] items-center">
+                <label className="font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80 text-gray-400">
+                  <IconBrandXFilled size={32} className="mx-2" />
+                </label>
+                <input
+                  type="text"
+                  placeholder="X profile link"
+                  className="w-full md:h-[52px] h-[42px] bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body focus:border-none focus:ring-0 border-none focus:outline-none"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <label className="text-gray-400 font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80">
+                Linkedin
+              </label>
+              <div className="flex flex-row bg-[#282828] rounded-[8px] items-center">
+                <label className="font-[400] text-[16px] leading-[24px] mb-1 font-body opacity-80 text-gray-400">
+                  <IconBrandLinkedinFilled size={34} className="mx-2" />
+                </label>
+                <input
+                  type="text"
+                  placeholder="Linkedin profile link"
+                  className="w-full md:h-[52px] h-[42px] bg-[#282828] rounded-[8px] px-4 text-primary placeholder-gray-500 font-body focus:border-none focus:ring-0 border-none focus:outline-none"
+                />
+              </div>
+            </div>
           </div>
         </div>
         <div className="flex mt-4 justify-center md:justify-normal">
           <button
-            className="bg-primary px-4 py-2 rounded-md text-white font-body mt-4"
+            className="bg-primary px-4 py-2 rounded-md text-white font-body my-4"
             onClick={() => setIsEditing(false)}
           >
             Update Details
@@ -600,7 +655,7 @@ function ProfileTab() {
 function Sidebar() {
   const [tab, setTab] = useState<Tab>("nft");
   return (
-    <div className="md:flex h-screen gap-8 w-full">
+    <div className="md:flex min-h-screen gap-8 w-full">
       <div className="md:hidden flex items-center justify-between w-full overflow-scrolls px-2 mb-4">
         <div
           className={`flex items-center gap-1 text-sm cursor-pointer py-2 px-4 rounded-md ${
