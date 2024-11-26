@@ -38,11 +38,11 @@ import { get_exchange_rate } from "../services/exchangeRateService";
 function NFTTab() {
   return (
     <div className="bg-primary rounded-md h-full w-full max-w-7xl overflow-hidden md:mx-4 text-black">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold font-body px-2 mt-12 mx-2">
+      <div className="flex items-center justify-between mt-2">
+        <h1 className="text-2xl font-bold font-body px-2 md:mt-12 mx-2">
           Overview
         </h1>
-        <button className="bg-black rounded-[52px] px-6 py-4 text-white font-body mt-12 md:mx-6 mx-2">
+        <button className="bg-black rounded-[52px] md:px-6 md:py-4 py-2 px-4 text-white font-body md:mt-12 md:mx-6 mx-2">
           View all
         </button>
       </div>

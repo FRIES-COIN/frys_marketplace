@@ -76,7 +76,7 @@ export function CarouselSize() {
       className="w-full max-w-7xl"
     >
       {!loading && nfts.length === 0 ? (
-        <div className="flex flex-col items-center justify-center h-96 p-2">
+        <div className="flex flex-col items-center justify-center h-[390px] p-2">
           <h1 className="text-base font-body">
             You have not minted any NFTs yet😔
           </h1>
@@ -122,8 +122,8 @@ export function CarouselSize() {
         ))}
       </CarouselContent>
       <div className="flex items-center justify-between bg-white w-full">
-        <CarouselNext className="text-white border-none mx-4 px-2 py-1 mt-4 left-10 top-[100%]" />
-        <CarouselPrevious className="text-white border-none mx-4 px-2 py-1 left-0 mt-4 top-[100%]" />
+        <CarouselNext className="text-white border-none mx-4 px-2 py-1 mt-2 left-10 top-[100%]" />
+        <CarouselPrevious className="text-white border-none mx-4 px-2 py-1 left-0 mt-2 top-[100%]" />
       </div>
     </Carousel>
   );
