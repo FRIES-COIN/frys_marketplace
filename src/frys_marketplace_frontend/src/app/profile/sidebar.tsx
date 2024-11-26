@@ -40,7 +40,7 @@ import { get_exchange_rate } from "../services/exchangeRateService";
 //NFT TAB COMPONENT
 function NFTTab() {
   return (
-    <div className="bg-[#151415] rounded-md min-h-screen w-full max-w-7xl overflow-hidden md:mx-4 text-black">
+    <div className="bg-background rounded-md min-h-screen w-full max-w-7xl overflow-hidden md:mx-4 text-black">
       <div className="flex items-center justify-between mt-2">
         <h1 className="text-2xl font-bold font-body px-2 md:mt-12 mx-2 text-primary">
           Overview
@@ -149,7 +149,7 @@ function WalletTab() {
   };
 
   return (
-    <div className="bg-[#151415] rounded-md h-full px-2">
+    <div className="bg-background rounded-md h-full px-2">
       <div className="text-white font-body w-full pt-4 flex items-center justify-center">
         <Select>
           <SelectTrigger className="md:w-1/4 border-none bg-[#202020] h-12 -mr-2">
@@ -407,7 +407,7 @@ function SettingsTab() {
 
 //PROFILE TAB
 function ProfileTab() {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(true);
   function UserProfile({
     setIsEditing,
   }: {
@@ -512,7 +512,7 @@ function ProfileTab() {
     setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   }) {
     return (
-      <section className="mx-2">
+      <section className="mx-2 bg-background">
         <div className="flex flex-col md:flex-row flex-wrap gap-4 md:p-5 mt-2 text-black">
           <div className="space-y-4 flex-1 min-w-[280px]">
             <div className="flex flex-col">
@@ -703,7 +703,10 @@ function Sidebar() {
             }`}
             onClick={() => setTab("nft")}
           >
-            <IconArtboardFilled size={24} className="text-white" />
+            <IconArtboardFilled
+              size={24}
+              className={`${tab === "nft" ? "text-[#151415]" : "text-white"}`}
+            />
             <h1 className="font-body">NFTs</h1>
           </div>
           <div
@@ -712,7 +715,12 @@ function Sidebar() {
             }`}
             onClick={() => setTab("wallet")}
           >
-            <IconWallet size={24} className="text-white" />
+            <IconWallet
+              size={24}
+              className={`${
+                tab === "wallet" ? "text-[#151415]" : "text-white"
+              }`}
+            />
             <h1 className="font-body">Wallet</h1>
           </div>
           <div
@@ -721,7 +729,12 @@ function Sidebar() {
             }`}
             onClick={() => setTab("settings")}
           >
-            <IconSettingsFilled size={24} className="text-white" />
+            <IconSettingsFilled
+              size={24}
+              className={`${
+                tab === "settings" ? "text-[#151415]" : "text-white"
+              }`}
+            />
             <h1 className="font-body">Settings</h1>
           </div>
           <div
@@ -730,7 +743,12 @@ function Sidebar() {
             }`}
             onClick={() => setTab("profile")}
           >
-            <IconUserFilled size={24} className="text-white" />
+            <IconUserFilled
+              size={24}
+              className={`${
+                tab === "profile" ? "text-[#151415]" : "text-white"
+              }`}
+            />
             <h1 className="font-body transition-all duration-150">Profile</h1>
           </div>
         </section>
