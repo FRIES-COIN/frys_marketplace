@@ -40,12 +40,12 @@ import { get_exchange_rate } from "../services/exchangeRateService";
 //NFT TAB COMPONENT
 function NFTTab() {
   return (
-    <div className="bg-primary rounded-md h-full w-full max-w-7xl overflow-hidden md:mx-4 text-black">
+    <div className="bg-[#151415] rounded-md min-h-screen w-full max-w-7xl overflow-hidden md:mx-4 text-black">
       <div className="flex items-center justify-between mt-2">
-        <h1 className="text-2xl font-bold font-body px-2 md:mt-12 mx-2">
+        <h1 className="text-2xl font-bold font-body px-2 md:mt-12 mx-2 text-primary">
           Overview
         </h1>
-        <button className="bg-black rounded-[52px] md:px-6 md:py-4 py-2 px-4 text-white font-body md:mt-12 md:mx-6 mx-2">
+        <button className="bg-primary rounded-[52px] md:px-6 md:py-4 py-2 px-4 text-[#151415] font-body md:mt-12 md:mx-6 mx-2">
           View all
         </button>
       </div>
@@ -300,7 +300,7 @@ function SettingsTab() {
                     @n
                   </label>
                 </div>
-                <button className="px-4 py-2 rounded text-white font-body bg-primary">
+                <button className="px-4 py-2 rounded text-[#151415] font-body bg-primary">
                   Change
                 </button>
               </div>
@@ -314,7 +314,7 @@ function SettingsTab() {
                     alexarawles@gmail.com
                   </label>
                 </div>
-                <button className="px-4 py-2 rounded text-white font-body bg-primary">
+                <button className="px-4 py-2 rounded text-[#151415] font-body bg-primary">
                   Change
                 </button>
               </div>
@@ -444,7 +444,7 @@ function ProfileTab() {
             </div>
           </div>
           <button
-            className="bg-primary text-white px-4 py-2 rounded-md transform transition-transform hover:scale-110 font-body"
+            className="bg-primary text-[#151415] px-4 py-2 rounded-md transform transition-transform hover:scale-110 font-body"
             onClick={() => setIsEditing(true)}
           >
             Edit
@@ -635,7 +635,7 @@ function ProfileTab() {
         </div>
         <div className="flex mt-4 justify-center md:justify-normal">
           <button
-            className="bg-primary px-4 py-2 rounded-md text-white font-body my-4"
+            className="bg-primary px-4 py-2 rounded-md text-[#151415] font-body my-4"
             onClick={() => setIsEditing(false)}
           >
             Update Details
@@ -659,41 +659,39 @@ function Sidebar() {
       <div className="md:hidden flex items-center justify-between w-full overflow-scrolls px-2 mb-4">
         <div
           className={`flex items-center gap-1 text-sm cursor-pointer py-2 px-4 rounded-md ${
-            tab === "nft" ? "bg-primary" : ""
+            tab === "nft" ? "bg-primary text-[#151415]" : "text-white"
           }`}
           onClick={() => setTab("nft")}
         >
           {/* <IconArtboardFilled size={14} className="text-white" /> */}
-          <h1 className="text-white font-body">NFTs</h1>
+          <h1 className="font-body">NFTs</h1>
         </div>
         <div
           className={`flex items-center gap-1 text-sm cursor-pointer py-2 px-4 rounded-md ${
-            tab === "wallet" ? "bg-primary" : ""
+            tab === "wallet" ? "bg-primary text-[#151415]" : "text-white"
           }`}
           onClick={() => setTab("wallet")}
         >
           {/* <IconWallet size={14} className="text-white" /> */}
-          <h1 className="text-white font-body">Wallet</h1>
+          <h1 className="font-body">Wallet</h1>
         </div>
         <div
           className={`flex items-center text-sm gap-1 cursor-pointer py-2 px-4 rounded-md ${
-            tab === "settings" ? "bg-primary" : ""
+            tab === "settings" ? "bg-primary text-[#151415]" : "text-white"
           }`}
           onClick={() => setTab("settings")}
         >
           {/* <IconSettingsFilled size={14} className="text-white" /> */}
-          <h1 className="text-white font-body">Settings</h1>
+          <h1 className="font-body">Settings</h1>
         </div>
         <div
           className={`flex items-center gap-1 text-sm cursor-pointer py-2 px-4 rounded-md ${
-            tab === "profile" ? "bg-primary" : ""
+            tab === "profile" ? "bg-primary text-[#151415]" : "text-white"
           }`}
           onClick={() => setTab("profile")}
         >
           {/* <IconUserFilled size={14} className="text-white" /> */}
-          <h1 className="text-white font-body transition-all duration-150">
-            Profile
-          </h1>
+          <h1 className="font-body transition-all duration-150">Profile</h1>
         </div>
       </div>
       {/* hidden in smaller screen */}
@@ -701,41 +699,39 @@ function Sidebar() {
         <section className="flex flex-col gap-8">
           <div
             className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
-              tab === "nft" ? "bg-primary" : ""
+              tab === "nft" ? "bg-primary text-[#151415]" : "text-white"
             }`}
             onClick={() => setTab("nft")}
           >
             <IconArtboardFilled size={24} className="text-white" />
-            <h1 className="text-white font-body">NFTs</h1>
+            <h1 className="font-body">NFTs</h1>
           </div>
           <div
             className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
-              tab === "wallet" ? "bg-primary" : ""
+              tab === "wallet" ? "bg-primary text-[#151415]" : "text-white"
             }`}
             onClick={() => setTab("wallet")}
           >
             <IconWallet size={24} className="text-white" />
-            <h1 className="text-white font-body">Wallet</h1>
+            <h1 className="font-body">Wallet</h1>
           </div>
           <div
             className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
-              tab === "settings" ? "bg-primary" : ""
+              tab === "settings" ? "bg-primary text-[#151415]" : "text-white"
             }`}
             onClick={() => setTab("settings")}
           >
             <IconSettingsFilled size={24} className="text-white" />
-            <h1 className="text-white font-body">Settings</h1>
+            <h1 className="font-body">Settings</h1>
           </div>
           <div
             className={`flex items-center gap-4 cursor-pointer py-2 px-4 rounded-md ${
-              tab === "profile" ? "bg-primary" : ""
+              tab === "profile" ? "bg-primary text-[#151415]" : "text-white"
             }`}
             onClick={() => setTab("profile")}
           >
             <IconUserFilled size={24} className="text-white" />
-            <h1 className="text-white font-body transition-all duration-150">
-              Profile
-            </h1>
+            <h1 className="font-body transition-all duration-150">Profile</h1>
           </div>
         </section>
         {/* <section className="flex flex-col gap-8 mb-16">
