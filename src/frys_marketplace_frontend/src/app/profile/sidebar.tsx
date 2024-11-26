@@ -282,14 +282,14 @@ function WalletTab() {
 function SettingsTab() {
   return (
     <div className="bg-background rounded-md md:px-2 px-1 py-2 md:m-2">
-      <div className="flex flex-col md:flex-row gap-12">
+      <div className="flex flex-col gap-12">
         <div className="flex-1">
           <div className="mb-8">
-            <h2 className="text-primary font-body font-bold text-[26px] mb-4 font-bold">
+            <h2 className="text-primary font-body font-bold text-[26px] mb-4">
               Account
             </h2>
             <div className="space-y-1">
-              <div className="flex items-center gap-2 py-2 px-4 rounded">
+              <div className="flex items-center gap-2 py-2 px-4 rounded max-w-lg">
                 <div className="flex-1">
                   <label className="text-white mb-1 block font-body">
                     Username
@@ -303,7 +303,7 @@ function SettingsTab() {
                   Change
                 </button>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 rounded">
+              <div className="flex items-center gap-2 px-4 py-2 rounded max-w-lg">
                 <div className="flex-1">
                   <label className="text-white mb-1 block font-body">
                     Email Address
@@ -387,16 +387,16 @@ function SettingsTab() {
           <h2 className="text-white font-body text-26px mb-2 font-bold">
             Security
           </h2>
-          <div className="w-full bg-primary md:w-[370px] md:h-[224px] h-[100px] rounded-[6px] flex flex-col items-center justify-center">
-            <input
-              type="checkbox"
-              className="toggle toggle-md"
-              id="security"
-              defaultChecked
-            />
+          <div className="w-full md:w-[370px] rounded-[6px] flex flex-col items-start justify-center">
             <p className="text-gray-500 font-body mt-2">
               Require a pin to transfer funds
             </p>
+            <input
+              type="checkbox"
+              className="toggle toggle-md mt-2"
+              id="security"
+              defaultChecked
+            />
           </div>
         </div>
       </div>
