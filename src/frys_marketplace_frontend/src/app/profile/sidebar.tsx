@@ -280,16 +280,16 @@ function WalletTab() {
 function SettingsTab() {
   return (
     <div className="bg-background rounded-md md:px-2 px-1 py-2 md:m-2">
-      <div className="flex flex-col gap-12">
+      <div className="flex flex-col md:gap-12 gap-6">
         <div className="flex-1">
-          <div className="mb-8">
-            <h2 className="text-primary font-body font-bold text-[26px] mb-4">
+          <div className="md:mb-8 mb-2">
+            <h2 className="text-primary font-body font-bold text-xl md:text-[26px] md:mb-4">
               Account
             </h2>
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 py-2 px-4 rounded max-w-lg">
-                <div className="flex-1">
-                  <label className="text-white mb-1 block font-body">
+            <div className="">
+              <div className="flex items-center gap-2 rounded max-w-lg">
+                <div className="flex-1 my-1 md:my-2">
+                  <label className="text-gray-300 mb-1 block font-body">
                     Username
                   </label>
 
@@ -301,9 +301,9 @@ function SettingsTab() {
                   Change
                 </button>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 rounded max-w-lg">
+              <div className="flex items-center gap-2 rounded max-w-lg">
                 <div className="flex-1">
-                  <label className="text-white mb-1 block font-body">
+                  <label className="text-gray-300 mb-1 block font-body">
                     Email Address
                   </label>
 
@@ -318,8 +318,8 @@ function SettingsTab() {
             </div>
           </div>
 
-          <div className="mb-8">
-            <h2 className="text-primary font-body font-bold text-[26px] mb-1 md:mb-2">
+          <div className="mb-2">
+            <h2 className="text-primary font-body font-bold text-xl md:text-[26px] md:mb-4">
               Notifications
             </h2>
             <div className="space-y-2 flex flex-col  max-w-md">
@@ -345,8 +345,8 @@ function SettingsTab() {
             </div>
           </div>
 
-          <div className="-mt-2">
-            <h2 className="text-primary font-body font-bold text-[26px] mb-1 md:mb-2">
+          <div className="mb-2">
+            <h2 className="text-primary font-body font-bold text-xl md:text-[26px] md:mb-4">
               Email Notifications
             </h2>
             <div className="mb-1">
@@ -381,8 +381,8 @@ function SettingsTab() {
             </div>
           </div>
         </div>
-        <div className="-mt-2 md:mt-0 w-full md:w-[370px] order-last md:order-none">
-          <h2 className="text-white font-body text-26px mb-2 font-bold">
+        <div className="md:mt-0 w-full md:w-[370px] order-last md:order-none">
+          <h2 className="text-primary font-body font-bold text-xl md:text-[26px] md:mb-4">
             Security
           </h2>
           <div className="w-full md:w-[370px] rounded-[6px] flex flex-col items-start justify-center">
