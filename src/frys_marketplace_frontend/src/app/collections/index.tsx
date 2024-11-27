@@ -13,65 +13,67 @@ import { collections, ICollection } from "./collections";
 import { ButtonsCard } from "../../../components/ui/tailwindcss-buttons";
 import { useEffect, useState } from "react";
 import { createActor } from "../../../../declarations/frys_marketplace_backend";
-import { getConnectedWalletAgent, connectPlug, checkConnection } from "../Wallet/wallet-service";
+import {
+  getConnectedWalletAgent,
+  connectPlug,
+  checkConnection,
+} from "../Wallet/wallet-service";
 
 export const frysBackendCanisterID = "ia5ie-kqaaa-aaaal-arqqa-cai";
 
 function CollectionsHeader() {
   return (
-    <section className="text-black">
-      <div className="flex flex-col md:flex-row items-center justify-between mt-12 font-title ">
+    <section className="font-body">
+      <div className="flex flex-col md:flex-row items-center justify-between mt-12 font-title text-gray-400">
         <div className="flex items-center md:gap-1 lg:gap-3 ">
-          <div className="bg-white rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 ">
+          <div className="bg-white rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 text-[#151415] font-body">
             <h1>All NFTs</h1>
           </div>
-          <div className="bg-transparent rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1">
+          <div className="bg-transparent rounded-3xl text-sm md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 text-gray-400 font-body">
             <h1>Arts</h1>
           </div>
-          <div className="bg-transparent rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1">
+          <div className="bg-transparent rounded-3xl text-sm md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body">
             <h1>Music</h1>
           </div>
-          <div className="bg-transparent rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1">
+          <div className="bg-transparent rounded-3xl text-sm md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body">
             <h1>Sports</h1>
           </div>
-          <div className="bg-transparent rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1">
-            <h1>Photography</h1>
-          </div>
-          <div className="bg-transparent rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1">
-            <h1>Trading Card</h1>
+
+          <div className="bg-transparent rounded-3xl text-sm md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body">
+            <h1>Trading</h1>
           </div>
         </div>
-        <div className="flex items-center md:justify-between justify-center cursor-pointer bg-black text-white md:py-4 py-2 px-4 my-4 rounded-[52px] w-full md:w-[20%] lg:w-[10%]">
+        <div className="flex items-center md:justify-between justify-center cursor-pointer bg-black text-white md:py-4 py-2 px-4 my-4 rounded-[52px] w-full md:w-[20%] lg:w-[10%] border-primary border-2">
           <div className="flex items-center gap-1">
             <IconFilterSearch />
-            <h1 className="font-title text-lg">Filter</h1>
+            <h1 className="text-lg font-body">Filter</h1>
           </div>
           <IconChevronDown />
         </div>
       </div>
       <div className="bg-white w-full h-[0.5px] my-6"></div>
       <div className="flex items-center md:gap-1 lg:gap-3 flex-wrap">
-        <div className="bg-white rounded-[52px] text-xs md:text-base lg:text-lg md:px-6 px-2 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 ">
+        <div className="bg-white rounded-[52px] text-xs md:text-base lg:text-lg md:px-6 px-2 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body">
           <IconWallet />
           <h1>0.01 - 10 ICP</h1>
           <IconChevronDown />
         </div>
-        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 font-title cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 ">
+        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body">
           <IconBulbFilled />
           <h1>Auction</h1>
           <IconChevronDown />
         </div>
-        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 font-title cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 ">
+        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body">
           <IconRosetteDiscountCheck />
           <h1>Verified creator</h1>
           <IconChevronDown />
         </div>
-        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 font-title cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 ">
+        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body">
           <IconArrowsSort />
           <h1>Sort order</h1>
           <IconChevronDown />
         </div>
-        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 font-title cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 ">
+        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body">
           <IconRosetteDiscountFilled />
           <h1>On sale</h1>
           <IconChevronDown />
@@ -83,7 +85,7 @@ function CollectionsHeader() {
 
 function CollectionCard({ collection }: { collection: ICollection }) {
   return (
-    <div className="relative h-[450px] w-[370px] lg:w-[400px] border-[12px] border-white rounded-[20px] overflow-hidden">
+    <div className="relative h-[450px] w-[370px] lg:w-[400px] border-[12px] border-white rounded-[20px] overflow-hidden hover:shadow-primary hover:shadow-xl cursor-pointer  hover:scale-95 ease-in duration-200 transition-all">
       <div
         style={{ backgroundImage: `url(${collection.image})` }}
         className={`absolute inset-0 bg-no-repeat bg-cover bg-[url(${collection.image})] rounded-[10px]`}
@@ -225,8 +227,8 @@ function CollectionsPage() {
   // console.log("NFTs:", nfts);
 
   return (
-    <div className="bg-primary max-w-[96rem] mx-auto my-0 rounded-3xl px-4 pt-6 pb-4">
-      <h1 className="font-bold font-body md:text-3xl text-2xl mb-6 text-black">
+    <div className="bg-background max-w-[96rem] mx-auto my-0 rounded-3xl px-4 pt-6 pb-4">
+      <h1 className="font-bold font-body md:text-3xl text-2xl mb-6 text-primary">
         Featured NFTs🔥
       </h1>
       <CollectionsHeader />
@@ -256,11 +258,11 @@ function CollectionsPage() {
         )}
       </section>
       <div className="flex items-center justify-center my-12">
-        <ButtonsCard className="bg-black text-white mt-4 font-body border-none w-1/4 py-4">
+        <ButtonsCard className="bg-primary text-[#151415] mt-4 font-body border-none w-full md:w-1/2 lg:w-1/4 py-4">
           {!loading && nfts.length > 0 ? "Load more" : null}
           {!loading && nfts.length === 0 ? "No NFTs found" : null}
           {loading ? (
-            <span className="loading loading-infinity loading-lg bg-primary"></span>
+            <span className="loading loading-infinity loading-lg bg-[#151415]"></span>
           ) : null}
         </ButtonsCard>
       </div>

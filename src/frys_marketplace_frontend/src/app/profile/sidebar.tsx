@@ -482,25 +482,25 @@ function ProfileTab() {
               <div className="mx-4 md:mx-0">
                 <IconBrandXFilled
                   size={40}
-                  className="md:text-xl cursor-pointer hover:text-primary hover:scale-105 ease-in duration-150 transition-all"
+                  className="md:text-xl cursor-pointer hover:text-primary hover:scale-105 ease-in duration-150 transition-all text-gray-400"
                 />
               </div>
               <div>
                 <IconBrandGithubFilled
                   size={40}
-                  className="md:text-xl cursor-pointer hover:text-primary hover:scale-105 ease-in duration-150 transition-all"
+                  className="md:text-xl cursor-pointer hover:text-primary hover:scale-105 ease-in duration-150 transition-all text-gray-400"
                 />
               </div>
               <div>
                 <IconBrandLinkedinFilled
                   size={40}
-                  className="md:text-xl cursor-pointer hover:text-primary hover:scale-105 ease-in duration-150 transition-all"
+                  className="md:text-xl cursor-pointer hover:text-primary hover:scale-105 ease-in duration-150 transition-all text-gray-400"
                 />
               </div>
               <div>
                 <IconBrandInstagramFilled
                   size={40}
-                  className="md:text-xl cursor-pointer hover:text-primary hover:scale-105 ease-in duration-150 transition-all"
+                  className="md:text-xl cursor-pointer hover:text-primary hover:scale-105 ease-in duration-150 transition-all text-gray-400"
                 />
               </div>
             </div>
