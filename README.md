@@ -35,7 +35,7 @@ Welcome to the FRYS Coin Marketplace! This platform allows users to buy, sell, a
 
 ## Demo
 
-You can view a live demo of the FRYS Coin Marketplace at the following link: [https://drive.google.com/drive/folders/1eWwdipbVa3l1AnDOmMX4eaHCLygxMkzR?usp=sharing](#)
+You can view a live demo of the FRYS Coin Marketplace at the following link: [https://drive.google.com/drive/folders/1eWwdipbVa3l1AnDOmMX4eaHCLygxMkzR?usp=sharing]
 
 ## Screenshots
 ![Screenshot from 2024-11-24 07-49-41](https://github.com/user-attachments/assets/0efd1fb1-eadd-4937-98c9-e9995672b9e3)
