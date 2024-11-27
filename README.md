@@ -14,7 +14,7 @@ Fries Coin is a unique blockchain project built on the **Internet Computer**, de
 ## Technology Stack
 - **Blockchain**: Internet Computer and Bitcoin (Layer 2 integration).
 - **NFT Marketplace**: Ordinals platform optimized for fry-themed and creative digital assets.
-- **Smart Contracts**: Self-executing code to ensure transparency and security in transactions.
+- **Canister Smart Contracts**: Self-executing code to ensure transparency and security in transactions.
 
 ## Bitcoin Ordinals NFT Platform
 
@@ -35,7 +35,7 @@ Welcome to the FRYS Coin Marketplace! This platform allows users to buy, sell, a
 
 ## Demo
 
-You can view a live demo of the FRYS Coin Marketplace at the following link: [https://drive.google.com/drive/folders/1eWwdipbVa3l1AnDOmMX4eaHCLygxMkzR?usp=drive_link](#)
+You can view a live demo of the FRYS Coin Marketplace at the following link: [https://drive.google.com/drive/folders/1eWwdipbVa3l1AnDOmMX4eaHCLygxMkzR?usp=sharing](#)
 
 ## Screenshots
 ![Screenshot from 2024-11-24 07-49-41](https://github.com/user-attachments/assets/0efd1fb1-eadd-4937-98c9-e9995672b9e3)
