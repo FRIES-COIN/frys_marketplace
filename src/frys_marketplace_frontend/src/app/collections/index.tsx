@@ -262,7 +262,7 @@ function CollectionsPage() {
           {!loading && nfts.length > 0 ? "Load more" : null}
           {!loading && nfts.length === 0 ? "No NFTs found" : null}
           {loading ? (
-            <span className="loading loading-infinity loading-lg bg-primary"></span>
+            <span className="loading loading-infinity loading-lg bg-[#151415]"></span>
           ) : null}
         </ButtonsCard>
       </div>
