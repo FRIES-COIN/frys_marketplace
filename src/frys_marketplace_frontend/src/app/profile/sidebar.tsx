@@ -152,7 +152,7 @@ function WalletTab() {
     <div className="bg-background rounded-md h-full px-2">
       <div className="text-white font-body w-full pt-4 flex items-center justify-center">
         <Select>
-          <SelectTrigger className="md:w-1/4 border-none bg-[#202020] h-12 -mr-2">
+          <SelectTrigger className="md:w-1/4 border-none bg-[#202020] h-12 md:h-16 -mr-2">
             <SelectValue
               placeholder="Choose token"
               className="flex items-center gap-2 placeholder:text-gray-500"
