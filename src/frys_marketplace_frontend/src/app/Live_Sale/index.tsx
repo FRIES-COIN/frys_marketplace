@@ -30,7 +30,8 @@ function LiveSale() {
       const allNFTs = await actor.get_all_nfts();
 
       const processedNFTs = allNFTs.map((nft) => {
-        const byteArray = Object.values(nft.nft_image[0]);
+        const nftImage = nft.nft_image[0];
+        const byteArray = Array.isArray(nftImage) ? nftImage : Array.from(nftImage);
         const uint8Array = new Uint8Array(byteArray);
 
         let binaryString = "";
@@ -41,7 +42,11 @@ function LiveSale() {
         const imageUrl = `data:image/jpeg;base64,${base64String}`;
 
         return {
-          ...nft,
+          id: nft.id,
+          collection_id: nft.collection_id,
+          nft_description: nft.nft_description,
+          price_in_icp_tokens: nft.price_in_icp_tokens,
+          created_at: nft.created_at,
           image_url: imageUrl,
           minter_principal_id: nft.minter_principal_id.toText(),
         };
