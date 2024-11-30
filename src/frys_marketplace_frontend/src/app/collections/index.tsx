@@ -53,31 +53,31 @@ function CollectionsHeader() {
       </div>
       <div className="bg-white w-full h-[0.5px] my-6"></div>
       <div className="flex items-center md:gap-1 lg:gap-3 flex-wrap">
-        <div className="bg-white rounded-[52px] text-xs md:text-base lg:text-lg md:px-6 px-2 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-500">
+        <div className="bg-white rounded-[52px] text-xs md:text-base lg:text-lg md:px-6 px-2 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-800">
           <IconWallet />
           <h1>0.01 - 10 ICP</h1>
           <IconChevronDown />
         </div>
-        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-500">
+        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-800">
           <IconBulbFilled />
           <h1>Auction</h1>
           <IconChevronDown />
         </div>
-        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-500">
+        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-800">
           <IconRosetteDiscountCheck />
-          <h1>Verified creator</h1>
+          <h1>Verified</h1>
           <IconChevronDown />
         </div>
-        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-500">
+        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-800">
           <IconArrowsSort />
           <h1>Sort order</h1>
           <IconChevronDown />
         </div>
-        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-500">
+        {/* <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-800">
           <IconRosetteDiscountFilled />
           <h1>On sale</h1>
           <IconChevronDown />
-        </div>
+        </div> */}
       </div>
     </section>
   );
