@@ -1,4 +1,4 @@
-import { Principal } from "@dfinity/principal";
+import { motion } from "framer-motion";
 import {
   IconArrowsSort,
   IconBulbFilled,
@@ -33,58 +33,98 @@ function CollectionsHeader({
   return (
     <section className="font-body">
       <div className="flex flex-col md:flex-row items-center justify-between mt-12 font-title text-gray-400">
-        <div className="flex items-center md:gap-1 lg:gap-3 transition-colors duration-500 ease-in">
-          <div
-            className={`rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body ${
+        <div className="flex items-center md:gap-1 lg:gap-3 ">
+          <motion.div
+            className={`rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body transition-colors duration-500 ease-in-out ${
               nftCategory === "All NFTs"
                 ? "bg-white text-[#151415]"
                 : "text-gray-400"
             }`}
             onClick={() => setNftCategory("All NFTs")}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            whileHover={{
+              scale: 1.05,
+              transition: { duration: 0.2 },
+            }}
           >
             <h1>All NFTs</h1>
-          </div>
-          <div
-            className={`rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body ${
+          </motion.div>
+          <motion.div
+            className={`rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body transition-colors duration-500 ease-in-out ${
               nftCategory === "Arts"
                 ? "bg-white text-[#151415]"
                 : "text-gray-400"
             }`}
             onClick={() => setNftCategory("Arts")}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            whileHover={{
+              scale: 1.05,
+              transition: { duration: 0.2 },
+            }}
           >
             <h1>Arts</h1>
-          </div>
-          <div
-            className={`rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body ${
+          </motion.div>
+          <motion.div
+            className={`rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body transition-colors duration-500 ease-in-out ${
               nftCategory === "Music"
                 ? "bg-white text-[#151415]"
                 : "text-gray-400"
             }`}
             onClick={() => setNftCategory("Music")}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            whileHover={{
+              scale: 1.05,
+              transition: { duration: 0.2 },
+            }}
           >
             <h1>Music</h1>
-          </div>
-          <div
-            className={`rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body ${
+          </motion.div>
+          <motion.div
+            className={`rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body transition-colors duration-500 ease-in-out ${
               nftCategory === "Sports"
                 ? "bg-white text-[#151415]"
                 : "text-gray-400"
             }`}
             onClick={() => setNftCategory("Sports")}
+            animate={{
+              x: 0,
+              opacity: 1,
+              transition: {
+                default: { type: "spring" },
+                opacity: { ease: "linear" },
+              },
+            }}
+            whileHover={{
+              scale: 1.05,
+              transition: { duration: 0.2 },
+            }}
           >
             <h1>Sports</h1>
-          </div>
+          </motion.div>
 
-          <div
-            className={`rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body ${
+          <motion.div
+            className={`rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body transition-colors duration-500 ease-in-out ${
               nftCategory === "Trading"
                 ? "bg-white text-[#151415]"
                 : "text-gray-400"
             }`}
             onClick={() => setNftCategory("Trading")}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            whileHover={{
+              scale: 1.05,
+              transition: { duration: 0.2 },
+            }}
           >
             <h1>Trading</h1>
-          </div>
+          </motion.div>
         </div>
         <div className="flex items-center md:justify-between justify-center cursor-pointer bg-black text-white md:py-4 py-2 px-4 my-4 rounded-[52px] w-full md:w-[20%] lg:w-[10%] border-primary border-2">
           <div className="flex items-center gap-1">
