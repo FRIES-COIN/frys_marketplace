@@ -19,27 +19,70 @@ import {
   checkConnection,
 } from "../Wallet/wallet-service";
 
+type T_NFTCategory = "All NFTs" | "Arts" | "Music" | "Sports" | "Trading";
+
 export const frysBackendCanisterID = "ia5ie-kqaaa-aaaal-arqqa-cai";
 
-function CollectionsHeader() {
+function CollectionsHeader({
+  nftCategory,
+  setNftCategory,
+}: {
+  nftCategory: T_NFTCategory;
+  setNftCategory: React.Dispatch<React.SetStateAction<T_NFTCategory>>;
+}) {
   return (
     <section className="font-body">
       <div className="flex flex-col md:flex-row items-center justify-between mt-12 font-title text-gray-400">
-        <div className="flex items-center md:gap-1 lg:gap-3 ">
-          <div className="bg-white rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 text-[#151415] font-body">
+        <div className="flex items-center md:gap-1 lg:gap-3 transition-colors duration-500 ease-in">
+          <div
+            className={`rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body ${
+              nftCategory === "All NFTs"
+                ? "bg-white text-[#151415]"
+                : "text-gray-400"
+            }`}
+            onClick={() => setNftCategory("All NFTs")}
+          >
             <h1>All NFTs</h1>
           </div>
-          <div className="bg-transparent rounded-3xl text-sm md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 text-gray-400 font-body">
+          <div
+            className={`rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body ${
+              nftCategory === "Arts"
+                ? "bg-white text-[#151415]"
+                : "text-gray-400"
+            }`}
+            onClick={() => setNftCategory("Arts")}
+          >
             <h1>Arts</h1>
           </div>
-          <div className="bg-transparent rounded-3xl text-sm md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body">
+          <div
+            className={`rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body ${
+              nftCategory === "Music"
+                ? "bg-white text-[#151415]"
+                : "text-gray-400"
+            }`}
+            onClick={() => setNftCategory("Music")}
+          >
             <h1>Music</h1>
           </div>
-          <div className="bg-transparent rounded-3xl text-sm md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body">
+          <div
+            className={`rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body ${
+              nftCategory === "Sports"
+                ? "bg-white text-[#151415]"
+                : "text-gray-400"
+            }`}
+            onClick={() => setNftCategory("Sports")}
+          >
             <h1>Sports</h1>
           </div>
 
-          <div className="bg-transparent rounded-3xl text-sm md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body">
+          <div
+            className={`rounded-3xl text-xs md:text-base lg:text-lg md:px-3 px-2 cursor-pointer py-1 font-body ${
+              nftCategory === "Trading"
+                ? "bg-white text-[#151415]"
+                : "text-gray-400"
+            }`}
+            onClick={() => setNftCategory("Trading")}
+          >
             <h1>Trading</h1>
           </div>
         </div>
@@ -158,7 +201,7 @@ export function LoadingCard() {
 
 function CollectionsPage() {
   const [loading, setLoading] = useState(true);
-  const [nftImage, setNFTImages] = useState();
+  const [nftCategory, setNftCategory] = useState<T_NFTCategory>("All NFTs");
   const [nfts, setNfts] = useState<
     Array<{
       id: bigint;
@@ -231,7 +274,10 @@ function CollectionsPage() {
       <h1 className="font-bold font-body md:text-3xl text-2xl mb-6 text-primary">
         Featured NFTs🔥
       </h1>
-      <CollectionsHeader />
+      <CollectionsHeader
+        nftCategory={nftCategory}
+        setNftCategory={setNftCategory}
+      />
       <section className="mt-8 md:mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 space-y-2 md:gap-4 md:pl-0 pl-4">
         {loading ? (
           <>
