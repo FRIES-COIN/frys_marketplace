@@ -5,6 +5,7 @@ import Mint from "../pages/Mint";
 import Profile from "../pages/Profile";
 import Footer from "./app/Footer";
 import Error from "../pages/Error";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>
+      <Toaster />
     </div>
   );
 }

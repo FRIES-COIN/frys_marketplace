@@ -18,6 +18,7 @@ import {
   connectPlug,
   checkConnection,
 } from "../Wallet/wallet-service";
+import toast from "react-hot-toast";
 
 type T_NFTCategory = "All NFTs" | "Arts" | "Music" | "Sports" | "Trading";
 
@@ -30,6 +31,10 @@ function CollectionsHeader({
   nftCategory: T_NFTCategory;
   setNftCategory: React.Dispatch<React.SetStateAction<T_NFTCategory>>;
 }) {
+  const handleCategoryChange = (category: T_NFTCategory) => {
+    toast.success("Category Updated");
+    setNftCategory(category);
+  };
   return (
     <section className="font-body">
       <div className="flex flex-col md:flex-row items-center justify-between mt-12 font-title text-gray-400">
@@ -40,7 +45,7 @@ function CollectionsHeader({
                 ? "bg-white text-[#151415]"
                 : "text-gray-400"
             }`}
-            onClick={() => setNftCategory("All NFTs")}
+            onClick={() => handleCategoryChange("All NFTs")}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -57,7 +62,7 @@ function CollectionsHeader({
                 ? "bg-white text-[#151415]"
                 : "text-gray-400"
             }`}
-            onClick={() => setNftCategory("Arts")}
+            onClick={() => handleCategoryChange("Arts")}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -74,7 +79,7 @@ function CollectionsHeader({
                 ? "bg-white text-[#151415]"
                 : "text-gray-400"
             }`}
-            onClick={() => setNftCategory("Music")}
+            onClick={() => handleCategoryChange("Music")}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -91,7 +96,7 @@ function CollectionsHeader({
                 ? "bg-white text-[#151415]"
                 : "text-gray-400"
             }`}
-            onClick={() => setNftCategory("Sports")}
+            onClick={() => handleCategoryChange("Sports")}
             animate={{
               x: 0,
               opacity: 1,
@@ -114,7 +119,7 @@ function CollectionsHeader({
                 ? "bg-white text-[#151415]"
                 : "text-gray-400"
             }`}
-            onClick={() => setNftCategory("Trading")}
+            onClick={() => handleCategoryChange("Trading")}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -306,7 +311,6 @@ function CollectionsPage() {
       setLoading(false);
     }
   };
-
   // console.log("NFTs:", nfts);
 
   return (
