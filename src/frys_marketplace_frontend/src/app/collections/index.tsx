@@ -19,10 +19,115 @@ import {
   checkConnection,
 } from "../Wallet/wallet-service";
 import toast from "react-hot-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../../components/ui/select";
 
 type T_NFTCategory = "All NFTs" | "Arts" | "Music" | "Sports" | "Trading";
 
 export const frysBackendCanisterID = "ia5ie-kqaaa-aaaal-arqqa-cai";
+
+function CollectionExtraFiltersModal({
+  filter,
+  setPrice,
+  setType,
+  setVerification,
+  setSortOrder,
+}: {
+  filter: string;
+  setPrice: React.Dispatch<React.SetStateAction<string>>;
+  setType: React.Dispatch<React.SetStateAction<string>>;
+  setVerification: React.Dispatch<React.SetStateAction<string>>;
+  setSortOrder: React.Dispatch<React.SetStateAction<string>>;
+}) {
+  const [selectedOption, setSelectedOption] = useState("");
+  let options: string[] = [];
+  let title = "";
+  switch (filter) {
+    case "price":
+      options = ["0.1 ICP - 9.9 ICP", "10 ICP - 99.9 ICP", "Above 100 ICP"];
+      title = "NFT Price";
+      break;
+    case "type":
+      options = ["Auction", "Fixed Price", "Offers"];
+      title = "Type of NFT Sale";
+      break;
+    case "verification":
+      options = ["Verified", "All Vendors"];
+      title = "Vendor Type";
+      break;
+    case "sortOrder":
+      options = ["Ascending", "Descending"];
+      title = "Sorting Order";
+      break;
+  }
+  const confirmFilter = () => {
+    if (selectedOption === "") {
+      toast.error("No option was selected");
+      return;
+    }
+    switch (filter) {
+      case "price":
+        setPrice(selectedOption);
+        break;
+      case "type":
+        setType(selectedOption);
+        break;
+      case "verification":
+        setVerification(selectedOption);
+        break;
+      case "sortOrder":
+        setSortOrder(selectedOption);
+        break;
+    }
+    //@ts-ignore
+    document.getElementById("my_modal_2").close();
+    toast.success(`Applying ${selectedOption}`);
+  };
+  return (
+    <dialog id="my_modal_2" className="modal backdrop-blur-sm">
+      <div className="modal-box bg-background ">
+        <h3 className="font-bold text-lg text-center text-gray-400">
+          Extra Filters🥫🌶️🧂
+        </h3>
+        <p className="pb-3 text-sm text-center text-gray-400">
+          Press ESC key or click outside to close
+        </p>
+        <h1 className="font-bold text-lg text-center text-primary">{title}</h1>
+        <div className="flex items-center justify-center mt-4 flex-col">
+          <select
+            className="select w-full md:w-[80%] bg-[#151415] text-primary"
+            value={selectedOption}
+            onChange={(e) => setSelectedOption(e.target.value)}
+          >
+            <option disabled selected>
+              Choose your Sauce🌶️
+            </option>
+            {options.length !== 0 &&
+              options.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+          </select>
+          <button
+            className="bg-primary py-2 px-4 font-bold text-gray-[#000] rounded-md mt-4 w-full md:w-[80%]"
+            onClick={confirmFilter}
+          >
+            Confirm
+          </button>
+        </div>
+      </div>
+      <form method="dialog" className="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+  );
+}
 
 function CollectionsHeader({
   nftCategory,
@@ -31,6 +136,18 @@ function CollectionsHeader({
   nftCategory: T_NFTCategory;
   setNftCategory: React.Dispatch<React.SetStateAction<T_NFTCategory>>;
 }) {
+  const [price, setPrice] = useState("0.1 ICP - 9.9 ICP");
+  const [type, setType] = useState("Auction");
+  const [verification, setVerification] = useState("Verified");
+  const [sortOrder, setSortOrder] = useState("Ascending");
+  const [currentFilter, setCurrentFilter] = useState("price");
+
+  const handleCurrentFilterChange = (filter: string) => {
+    // @ts-ignore
+    document.getElementById("my_modal_2").showModal();
+    setCurrentFilter(filter);
+  };
+
   const handleCategoryChange = (category: T_NFTCategory) => {
     toast.success("Category Updated");
     setNftCategory(category);
@@ -141,31 +258,45 @@ function CollectionsHeader({
       </div>
       <div className="bg-white w-full h-[0.5px] my-6"></div>
       <div className="flex items-center md:gap-1 lg:gap-3 flex-wrap">
-        <div className="bg-white rounded-[52px] text-xs md:text-base lg:text-lg md:px-6 px-2 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-800">
+        <div
+          className="bg-white rounded-[52px] text-xs md:text-base lg:text-lg md:px-6 px-2 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-800"
+          onClick={() => handleCurrentFilterChange("price")}
+        >
           <IconWallet />
-          <h1>0.01 - 10 ICP</h1>
+          <h1>{price}</h1>
           <IconChevronDown />
         </div>
-        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-800">
+        <div
+          className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-800"
+          onClick={() => handleCurrentFilterChange("type")}
+        >
           <IconBulbFilled />
-          <h1>Auction</h1>
+          <h1>{type}</h1>
           <IconChevronDown />
         </div>
-        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-800">
+        <div
+          className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-800"
+          onClick={() => handleCurrentFilterChange("verification")}
+        >
           <IconRosetteDiscountCheck />
-          <h1>Verified</h1>
+          <h1>{verification}</h1>
           <IconChevronDown />
         </div>
-        <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-800">
+        <div
+          className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-800"
+          onClick={() => handleCurrentFilterChange("sortOrder")}
+        >
           <IconArrowsSort />
-          <h1>Sort order</h1>
+          <h1>{sortOrder}</h1>
           <IconChevronDown />
         </div>
-        {/* <div className="bg-white rounded-[52px]  text-xs md:text-base lg:text-lg md:px-3 px-6 cursor-pointer py-1 flex items-center gap-2 my-2 md:my-0 mx-1 font-body text-gray-800">
-          <IconRosetteDiscountFilled />
-          <h1>On sale</h1>
-          <IconChevronDown />
-        </div> */}
+        <CollectionExtraFiltersModal
+          filter={currentFilter}
+          setPrice={setPrice}
+          setType={setType}
+          setVerification={setVerification}
+          setSortOrder={setSortOrder}
+        />
       </div>
     </section>
   );
