@@ -1,12 +1,14 @@
 use std::cell::RefCell;
 use std::collections::HashMap;
-use candid::Principal;
+use candid::{CandidType, Principal};
+use serde::{Serialize, Deserialize};
 use crate::types::*;
 
 thread_local! {
     pub static STATE: RefCell<State> = RefCell::new(State::default());
 }
 
+#[derive(CandidType, Serialize, Deserialize, Clone)]
 pub struct State {
     pub next_inscription_id: u64,
     pub inscriptions: HashMap<u64, Inscription>,

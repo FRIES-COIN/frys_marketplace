@@ -13,129 +13,77 @@ use minting::{MINT_PASSWORD, NFTS};
 use minting::{ COLLECTIONS, NFT, NEXT_COLLECTION_ID, NEXT_NFT_ID, PendingMint, PENDING_MINTS };
 use payment::Payment;
 use payment::PAYMENT_STORE;
+use state::{State, STATE};
+use types::{MintRequest, MintResponse};
 use crate::payment::TokenType;
-use crate::payment::PendingTransfer;
-// use ic_cdk_macros::*;
+use crate::payment::{PendingTransfer, PENDING_TRANSFERS};
+use crate::frys_interface::{unlock_frys, check_allowance};
+use crate::ordinals::mint_inscription; 
+// use std::cell::RefCell;
 
-// use crate::state::STATE;
-use ic_cdk::{post_upgrade, pre_upgrade, storage };
+use ic_cdk::{export_candid, post_upgrade, pre_upgrade, query, storage, update };
 
 use ic_cdk::init;
 
-#[init]
-fn init() {
-    MINT_PASSWORD.with(|password| {
-        *password.borrow_mut() = std::env::var("MINT_PASSWORD")
-            .unwrap_or_else(|_| String::from(""));
-    });
+// thread_local! {
+//     static TEST_COUNTER: RefCell<u64> = RefCell::new(0);
+// }
+
+// Expose canister functions in files
+// #[update]
+// pub async fn verify_frys_payment(caller: Principal, amount: u64) -> Result<(), String> {
+//     verify_and_lock_frys(caller, amount).await
+// }
+
+#[update]
+pub async fn unlock_frys_payment(to: Principal, amount: u64) -> Result<(), String> {
+    unlock_frys(to, amount).await
 }
 
-// use crate::types::{
-//     SystemStats,
-//     Collection,
-//     MintRequest,
-//     MintResponse
-// };
+#[query]
+pub async fn check_frys_allowance(owner: Principal) -> Result<u64, String> {
+    check_allowance(owner).await
+}
 
-// Initialize state
-// #[init]
-// #[candid_method(init)]
-// fn init() {
-//     STATE.with(|state| {
-//         let mut state = state.borrow_mut();
-//         state.next_inscription_id = 0;
-//         state.inscriptions.clear();
-//         state.collections.clear();
-//     });
-// }
+#[update]
+pub async fn create_inscription(request: MintRequest) -> Result<MintResponse, String> {
+    mint_inscription(request).await
+}
 
-// // System stats query
-// // #[query]
-// #[candid_method(query)]
-// fn get_stats() -> SystemStats {
-//     STATE.with(|state| {
-//         let state = state.borrow();
-//         SystemStats {
-//             total_inscriptions: state.next_inscription_id,
-//             total_frys_locked: state.total_frys_locked(),
-//             total_collections: state.collections.len() as u64,
-//         }
-//     })
-// }
+#[query]
+pub fn get_state_info() -> State {
+    STATE.with(|state| state.borrow().clone())
+}
 
-// // Collection queries
-// // #[query]
-// #[candid_method(query)]
-// fn get_collection_info(name: String) -> Option<Collection> {
-//     STATE.with(|state| {
-//         let state = state.borrow();
-//         state.collections.get(&name).cloned()
-//     })
-// }
-
-// // #[query]
-// #[candid_method(query)]
-// fn get_collection_floor(name: String) -> Option<u64> {
-//     STATE.with(|state| {
-//         let state = state.borrow();
-//         state.collections.get(&name).and_then(|c| c.floor_price)
-//     })
-// }
-
-// // #[query]
-// #[candid_method(query)]
-// fn get_collection_stats(name: String) -> Option<Collection> {
-//     STATE.with(|state| {
-//         let state = state.borrow();
-//         state.collections.get(&name).cloned()
-//     })
-// }
-
-// // #[update]
-// #[candid_method(update)]
-// async fn mint_inscription(request: MintRequest) -> Result<MintResponse, String> {
-//     let caller = ic_cdk::caller();
-
-//     // Store frys_amount before moving request
-//     let frys_amount = request.frys_amount;
-
-//     // Verify and lock FRYS tokens first
-//     frys_interface::verify_and_lock_frys(caller, frys_amount).await?;
-
-//     // Update request with caller as creator
-//     let mut request = request;
-//     request.metadata.creator = caller;
-
-//     // If FRYS verification succeeds, proceed with minting
-//     match ordinals::mint_inscription(request).await {
-//         Ok(response) => Ok(response),
-//         Err(e) => {
-//             // If minting fails, unlock the FRYS tokens
-//             if let Err(unlock_err) = frys_interface::unlock_frys(caller, frys_amount).await {
-//                 ic_cdk::println!("Failed to unlock FRYS tokens: {}", unlock_err);
-//             }
-//             Err(e)
-//         }
-//     }
-// }
-
-// Persisting storage
-// #[pre_upgrade]
+#[init]
+fn init() {
+MINT_PASSWORD.with(|password| {
+    *password.borrow_mut() = std::env::var("MINT_PASSWORD")
+        .unwrap_or_else(|_| String::from(""));
+});
+    
+// Initialize other state containers with default values
+STATE.with(|s| *s.borrow_mut() = State::default());
+PAYMENT_STORE.with(|store| *store.borrow_mut() = HashMap::new());
+PENDING_TRANSFERS.with(|pt| *pt.borrow_mut() = HashMap::new());
+#[pre_upgrade]
 fn pre_upgrade() {
-    // Create empty state if this is first deployment
     let state = (
         PAYMENT_STORE.with(|store| store.borrow().clone()),
         COLLECTIONS.with(|c| c.borrow().clone()),
         NFTS.with(|n| n.borrow().clone()),
         PENDING_MINTS.with(|pm| pm.borrow().clone()),
         NEXT_COLLECTION_ID.with(|id| *id.borrow()),
-        NEXT_NFT_ID.with(|id| *id.borrow())
+        NEXT_NFT_ID.with(|id| *id.borrow()),
+        STATE.with(|s| s.borrow().clone()),
+        PENDING_TRANSFERS.with(|pt| pt.borrow().clone()),
     );
     
     storage::stable_save((state,)).expect("Failed to save state");
 }
+}
 
-// #[post_upgrade]
+#[post_upgrade]
 fn post_upgrade() {
     let (state,): ((
         HashMap<String, Payment>,
@@ -143,10 +91,12 @@ fn post_upgrade() {
         HashMap<u64, NFT>,
         HashMap<Principal, PendingMint>,
         u64,
-        u64
+        u64,
+        State,
+        HashMap<String, PendingTransfer>,
     ),) = storage::stable_restore().expect("Failed to restore state");
 
-    let (payments, collections, nfts, pending_mints, next_collection_id, next_nft_id) = state;
+    let (payments, collections, nfts, pending_mints, next_collection_id, next_nft_id, ordinals_state, pending_transfers) = state;
 
     PAYMENT_STORE.with(|store| *store.borrow_mut() = payments);
     COLLECTIONS.with(|c| *c.borrow_mut() = collections);
@@ -154,6 +104,24 @@ fn post_upgrade() {
     PENDING_MINTS.with(|pm| *pm.borrow_mut() = pending_mints);
     NEXT_COLLECTION_ID.with(|id| *id.borrow_mut() = next_collection_id);
     NEXT_NFT_ID.with(|id| *id.borrow_mut() = next_nft_id);
+    STATE.with(|s| *s.borrow_mut() = ordinals_state);
+    PENDING_TRANSFERS.with(|pt| *pt.borrow_mut() = pending_transfers);
 }
 
-ic_cdk::export_candid!();
+// Test if stable storage
+
+// #[update]
+// pub fn increment_counter() -> u64 {
+//     TEST_COUNTER.with(|counter| {
+//         let mut count = counter.borrow_mut();
+//         *count += 1;
+//         *count
+//     })
+// }
+
+// #[query]
+// pub fn get_counter() -> u64 {
+//     TEST_COUNTER.with(|counter| *counter.borrow())
+// }
+
+export_candid!();
