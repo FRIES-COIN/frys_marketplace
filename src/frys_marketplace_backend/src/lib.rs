@@ -2,7 +2,6 @@ mod state;
 mod types;
 mod ordinals;
 mod payment;
-mod frys_interface;
 mod minting;
 
 use std::collections::HashMap;
@@ -17,7 +16,6 @@ use state::{State, STATE};
 use types::{MintRequest, MintResponse};
 use crate::payment::TokenType;
 use crate::payment::{PendingTransfer, PENDING_TRANSFERS};
-use crate::frys_interface::{unlock_frys, check_allowance};
 use crate::ordinals::mint_inscription; 
 // use std::cell::RefCell;
 
@@ -34,16 +32,6 @@ use ic_cdk::init;
 // pub async fn verify_frys_payment(caller: Principal, amount: u64) -> Result<(), String> {
 //     verify_and_lock_frys(caller, amount).await
 // }
-
-#[update]
-pub async fn unlock_frys_payment(to: Principal, amount: u64) -> Result<(), String> {
-    unlock_frys(to, amount).await
-}
-
-#[query]
-pub async fn check_frys_allowance(owner: Principal) -> Result<u64, String> {
-    check_allowance(owner).await
-}
 
 #[update]
 pub async fn create_inscription(request: MintRequest) -> Result<MintResponse, String> {
