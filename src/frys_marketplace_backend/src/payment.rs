@@ -1,5 +1,5 @@
 use candid::{CandidType, Nat, Principal};
-use ic_cdk::{api::call, storage, caller, update, query, heartbeat};
+use ic_cdk::{api::call, caller, update, query, heartbeat};
 use icrc_ledger_types::{
     icrc1::transfer::{TransferArg, TransferError},
     icrc1::account::Account,

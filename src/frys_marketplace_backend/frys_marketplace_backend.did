@@ -5,6 +5,64 @@ type Collection = record {
   created_at : nat64;
   nft_count : nat64;
 };
+type CollectionMetadata = record {
+  profile_image : opt text;
+  banner_image : opt text;
+  royalty_percentage : float64;
+  website : opt text;
+  category : text;
+  social_links : vec record { text; text };
+};
+type Collection_1 = record {
+  creation_time : nat64;
+  floor_price : opt nat64;
+  creator : principal;
+  verified : bool;
+  metadata : CollectionMetadata;
+  name : text;
+  description : text;
+  inscription_count : nat64;
+  total_volume : nat64;
+};
+type Inscription = record {
+  id : nat64;
+  status : InscriptionStatus;
+  sat_point : nat64;
+  owner : principal;
+  metadata : InscriptionMetadata;
+  data : text;
+  rarity_score : float64;
+  generation : nat64;
+  content_type : text;
+  transfer_history : vec TransferRecord;
+  frys_amount : nat64;
+  timestamp : nat64;
+};
+type InscriptionMetadata = record {
+  creator : principal;
+  creation_number : nat64;
+  media_hash : text;
+  external_url : opt text;
+  name : text;
+  description : text;
+  collection_name : text;
+  attributes : vec record { text; text };
+  price : float64;
+  license : opt text;
+};
+type InscriptionStatus = variant { Burned; Listed; Active; Locked };
+type MintRequest = record {
+  metadata : InscriptionMetadata;
+  data : text;
+  content_type : text;
+  frys_amount : nat64;
+};
+type MintResponse = record {
+  sat_point : nat64;
+  rarity_score : float64;
+  inscription_id : nat64;
+  timestamp : nat64;
+};
 type NFT = record {
   id : nat64;
   price_in_icp_tokens : nat64;
@@ -30,23 +88,54 @@ type PendingTransfer = record {
   token_type : TokenType;
   retries : nat32;
 };
-type Result = variant { Ok : Collection; Err : text };
-type Result_1 = variant { Ok; Err : text };
-type Result_2 = variant { Ok : NFT; Err : text };
-type Result_3 = variant { Ok : bool; Err : text };
+type Result = variant { Ok : nat64; Err : text };
+type Result_1 = variant { Ok : Collection; Err : text };
+type Result_2 = variant { Ok : MintResponse; Err : text };
+type Result_3 = variant { Ok; Err : text };
+type Result_4 = variant { Ok : NFT; Err : text };
+type Result_5 = variant { Ok : bool; Err : text };
+type State = record {
+  collections : vec record { text; Collection_1 };
+  inscriptions : vec record { nat64; Inscription };
+  current_generation : nat64;
+  next_inscription_id : nat64;
+};
 type TokenType = variant { ICP; FRYS; CKBTC };
+type TransactionType = variant {
+  Burn;
+  List;
+  Lock;
+  Mint;
+  Sale;
+  Unlist;
+  Unlock;
+  Transfer;
+};
+type TransferRecord = record {
+  to : principal;
+  transaction_type : TransactionType;
+  from : principal;
+  timestamp : nat64;
+  price : opt nat64;
+};
 service : () -> {
-  create_collection : (text) -> (Result);
-  delete_nft : (nat64) -> (Result_1);
+  check_frys_allowance : (principal) -> (Result) query;
+  create_collection : (text) -> (Result_1);
+  create_inscription : (MintRequest) -> (Result_2);
+  delete_nft : (nat64) -> (Result_3);
   get_all_collections : () -> (vec Collection) query;
   get_all_nfts : () -> (vec NFT) query;
   get_canister_icp_balance : () -> (text) query;
   get_collection_nfts : (nat64) -> (vec NFT) query;
+  get_counter : () -> (nat64) query;
   get_nft_by_id : (nat64) -> (opt NFT) query;
   get_payment_history : () -> (vec Payment) query;
   get_pending_transfers : () -> (vec PendingTransfer) query;
-  mint_nft : (vec blob, nat64, text, nat64, text) -> (Result_2);
+  get_state_info : () -> (State) query;
+  increment_counter : () -> (nat64);
+  mint_nft : (vec blob, nat64, text, nat64, text) -> (Result_4);
   payment : (text, float64, TokenType) -> (text);
-  verify_frys_payment : (nat64, nat64) -> (Result_3);
+  unlock_frys_payment : (principal, nat64) -> (Result_3);
+  verify_frys_payment : (nat64, nat64) -> (Result_5);
   who_am_i : () -> (principal);
 }
