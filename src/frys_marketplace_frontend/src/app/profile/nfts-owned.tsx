@@ -88,7 +88,7 @@ export function CarouselSize() {
     >
       {!loading && nfts.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-[390px] p-2">
-          <h1 className="text-base font-body">
+          <h1 className="text-base font-body text-gray-400 text-center">
             You have not minted any NFTs yet😔
           </h1>
           <Link to="/mint" className="text-blue-500 font-bold ml-2">
