@@ -44,7 +44,15 @@ export function CarouselSize() {
       const actor = createActor(frysBackendCanisterID, sessionAgent);
       const allNFTs = await actor.get_all_nfts();
 
-      const processedNFTs = allNFTs.map((nft) => {
+      const processedNFTs = allNFTs.map((nft: {
+        id: bigint;
+        collection_id: bigint;
+        nft_description: string;
+        price_in_icp_tokens: bigint;
+        created_at: bigint;
+        nft_image: (Uint8Array | number[])[];
+        minter_principal_id: { toText: () => string };
+      }) => {
         const byteArray = Object.values(nft.nft_image[0]);
         const uint8Array = new Uint8Array(byteArray);
         let binaryString = "";
@@ -55,12 +63,15 @@ export function CarouselSize() {
         const imageUrl = `data:image/jpeg;base64,${base64String}`;
 
         return {
-          ...nft,
+          id: nft.id,
+          collection_id: nft.collection_id,
+          nft_description: nft.nft_description,
+          price_in_icp_tokens: nft.price_in_icp_tokens,
+          created_at: nft.created_at,
           image_url: imageUrl,
           minter_principal_id: nft.minter_principal_id.toText(),
         };
       });
-
       setNfts(processedNFTs);
     } catch (error) {
       console.error("Failed to fetch NFTs:", error);

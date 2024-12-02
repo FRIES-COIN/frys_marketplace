@@ -417,8 +417,10 @@ function CollectionsPage() {
       const actor = createActor(frysBackendCanisterID, sessionAgent);
       const allNFTs = await actor.get_all_nfts();
 
-      const processedNFTs = allNFTs.map((nft) => {
-        const byteArray = Object.values(nft.nft_image[0]);
+      const processedNFTs = allNFTs.map((nft: any) => {
+        const byteArray = Array.isArray(nft.nft_image[0])
+          ? nft.nft_image[0]
+          : Array.from(nft.nft_image[0]);
         const uint8Array = new Uint8Array(byteArray);
 
         let binaryString = "";
@@ -433,9 +435,7 @@ function CollectionsPage() {
           image_url: imageUrl,
           minter_principal_id: nft.minter_principal_id.toText(),
         };
-      });
-
-      setNfts(processedNFTs);
+      });      setNfts(processedNFTs);
     } catch (error) {
       console.error("Failed to fetch NFTs:", error);
     } finally {
